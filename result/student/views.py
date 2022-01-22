@@ -148,27 +148,30 @@ def backlogdata(request):
         sem = Semester.objects.get(id=sem)
         backdata = BacklogData(sem=sem,regulation=reg,branch=bra,batch=batch)
         backdata.save()
-        # backdata = BacklogData.objects.get(id=backdata.id)
-        
         if "file" in request.FILES:
             data = request.FILES['file']
             backdata.file = data
             backdata.save()
         backdata.save()
-        
         split_data_backlog(data,sem.id)
-        
+        print("BACKLOG DATA UPLOADED SUCCESSFUL")
         return JsonResponse({"Uploaded":"Success"}, status=status.HTTP_201_CREATED) 
     return JsonResponse({"Uploaded":"Failed"}, status=status.HTTP_400_BAD_REQUEST) 
 
+# 4 
+# sem data upload handler
+#  Sem Analysis API Function
+#  REACT Fetch API function
+#  Section wise Analysis API FUNCTION
+
+
+# UPLOAD EXCEL FILE API HANDLER
 @csrf_exempt
 def data(request):
     if request.method == "POST":
         reg = request.POST.get("reg")
         branch = request.POST.get("branch")
         name = request.POST.get("name")
-        # # type = request.POST.get("type")
-        # no_of_subject = request.POST.get("no_of_subject")
         batch = request.POST.get('batch')
         bra = Branch.objects.get(id=branch)
         reg = Regulation.objects.get(id=reg)
@@ -178,28 +181,15 @@ def data(request):
         else:
             sem = Semester(name=name,branch=bra,regulation=reg,batch=batch)
             sem.save()
-            # sem.regulation.add(reg)
-            
             if "file" in request.FILES:
                 data = request.FILES['file']
                 sem.file = data
                 sem.save()
             sem.save()
             split_data(data,sem.id)
+            print("SEM DATA UPLOADED SUCCESSFUL")
             return JsonResponse({"Uploaded":"Success"}, status=status.HTTP_201_CREATED) 
         return JsonResponse({"Uploaded":"Failed"}, status=status.HTTP_400_BAD_REQUEST) 
-        
-    # sem = Semester.objects.all()
-    # reg = Regulation.objects.all()
-    # branch = Branch.objects.all()
-    # batch = Batch.objects.all()
-    # context = {
-    #     'sem':sem,
-    #     'branch':branch,
-    #     "reg":reg,
-    #     "batch":batch
-    # }
-    # return render(request,"upload_excel.html",context)
     
     return Response({"Uploaded":"Failed"}, status=status.HTTP_400_BAD_REQUEST)  
 
@@ -237,7 +227,8 @@ def get_sem_analysis(request,sem_id):
 #     return HttpResponse("hi")
         
         
-    
+# SECTION WISE SEM ANALYSIS API HANDLER
+
 def get_sect_analysis(request, sem_id):
     if Semester.objects.filter(id=sem_id).exists():
         sem = Semester.objects.get(id=sem_id)
@@ -249,13 +240,9 @@ def get_sect_analysis(request, sem_id):
             sect_list = get_section_list(students)
             subj = sem.subject.split(',')
             data = []
-            # for i in list(sect_list.keys()):  
-            #     analyse = section_analysis(i,reg,batch,branch,sem,students,)
-            #     data[f"Section_{i}"] = analyse
             for i in subj:  
                 analyse = section_analysis(i,reg,batch,branch,sem,students,sect_list)
                 data.append(analyse)
-            # data["subj"] = subj
             main = {}   
             main["sect"] = list(sect_list.keys())
             main["data"] = data

@@ -89,7 +89,8 @@ def get_sem_performance_analysis(sem):
         
         
         
-        
+  
+# SEM ANALYSIS FUNCTION       
         
 def get_subject_analysis_data(sem):
     if Semester.objects.filter(id=sem.id).exists():

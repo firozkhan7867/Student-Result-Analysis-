@@ -106,19 +106,15 @@ def add_attempt(data,subj_name,code,sem,roll):
         grade_data = data["Grade"]
         cgpa_data = cgpa[i]
         student_roll = Student.objects.get(roll=roll[i])
-        print(student_roll, result_data)
         if BacklogSubject.objects.filter(roll=student_roll).exists():
             back_subj_data = BacklogSubject.objects.all().filter(roll=student_roll)
-            print("if")
             if len(back_subj_data) > 1:
                 for back_data in back_subj_data:
                     if back_data.subject.name == subj_name:
-                        print("iffff")
                         add_attempt_details(back_data.subject,back_data.sem,back_data,student_roll,attendance_data[i],batch,credit_data,result_data[i],grade_data[i],cgpa_data)
             else:
                 back_data = back_subj_data[0]
                 if back_data.subject.name == subj_name:
-                    print("else")
                     add_attempt_details(back_data.subject,back_data.sem,back_data,student_roll,attendance_data[i],batch,credit_data,result_data[i],grade_data[i],cgpa_data)
                
 
