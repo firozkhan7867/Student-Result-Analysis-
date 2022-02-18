@@ -6,7 +6,7 @@ from django.shortcuts import render
 from student.preprocesssing import get_all_batch_for_reg,get_all_reg_for_branch
 from student.preprocesssing import  get_section_list
 from student.add_to_DB import split_data
-from .add_to_DB import split_data_student
+from .add_to_DB import check_repeated_subj, split_data_student
 from student.back_log_handler import split_data_backlog
 from .analysis.sem_analysis import get_subject_analysis_data,all_subj
 from .analysis.sect_analysis import section_analysis
@@ -179,15 +179,26 @@ def data(request):
         if Semester.objects.filter(branch=bra,batch=batch,regulation=reg,name=name).exists():
             pass
         else:
-            sem = Semester(name=name,branch=bra,regulation=reg,batch=batch)
-            sem.save()
+            
+            # sem = Semester(name=name,branch=bra,regulation=reg,batch=batch)
+            # sem.save()
             if "file" in request.FILES:
                 data = request.FILES['file']
+                sem = Semester(name=name,branch=bra,regulation=reg,batch=batch)
+                sem.save()
                 sem.file = data
                 sem.save()
-            sem.save()
-            split_data(data,sem.id)
-            print("SEM DATA UPLOADED SUCCESSFUL")
+                if split_data(data,sem.id):
+                    print("SEM DATA UPLOADED SUCCESSFUL")
+                    return JsonResponse({"Uploaded":"Success"}, status=status.HTTP_201_CREATED) 
+                else:
+                    sem.delete()
+                    return JsonResponse({"Uploaded":"Failed, Please Check that you are not uploading the Same Semester multiple times"},status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return JsonResponse({"Uploaded":"Failed, Please Upload the Excel File"},status=status.HTTP_400_BAD_REQUEST)
+            
+            
+            
             return JsonResponse({"Uploaded":"Success"}, status=status.HTTP_201_CREATED) 
         return JsonResponse({"Uploaded":"Failed"}, status=status.HTTP_400_BAD_REQUEST) 
     

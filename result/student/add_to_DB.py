@@ -1,3 +1,4 @@
+from re import S
 from .back_log_handler import add_backlog, add_student_performance
 from student.preprocesssing import get_subj_list, get_transformed_data
 from .models import BacklogSubject, Batch, Performance, Semester, Subjects,Student,Regulation, Branch
@@ -18,14 +19,17 @@ def add_student(sem,roll):
     for i in range(len(roll)):
         if Student.objects.filter(roll=roll[i]).exists():
             student = Student.objects.get(roll=roll[i])
-            if sem not in student.sem.all():
+            if sem not in student.sem.all() and student.branch == sem.branch and student.regulation == sem.regulation:
                 student.sem.add(sem)
                 student.save() 
+            else:
+                return False
         else:
             student = Student(roll=roll[i], regulation= sem.regulation, branch=sem.branch,batch=batch)
             student.save()
             student.sem.add(sem)
             student.save()
+    return True
 
 
 
@@ -44,7 +48,7 @@ def add_subject(data,subj_name,code,sem,roll):
         cgpa_data = cgpa[i]
         student_roll = Student.objects.get(roll=roll[i])
         # sem should be removed to maintain unique constraint
-        if Subjects.objects.filter(code=code,roll=student_roll,sem=sem).exists():
+        if Subjects.objects.filter(code=code,roll=student_roll,sem=sem,batch=batch).exists():
             pass
         else:
             subj = Subjects(roll=student_roll,name=subj_name,code=code,branch=sem.branch, regulation=sem.regulation,
@@ -104,20 +108,57 @@ def add_performance_sem(data,roll,sem):
             get_perform.save()
         
 
+
+def check_repeated_subj(data,bra,reg,batch):
+    sems = Semester.objects.filter(branch=bra,regulation=reg,batch=batch)
+    # for i in sems:
+    #     if i.subject == subjs:
+    #         return False
+    #     s = i.subject.split(",")
+    #     for j in s:
+    #         if j in title:
+    #             return False
+    return True
+    
+def check_repeated_sem(title,sem):
+    sems = Semester.objects.filter(branch=sem.branch,regulation=sem.regulation,batch=sem.batch)
+    print(sems)
+    if len(sems) > 1:
+        subjs = ",".join(title[:-1])
+        print(title,"-"*10)
+        for i in sems:
+            if i.subject == subjs and i.id != sem.id:
+                return False
+            s = i.subject.split(",")
+            print("-------------------------- new-----------------")
+            print(s)
+            if len(s) > 1 and i.id != sem.id:
+                for j in s:
+                    print(j)
+                    if j in title:
+                        print("fkadsdsnlsklllllllllllllllllllllllllll")
+                        return False
+    return True
     
     
 def split_data(data,sem_id):
     sem = Semester.objects.get(id=sem_id)
     data = pd.read_excel(data)
     title = get_subj_list(data,6)
+    if not check_repeated_sem(title,sem):
+        return False
     di = get_transformed_data(data)
     sem.subject = ",".join(title[:-1])
     sem.save()
     
     
     
+    
     # compulsory add this line to add new students in the database
-    add_student(sem,di[1])
+    
+    if not add_student(sem,di[1]):
+        print("please check your file. it may contain inconsistent data")
+        return False
     # d1 = di[0][title[-1]]
     for i in di[0].keys():
         code_and_subj = extract_name(i)
@@ -129,6 +170,8 @@ def split_data(data,sem_id):
             
         else:
             add_performance_sem(di[0][i],di[1],sem)
+            
+    return True
 
 
 
