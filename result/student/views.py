@@ -3,6 +3,7 @@ from urllib import response
 from django.http import request
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
+from student.multi_sem_analysis.test_analysis import all_sems_analysis
 from student.preprocesssing import get_all_batch_for_reg,get_all_reg_for_branch
 from student.preprocesssing import  get_section_list
 from student.add_to_DB import split_data
@@ -415,9 +416,22 @@ def get_back_predata(request):
     return JsonResponse(data)
 
 
-
 # @api_view(['POST'])
 # def test(request):
 #     if request.method == "POST":
 #         print(request.data)
 #         return JsonResponse(request.data)
+
+
+
+
+def get_batch_analysis(request, batch_id, branch_id):
+    batch = Batch.objects.get(id=batch_id)
+    branch = Branch.objects.get(id=branch_id)
+    sems = Semester.objects.filter(batch=batch,branch=branch)
+    all_sems_analysis(sems, batch, branch)
+    return HttpResponse("hi")
+
+
+
+

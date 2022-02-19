@@ -168,6 +168,8 @@ class Performance(models.Model):
     SCGPA = models.FloatField(blank=True)
     no_of_backlog = models.IntegerField()
     pass_or_fail = models.BooleanField(default=True)
+    had_backlog = models.BooleanField(default=False)
+    
     
     def __str__(self):
         return f"{self.roll} got SCGPA of {self.SCGPA} for {self.sem.name} semester"
