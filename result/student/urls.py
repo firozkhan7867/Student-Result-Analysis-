@@ -15,7 +15,8 @@ urlpatterns = [
     path('test',views.generate_list_semester, name="test"),
     path('updata',views.get_reg_branch_batch,name="updata"),
     path('backupdata',views.get_back_predata, name="backdata"),
-    # path('batch/<int:batch_id>/<int:branch_id>',views.get_batch_analysis,name="batch_data"),
+    path('batch/<int:batch_id>/<int:branch_id>',views.get_batch_analysis,name="batch_data"),
+    path('batch/sem/<int:batch_id>/<int:branch_id>',views.get_all_sems_backlog,name="Sem_backlog_data"),
 ]
 
 

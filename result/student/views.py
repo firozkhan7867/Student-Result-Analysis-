@@ -3,7 +3,8 @@ from urllib import response
 from django.http import request
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
-from student.multi_sem_analysis.test_analysis import all_sems_analysis
+from student.multi_sem_analysis.Sem_backlog_data_analysis import get_sem_wise_backlog_analysis
+from student.multi_sem_analysis.Student_CGPA_analysis import all_sems_analysis
 from student.preprocesssing import get_all_batch_for_reg,get_all_reg_for_branch
 from student.preprocesssing import  get_section_list
 from student.add_to_DB import split_data
@@ -424,14 +425,24 @@ def get_back_predata(request):
 
 
 
-
-def get_batch_analysis(request, batch_id, branch_id):
+# controller to get batch student sem analysis of all sems
+def get_batch_analysis(request, batch_id, branch_id): 
     batch = Batch.objects.get(id=batch_id)
     branch = Branch.objects.get(id=branch_id)
     sems = Semester.objects.filter(batch=batch,branch=branch)
-    all_sems_analysis(sems, batch, branch)
-    return HttpResponse("hi")
+    data = all_sems_analysis(sems, batch, branch)
+    return JsonResponse(data,safe=False)
 
 
+
+# # controller to get sems with backlog details
+
+def get_all_sems_backlog(request,batch_id,branch_id):
+    batch = Batch.objects.get(id=batch_id)
+    branch = Branch.objects.get(id=branch_id)
+    sems = Semester.objects.filter(batch=batch,branch=branch)
+    data = get_sem_wise_backlog_analysis(sems,batch,branch)
+    sem_data = {"sems":data}
+    return JsonResponse(sem_data,safe=False)
 
 

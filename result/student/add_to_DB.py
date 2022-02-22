@@ -1,4 +1,6 @@
 from re import S
+
+from scipy.fftpack import tilbert
 from .back_log_handler import add_backlog, add_student_performance
 from student.preprocesssing import get_subj_list, get_transformed_data
 from .models import BacklogSubject, Batch, Performance, Semester, Subjects,Student,Regulation, Branch
@@ -19,12 +21,16 @@ def add_student(sem,roll):
     for i in range(len(roll)):
         if Student.objects.filter(roll=roll[i]).exists():
             student = Student.objects.get(roll=roll[i])
+            print(student)
+            print("inside iff")
             if sem not in student.sem.all() and student.branch == sem.branch and student.regulation == sem.regulation:
                 student.sem.add(sem)
                 student.save() 
             else:
+                print("inside")
                 return False
         else:
+            print("inside else")
             student = Student(roll=roll[i], regulation= sem.regulation, branch=sem.branch,batch=batch)
             student.save()
             student.sem.add(sem)
@@ -123,7 +129,6 @@ def check_repeated_subj(data,bra,reg,batch):
     
 def check_repeated_sem(title,sem):
     sems = Semester.objects.filter(branch=sem.branch,regulation=sem.regulation,batch=sem.batch)
-    print(sems)
     if len(sems) > 1:
         subjs = ",".join(title[:-1])
         print(title,"-"*10)
@@ -139,6 +144,7 @@ def check_repeated_sem(title,sem):
                     if j in title:
                         print("fkadsdsnlsklllllllllllllllllllllllllll")
                         return False
+            
     return True
     
     
@@ -146,11 +152,14 @@ def split_data(data,sem_id):
     sem = Semester.objects.get(id=sem_id)
     data = pd.read_excel(data)
     title = get_subj_list(data,6)
+    
+    sem.subject = ",".join(title[:-1])
+    sem.save()
     if not check_repeated_sem(title,sem):
         return False
     di = get_transformed_data(data)
-    sem.subject = ",".join(title[:-1])
-    sem.save()
+    # sem.subject = ",".join(title[:-1])
+    # sem.save()
     
     
     
