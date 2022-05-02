@@ -11,7 +11,7 @@ from student.add_to_DB import split_data
 from .add_to_DB import check_repeated_subj, split_data_student
 from student.back_log_handler import split_data_backlog
 from .analysis.sem_analysis import get_subject_analysis_data,all_subj
-from .analysis.sect_analysis import section_analysis
+from .analysis.sect_analysis import get_complete_sect_wise_subj_analysis, section_analysis
 from student.preprocesssing import get_subj_list, get_subject_analysis, get_transformed_data
 from .models import BacklogData, Batch, Branch, Performance, Regulation, Semester, Student, Subjects
 import os
@@ -256,7 +256,11 @@ def get_sect_analysis(request, sem_id):
             for i in subj:  
                 analyse = section_analysis(i,reg,batch,branch,sem,students,sect_list)
                 data.append(analyse)
+            newdata = get_complete_sect_wise_subj_analysis(sect_list,reg,batch,branch,sem)
+            tt =  {"subj":"TOTAL ANALYSIS","cc":"Total Analysis for all sujects",'code':'all subject analysis','data':newdata}
+            # data.append(tt)
             main = {}   
+            print(data)
             main["sect"] = list(sect_list.keys())
             main["data"] = data
             main2 = {}

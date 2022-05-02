@@ -5,16 +5,21 @@ from student.preprocesssing import get_subj_list #, get_transformed_data
 
 
 def add_student_performance(roll,sem):
-    grade = {"O":10,"A+":9,"A":8,"B+":7,"B":6,"C":5,"F":0,"AB":0}
+    print(roll,sem)
+    # grade = {"O":10,"A+":9,"A":8,"B+":7,"B":6,"C":5,"F":0,"AB":0}
+    grade = {"A+":10,"A":9,"B":8,"C":7,"D":6,"E":5,"F":0,"AB":0}
     if Student.objects.filter(roll=roll).exists():
         # print("exists user ", Student.objects.get(roll=roll))
         student = Student.objects.get(roll=roll)
         subj = Subjects.objects.all().filter(roll=student,sem=sem)
         credit = [sub.credit for sub in subj]
         grade_val = [sub.grade for sub in subj]
+        # print(student,credit,grade_val)
         
         CP = []
         for i in range(len(credit)):
+            # print(grade[grade_val[i]], credit[i])
+            # print(credit[i]*grade[grade_val[i]])
             CP.append(credit[i]*grade[grade_val[i]])
         TCR = sum(credit)
         # for i in grade_val:
@@ -25,6 +30,8 @@ def add_student_performance(roll,sem):
             SCGPA = TCP/sum(credit)
         
         return [TCR, TCP,SCGPA ]
+    else:
+        print(roll)
         
 
 def add_backlog(subj,student_roll):

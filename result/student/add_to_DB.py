@@ -18,6 +18,7 @@ def extract_name(subj_name):
     
 def add_student(sem,roll):
     batch = Batch.objects.get(id=sem.batch.id)
+    print(roll)
     for i in range(len(roll)):
         if Student.objects.filter(roll=roll[i]).exists():
             student = Student.objects.get(roll=roll[i])

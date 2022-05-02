@@ -12,7 +12,8 @@ def get_transformed_data(data):
     print('tt')
     num_of_subj = get_subj_list(data,6)
     count = len(num_of_subj)
-    data = data.iloc[11:,1:]
+    data = data.iloc[8:,1:]
+    print(data.iloc[:10])
     data = data.dropna()
     subj_dict = {}
     for i in range(1,count+1):

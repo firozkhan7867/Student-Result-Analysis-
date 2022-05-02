@@ -48,7 +48,8 @@ const Table = ({subjVisData}) => {
                                         <td key={index2} className="">
                                             <span className='text-danger'> Failed : {value2.analysis.fail} </span> <br />
                                             <span className='text-primary'> Passed count : {value2.analysis.passed_student} </span><br />
-                                            <span > Total Student : {value2.analysis.total_student}</span>
+                                            <span > Total Student : {value2.analysis.total_student}</span><br />
+                                            <span className='text-center'>Pass Percentage : <span className='text-success font-weight-bold '> {value2.analysis.Pass_percentage}% </span></span>
                                         </td>
                                     )
                                 })}

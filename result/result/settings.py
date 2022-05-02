@@ -76,6 +76,7 @@ SIMPLE_JWT = {
 # ROOT_URLCONF = 'auth_system.urls'
 CORS_ALLOW_ALL_ORIGINS=True
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TEMPLATES = [
     {
