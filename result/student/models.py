@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 import os
 
@@ -26,12 +27,33 @@ class Branch(models.Model):
     
     class Meta:
         verbose_name_plural = "Branches"
+
+
+# class GradingSystem(models.Model):
+#     name = models.CharField(max_length=200)
+#     year = models.CharField(max_length=50)
+#     # 30 -> A+  
+#     # 27 -> A
+#     # 24 -> B+
+#     g_10 = models.CharField(max_length=10)
+#     g_9 = models.CharField(max_length=10)
+#     g_8 = models.CharField(max_length=10)
+#     g_7 = models.CharField(max_length=10)
+#     g_6 = models.CharField(max_length=10)
+#     g_5 = models.CharField(max_length=10)
+#     fail = models.CharField(max_length=10)
+
+#     class Meta:
+#         verbose_name_plural = "GradingSystem"
     
+#     def __str__(self):
+#         return self.name + self.year
     
     
 class Regulation(models.Model):
     regulation = models.CharField(max_length=50,unique=True)
     year = models.CharField(max_length=50)
+    # grades = models.ForeignKey(GradingSystem, on_delete=models.CASCADE)
     
     def __str__(self):
         return f"{self.regulation} for year {self.year}"
@@ -58,7 +80,7 @@ class Semester(models.Model):
     file = models.FileField(upload_to=path_and_rename, verbose_name="Excel FIle", blank=True)
     
     def __str__(self):
-        return self.name
+        return f"{self.name}  of {self.regulation.regulation} in {self.branch.branches} of Batch {self.batch.name}"
     
     class Meta:
         verbose_name_plural = "Semesters"
@@ -83,8 +105,7 @@ class Student(models.Model):
     def sems(self):
         sems = Semester.objects.all().filter(regulation=self.regulation)
         return sems
-    
-    
+      
     class Meta:
         verbose_name_plural = "Students"
     
@@ -193,3 +214,19 @@ class BacklogData(models.Model):
     class Meta:
         verbose_name_plural = "BackLogDATA"
     
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+

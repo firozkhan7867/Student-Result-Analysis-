@@ -3,6 +3,9 @@ from urllib import response
 from django.http import request
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
+from student.Fetch.preprocessing import fetch_and_add_student_sem
+from student.Fetch.preprocessing import add_preformance_table
+from student.Fetch.preprocessing import add_subject,check_sem_exist,get_subject_from_fetch_obj
 from student.multi_sem_analysis.Sem_backlog_data_analysis import get_sem_wise_backlog_analysis
 from student.multi_sem_analysis.Student_CGPA_analysis import all_sems_analysis
 from student.preprocesssing import get_all_batch_for_reg,get_all_reg_for_branch
@@ -15,6 +18,7 @@ from .analysis.sect_analysis import get_complete_sect_wise_subj_analysis, sectio
 from student.preprocesssing import get_subj_list, get_subject_analysis, get_transformed_data
 from .models import BacklogData, Batch, Branch, Performance, Regulation, Semester, Student, Subjects
 import os
+import time
 import pandas as pd
 from rest_framework import status,viewsets
 from rest_framework.decorators import api_view
@@ -26,6 +30,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
+from student.Fetch.main_code import get_formated_result
 # Create your views here.
 
 
@@ -448,5 +453,53 @@ def get_all_sems_backlog(request,batch_id,branch_id):
     data = get_sem_wise_backlog_analysis(sems,batch,branch)
     sem_data = {"sems":data}
     return JsonResponse(sem_data,safe=False)
+
+
+
+
+
+def fetch_result(request,roll,branch):
+    result = get_formated_result(roll,branch)
+    student = Student.objects.get(roll=roll)
+    print(f"Branch : {student.branch} Regultaion : {student.regulation} Batch: {student.batch} Section: {student.section}")
+    # print(result)
+    result = result["7"]
+    subj = get_subject_from_fetch_obj(result)
+
+    sem = check_sem_exist(result,student.branch,student.batch,student.regulation,7,subj)
+    
+    add_subject(result,roll,sem)
+    add_preformance_table(roll,sem)
+    
+    return JsonResponse(result, safe=False)
+
+
+def fetch_semester_result(request,batch,sem,branch):
+    if not Batch.objects.filter(id=batch).exists() and Branch.objects.filter(branches=branch.upper()).exists():
+        print("!!!  .....   INVALID DETAILS")
+        return
+
+    batch  = Batch.objects.get(id=batch)
+    branch_obj = Branch.objects.get(branches=branch.upper())
+    students = Student.objects.filter(batch=batch,branch=branch_obj)
+    print(students)
+
+    print("-------------------------------------------------------------------------------------------------")
+
+    for i in students:
+        time.sleep(10)
+        fetch_and_add_student_sem(i.roll.upper(),sem,branch)
+    
+    return HttpResponse("Success")
+    
+
+    # reg = Regulation.objects.all()
+    # branch = Branch.objects.all()
+    # batch = Batch.objects.all()
+
+    # print()
+
+
+    return JsonResponse(result,safe=False)
 
 

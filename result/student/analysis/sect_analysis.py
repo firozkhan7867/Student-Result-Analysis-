@@ -44,7 +44,8 @@ def subj_analysis_one_more_sec(sem,batch,reg,branch,subs, sect):
                 pass_count +=1
             
             num_of_student +=1
-    pass_percentage = float(str((pass_count/num_of_student) * 100)[:4])
+    # pass_percentage = float(str((pass_count/num_of_student) * 100)[:4])
+    pass_percentage= 10
     return {"fail":fail_count,"total_student":num_of_student,"passed_student":pass_count,"Pass_percentage":pass_percentage}
     
 
@@ -120,7 +121,10 @@ def get_subject_analysis_data_sec(sem,sect,subj):
         batch = sem.batch
         reg = sem.regulation
         branch = sem.branch
+        print(subj)
         title_code = extract_name(subj)
+        if len(title_code) <2:
+            return
         code = title_code[0]
         name = title_code[1]
         
