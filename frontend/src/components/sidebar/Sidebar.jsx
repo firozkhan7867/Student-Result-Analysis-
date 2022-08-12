@@ -253,7 +253,7 @@ class Sidebar extends Component{
 
 
     componentDidMount(){
-        fetch( `http://127.0.0.1:8000/test`,{
+        fetch( `${process.env.REACT_APP_API_URL}`,{
                 method: "GET",
             }).then(resp => resp.json())
             // .then(resp => console.log(resp))
