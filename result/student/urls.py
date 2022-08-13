@@ -20,6 +20,7 @@ urlpatterns = [
     path('fetch_result/<str:roll>/<str:branch>/<int:sem>',views.fetch_result,name="fetch_result"), 
     path('fetch_semester_result/<int:batch>/<int:sem>/<str:branch>/',views.fetch_semester_result,name="fetch_semester_result"), 
     path('fetch_test/<int:num>',views.fetch_test,name="fetch_test"),
+    path('cancel',views.cancel),
 ]
 
 

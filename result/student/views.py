@@ -528,7 +528,7 @@ async def fetch_semester_result(request,batch,sem,branch):
 
 def test5(num):
     print('inside test5')
-    time.sleep(10)
+    time.sleep(50)
 
 @sync_to_async
 def testtttt(num):
@@ -537,11 +537,24 @@ def testtttt(num):
     print(num)
 
 
+async def helper(num):
+    global t1
+    t1 = asyncio.create_task(testtttt(num))
 
-async def fetch_test(request,num):
+def fetch_test(request,num):
+    
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
 
-    asyncio.create_task(testtttt(num))
+    # Run the coroutine containing tasks
+    # cancelAfter = 5
+    asyncio.run(helper(num))
 
     return JsonResponse({"sent":num},safe=False)
 
 
+async def cancel(request):
+    t1.cancel()
+    print("cancelled")
+
+    return JsonResponse({"cancelled":"yes"},safe=False)
