@@ -1,3 +1,5 @@
+from cgi import test
+from pprint import pformat
 from traceback import print_tb
 from urllib import response
 from django.http import request
@@ -31,6 +33,8 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
 from student.Fetch.main_code import get_formated_result
+from asgiref.sync import sync_to_async
+import asyncio
 # Create your views here.
 
 
@@ -458,23 +462,24 @@ def get_all_sems_backlog(request,batch_id,branch_id):
 
 
 
-def fetch_result(request,roll,branch):
+def fetch_result(request,roll,branch,sem):
     result = get_formated_result(roll,branch)
+    print(result)
     student = Student.objects.get(roll=roll)
     print(f"Branch : {student.branch} Regultaion : {student.regulation} Batch: {student.batch} Section: {student.section}")
-    # print(result)
-    result = result["7"]
+    result = result[str(sem)]
     subj = get_subject_from_fetch_obj(result)
 
     sem = check_sem_exist(result,student.branch,student.batch,student.regulation,7,subj)
     
-    add_subject(result,roll,sem)
-    add_preformance_table(roll,sem)
+    # add_subject(result,roll,sem)
+    # add_preformance_table(roll,sem)
     
     return JsonResponse(result, safe=False)
 
 
-def fetch_semester_result(request,batch,sem,branch):
+@sync_to_async
+def reduced_fetch_semester_result(batch,sem,branch):
     if not Batch.objects.filter(id=batch).exists() and Branch.objects.filter(branches=branch.upper()).exists():
         print("!!!  .....   INVALID DETAILS")
         return
@@ -486,10 +491,27 @@ def fetch_semester_result(request,batch,sem,branch):
 
     print("-------------------------------------------------------------------------------------------------")
 
+
     for i in students:
         time.sleep(10)
         fetch_and_add_student_sem(i.roll.upper(),sem,branch)
     
+    
+    # for i in range(5):
+    #     time.sleep(10)
+    #     fetch_and_add_student_sem(students[i].roll.upper(),sem,branch)
+    
+    print("="*40)
+    print("\n\n\n")
+    
+    print("successfully completed process")
+    
+
+    
+
+
+async def fetch_semester_result(request,batch,sem,branch):
+    asyncio.create_task(reduced_fetch_semester_result(batch,sem,branch))
     return HttpResponse("Success")
     
 
@@ -501,5 +523,25 @@ def fetch_semester_result(request,batch,sem,branch):
 
 
     return JsonResponse(result,safe=False)
+
+
+
+def test5(num):
+    print('inside test5')
+    time.sleep(10)
+
+@sync_to_async
+def testtttt(num):
+    time.sleep(10)
+    test5(num)
+    print(num)
+
+
+
+async def fetch_test(request,num):
+
+    asyncio.create_task(testtttt(num))
+
+    return JsonResponse({"sent":num},safe=False)
 
 

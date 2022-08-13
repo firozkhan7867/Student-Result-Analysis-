@@ -9,6 +9,7 @@ from student.models import Semester
 
 
 def check_subject_fetch(roll,subj_obj,sem):
+
     if Student.objects.filter(roll=roll).exists():
         stud_obj = Student.objects.get(roll=roll)
         regulation = stud_obj.regulation
@@ -20,21 +21,27 @@ def check_subject_fetch(roll,subj_obj,sem):
         if Subjects.objects.filter(regulation=regulation,branch=branch,sem=sem,roll=stud_obj,name=name,code=code).exists():
             print(f"!!! .... Subject for {stud_obj.roll} cannot be created for {name}")
             return
-        
         attendance = subj_obj["AttendanceGrade"]
         grade = subj_obj["ResultGrade"]
         cgpa = subj_obj["CreditsPoints"]
         credit = subj_obj["Credits"]
+
+
+        
         result = "P"
         fail = False
         if grade == "F" or grade == "AB":
             result = "F"
             fail = True
+        if attendance.lower() == "d":
+            fail = True
+            result = "F"
+            credit = 0
         
         
-        subj = Subjects(roll=stud_obj,name=name,regulation=regulation,branch=branch,batch=batch,attendance=attendance,
+        subj = Subjects.objects.create(roll=stud_obj,name=name,regulation=regulation,branch=branch,batch=batch,attendance=attendance,
         cgpa=cgpa,result=result,fail=fail,sem=sem,credit=credit,code=code,grade=grade)
-        subj.save()
+        
     
         print(f"subject created for {stud_obj.roll} of {name}")
     else:
@@ -80,6 +87,8 @@ def check_sem_exist(result,branch,batch,reg,sem,subj):
     
 
 def get_subject_from_fetch_obj(result):
+    print("*"*30)
+    print(result)
     subj_list = ""
     data = result[0]["SubjectCode"] + "-"+result[0]["SubjectName"] 
     subj_list += data
@@ -166,6 +175,11 @@ def fetch_and_add_student_sem(roll,sem,branch):
     print(f"Branch : {student.branch} Regultaion : {student.regulation} Batch: {student.batch} Section: {student.section}")
     # print(result)
     result = result[str(sem)]
+
+    if len(result) == 0:
+        msg= f"\n\n\n \t Data not exists !!!!!!!!!!  --------- SKipping the student {roll}  sem: {sem} branch: {branch} \n\n\n\n"
+        print(msg)
+        return {"error":msg}
     subj = get_subject_from_fetch_obj(result)
 
     sem = check_sem_exist(result,student.branch,student.batch,student.regulation,sem,subj)
@@ -173,6 +187,10 @@ def fetch_and_add_student_sem(roll,sem,branch):
     add_subject(result,roll,sem)
     add_preformance_table(roll,sem)
 
+    msg = f"successfully added student data of {roll} sem:{sem} branch: {branch}"
+    print(msg)
+
+    return {"success": msg}
 
 
 
