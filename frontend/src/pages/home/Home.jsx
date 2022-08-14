@@ -42,8 +42,8 @@ const Home = (props) => {
                     {/* <Combo */}
                     {/* <Chart data={userData} title="User Analytics" grid datakey="Active User" /> */}
                     <div className="homeWidgets">
-                        {/* <WidgetSm />
-                        <WidgetLg />  */}
+                        {/* <WidgetSm /> */}
+                        <WidgetLg  /> 
                     </div>
                 </Fragment>
         }
