@@ -17,7 +17,7 @@ const Loginone = ({login, isAuthenticated}) => {
     }
     if (isAuthenticated){
         return <Redirect to="/" />
-    }
+    }   
 
 
     return (
@@ -37,25 +37,25 @@ const Loginone = ({login, isAuthenticated}) => {
                                 <span className="input-group-text"> <i className="fa fa-envelope"></i> </span>
                             </div>
                             <input type="email" 
-                    className='form-control' placeholder='Email' name='email'
-                    value={email}
-                    
-                    onChange={e => onChange(e)}
-                    required
-                    />
+                                className='form-control' placeholder='Email' name='email'
+                                value={email}
+                                
+                                onChange={e => onChange(e)}
+                                required
+                                />
                             </div>
                             <div className="form-group input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text"> <i className="fa fa-lock"></i> </span>
                             </div>
                             <input type="password" 
-                    className='form-control' placeholder='Password' name='password'
-                    value={password}
-                    minLength='6'
-                    
-                    onChange={e => onChange(e)}
-                    required
-                    />
+                                className='form-control' placeholder='Password' name='password'
+                                value={password}
+                                minLength='6'
+                                
+                                onChange={e => onChange(e)}
+                                required
+                                />
                             </div>
                             <div className="form-group">
                             <button type="submit" className="btn btn-primary btn-block px-5 mt-3 mb-2">Login</button>

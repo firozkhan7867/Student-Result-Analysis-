@@ -58,7 +58,7 @@ const Combo = (props) => {
             </div> */}
             <div className="featured">
                 <div className="featuredItem">
-                    <h1 className='d-flex justify-content-center'>Section Wise Subject Analysys</h1>
+                    <h1 className='d-flex justify-content-center'>Section Wise Subject Analysis</h1>
                     <hr />
                         <br />
                     <Table />

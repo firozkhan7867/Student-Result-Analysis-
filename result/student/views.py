@@ -1,8 +1,13 @@
+from cgi import test
+from pprint import pformat
 from traceback import print_tb
 from urllib import response
 from django.http import request
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
+from student.Fetch.preprocessing import fetch_and_add_student_sem
+from student.Fetch.preprocessing import add_preformance_table
+from student.Fetch.preprocessing import add_subject,check_sem_exist,get_subject_from_fetch_obj
 from student.multi_sem_analysis.Sem_backlog_data_analysis import get_sem_wise_backlog_analysis
 from student.multi_sem_analysis.Student_CGPA_analysis import all_sems_analysis
 from student.preprocesssing import get_all_batch_for_reg,get_all_reg_for_branch
@@ -11,10 +16,11 @@ from student.add_to_DB import split_data
 from .add_to_DB import check_repeated_subj, split_data_student
 from student.back_log_handler import split_data_backlog
 from .analysis.sem_analysis import get_subject_analysis_data,all_subj
-from .analysis.sect_analysis import section_analysis
+from .analysis.sect_analysis import get_complete_sect_wise_subj_analysis, section_analysis
 from student.preprocesssing import get_subj_list, get_subject_analysis, get_transformed_data
 from .models import BacklogData, Batch, Branch, Performance, Regulation, Semester, Student, Subjects
 import os
+import time
 import pandas as pd
 from rest_framework import status,viewsets
 from rest_framework.decorators import api_view
@@ -26,6 +32,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
+from student.Fetch.main_code import get_formated_result
+from asgiref.sync import sync_to_async
+import asyncio
 # Create your views here.
 
 
@@ -256,7 +265,11 @@ def get_sect_analysis(request, sem_id):
             for i in subj:  
                 analyse = section_analysis(i,reg,batch,branch,sem,students,sect_list)
                 data.append(analyse)
+            newdata = get_complete_sect_wise_subj_analysis(sect_list,reg,batch,branch,sem)
+            tt =  {"subj":"TOTAL ANALYSIS","cc":"Total Analysis for all sujects",'code':'all subject analysis','data':newdata}
+            # data.append(tt)
             main = {}   
+            print(data)
             main["sect"] = list(sect_list.keys())
             main["data"] = data
             main2 = {}
@@ -444,5 +457,160 @@ def get_all_sems_backlog(request,batch_id,branch_id):
     data = get_sem_wise_backlog_analysis(sems,batch,branch)
     sem_data = {"sems":data}
     return JsonResponse(sem_data,safe=False)
+
+
+
+
+
+def fetch_result(request,roll,branch,sem):
+    result = get_formated_result(roll,branch)
+    print(result)
+    student = Student.objects.get(roll=roll)
+    print(f"Branch : {student.branch} Regultaion : {student.regulation} Batch: {student.batch} Section: {student.section}")
+    result = result[str(sem)]
+    subj = get_subject_from_fetch_obj(result)
+
+    sem = check_sem_exist(result,student.branch,student.batch,student.regulation,7,subj)
+    
+    # add_subject(result,roll,sem)
+    # add_preformance_table(roll,sem)
+    
+    return JsonResponse(result, safe=False)
+
+
+@sync_to_async
+def reduced_fetch_semester_result(batch,sem,branch):
+    if not Batch.objects.filter(id=batch).exists() and Branch.objects.filter(branches=branch.upper()).exists():
+        print("!!!  .....   INVALID DETAILS")
+        return
+
+    batch  = Batch.objects.get(id=batch)
+    branch_obj = Branch.objects.get(branches=branch.upper())
+    students = Student.objects.filter(batch=batch,branch=branch_obj)
+    print(students)
+
+    print("-------------------------------------------------------------------------------------------------")
+
+
+    for i in students:
+        time.sleep(10)
+        fetch_and_add_student_sem(i.roll.upper(),sem,branch)
+    
+    
+    # for i in range(5):
+    #     time.sleep(10)
+    #     fetch_and_add_student_sem(students[i].roll.upper(),sem,branch)
+    
+    print("="*40)
+    print("\n\n\n")
+    
+    print("successfully completed process")
+    
+
+    
+
+
+async def fetch_semester_result(request,batch,sem,branch):
+    asyncio.create_task(reduced_fetch_semester_result(batch,sem,branch))
+    return HttpResponse("Success")
+    
+
+    # reg = Regulation.objects.all()
+    # branch = Branch.objects.all()
+    # batch = Batch.objects.all()
+
+    # print()
+
+
+    return JsonResponse(result,safe=False)
+
+
+
+def test5(num):
+    print('inside test5')
+    time.sleep(50)
+
+@sync_to_async
+def testtttt(num):
+    time.sleep(10)
+    test5(num)
+    print(num)
+
+
+async def helper(num):
+    global t1
+    t1 = asyncio.create_task(testtttt(num))
+
+def fetch_test(request,num):
+    
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    # Run the coroutine containing tasks
+    # cancelAfter = 5
+    asyncio.run(helper(num))
+
+    return JsonResponse({"sent":num},safe=False)
+
+
+async def cancel(request):
+    t1.cancel()
+    print("cancelled")
+
+    return JsonResponse({"cancelled":"yes"},safe=False)
+
+
+
+
+# Toppers Data API for single semester
+
+def get_topper_data(request,batch,sem,branch):
+    sems = {1:"I",2:"II",3:"III",4:"IV",5:"V",6:"VI",7:"VII",8:"VIII"}
+    batch  = Batch.objects.get(id=batch)
+    branch_obj = Branch.objects.get(branches=branch.upper())
+    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sems[sem])
+    performance =  Performance.objects.filter(batch=batch,regulation=sem.regulation,sem=sem).order_by('-SCGPA')
+    k = 0
+    data = []
+    for i in performance:
+        if k==10:
+            break
+        data.append({"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA})
+        k+=1
+
+    return JsonResponse({"data":data},safe=False)
+
+
+def get_sec_wise_topper_data(request,batch,sem,branch,sec):
+    sems = {1:"I",2:"II",3:"III",4:"IV",5:"V",6:"VI",7:"VII",8:"VIII"}
+    batch  = Batch.objects.get(id=batch)
+    branch_obj = Branch.objects.get(branches=branch.upper())
+    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sems[sem])
+    students = Student.objects.filter(batch=batch,branch=branch_obj,section=sec)
+    firoz = Student.objects.filter(roll="20135A0516").values()
+    print(firoz)
+
+    for i in students:
+        print(i)
+    
+    print('--------------------------------')
+
+    performance =  Performance.objects.filter(batch=batch,regulation=sem.regulation,sem=sem,roll__in=students).order_by('-SCGPA')
+    k = 0
+    data = []
+    for i in performance:
+        if k==20:
+            break
+        data.append({"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA})
+        k+=1
+    print(*data)
+    return JsonResponse({"data":data},safe=False)
+
+
+
+
+
+
+
 
 

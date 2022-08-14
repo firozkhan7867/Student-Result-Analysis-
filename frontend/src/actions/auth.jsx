@@ -97,9 +97,7 @@ export const login = (email, password) => async dispatch => {
             'Content-Type': 'application/json'
         }
     };
-
     const body = JSON.stringify({ email, password });
-
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config);
         // console.log(res);
@@ -107,7 +105,6 @@ export const login = (email, password) => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data
         });
-
         dispatch(load_user());
     } catch (err) {
         dispatch({

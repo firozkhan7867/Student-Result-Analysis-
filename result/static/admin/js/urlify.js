@@ -134,8 +134,12 @@
             for (const lookup of ALL_DOWNCODE_MAPS) {
                 Object.assign(Downcoder.map, lookup);
             }
+<<<<<<< HEAD
             Downcoder.chars = Object.keys(Downcoder.map);
             Downcoder.regex = new RegExp(Downcoder.chars.join('|'), 'g');
+=======
+            Downcoder.regex = new RegExp(Object.keys(Downcoder.map).join('|'), 'g');
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
         }
     };
 
@@ -149,6 +153,7 @@
 
     function URLify(s, num_chars, allowUnicode) {
         // changes, e.g., "Petty theft" to "petty-theft"
+<<<<<<< HEAD
         // remove all these words from the string before urlifying
         if (!allowUnicode) {
             s = downcode(s);
@@ -166,6 +171,11 @@
             const r = new RegExp('\\b(' + removeList.join('|') + ')\\b', 'gi');
             s = s.replace(r, '');
         }
+=======
+        if (!allowUnicode) {
+            s = downcode(s);
+        }
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
         s = s.toLowerCase(); // convert to lowercase
         // if downcode doesn't hit, the char will be stripped here
         if (allowUnicode) {

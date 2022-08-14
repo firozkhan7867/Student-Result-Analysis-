@@ -12,22 +12,39 @@
     justify-content: center;
     flex: 0 0 23px;
     width: 23px;
+<<<<<<< HEAD
     border-right: 1px solid #eaeaea;
     background-color: #ffffff;
     cursor: pointer;
     font-size: 20px;
     color: #447e9b;
+=======
+    border: 0;
+    border-right: 1px solid var(--hairline-color);
+    background-color: var(--body-bg);
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--link-fg);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     padding: 0;
 }
 
 [dir="rtl"] .toggle-nav-sidebar {
+<<<<<<< HEAD
     border-left: 1px solid #eaeaea;
+=======
+    border-left: 1px solid var(--hairline-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     border-right: 0;
 }
 
 .toggle-nav-sidebar:hover,
 .toggle-nav-sidebar:focus {
+<<<<<<< HEAD
     background-color: #f6f6f6;
+=======
+    background-color: var(--darkened-bg);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 #nav-sidebar {
@@ -36,13 +53,22 @@
     left: -276px;
     margin-left: -276px;
     border-top: 1px solid transparent;
+<<<<<<< HEAD
     border-right: 1px solid #eaeaea;
     background-color: #ffffff;
+=======
+    border-right: 1px solid var(--hairline-color);
+    background-color: var(--body-bg);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     overflow: auto;
 }
 
 [dir="rtl"] #nav-sidebar {
+<<<<<<< HEAD
     border-left: 1px solid #eaeaea;
+=======
+    border-left: 1px solid var(--hairline-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     border-right: 0;
     left: 0;
     margin-left: 0;
@@ -91,20 +117,44 @@
 
 #nav-sidebar .current-app .section:link,
 #nav-sidebar .current-app .section:visited {
+<<<<<<< HEAD
     color: #ffc;
+=======
+    color: var(--header-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     font-weight: bold;
 }
 
 #nav-sidebar .current-model {
+<<<<<<< HEAD
     background: #ffc;
+=======
+    background: var(--selected-row);
+}
+
+.main > #nav-sidebar + .content {
+    max-width: calc(100% - 23px);
+}
+
+.main.shifted > #nav-sidebar + .content {
+    max-width: calc(100% - 299px);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 @media (max-width: 767px) {
     #nav-sidebar, #toggle-nav-sidebar {
         display: none;
     }
+<<<<<<< HEAD
 }
 
 .change-list .main > #nav-sidebar+.content {
     overflow: hidden;
+=======
+
+    .main > #nav-sidebar + .content,
+    .main.shifted > #nav-sidebar + .content {
+        max-width: 100%;
+    }
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
