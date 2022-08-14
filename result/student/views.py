@@ -558,3 +558,59 @@ async def cancel(request):
     print("cancelled")
 
     return JsonResponse({"cancelled":"yes"},safe=False)
+
+
+
+
+# Toppers Data API for single semester
+
+def get_topper_data(request,batch,sem,branch):
+    sems = {1:"I",2:"II",3:"III",4:"IV",5:"V",6:"VI",7:"VII",8:"VIII"}
+    batch  = Batch.objects.get(id=batch)
+    branch_obj = Branch.objects.get(branches=branch.upper())
+    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sems[sem])
+    performance =  Performance.objects.filter(batch=batch,regulation=sem.regulation,sem=sem).order_by('-SCGPA')
+    k = 0
+    data = []
+    for i in performance:
+        if k==10:
+            break
+        data.append({"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA})
+        k+=1
+
+    return JsonResponse({"data":data},safe=False)
+
+
+def get_sec_wise_topper_data(request,batch,sem,branch,sec):
+    sems = {1:"I",2:"II",3:"III",4:"IV",5:"V",6:"VI",7:"VII",8:"VIII"}
+    batch  = Batch.objects.get(id=batch)
+    branch_obj = Branch.objects.get(branches=branch.upper())
+    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sems[sem])
+    students = Student.objects.filter(batch=batch,branch=branch_obj,section=sec)
+    firoz = Student.objects.filter(roll="20135A0516").values()
+    print(firoz)
+
+    for i in students:
+        print(i)
+    
+    print('--------------------------------')
+
+    performance =  Performance.objects.filter(batch=batch,regulation=sem.regulation,sem=sem,roll__in=students).order_by('-SCGPA')
+    k = 0
+    data = []
+    for i in performance:
+        if k==20:
+            break
+        data.append({"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA})
+        k+=1
+    print(*data)
+    return JsonResponse({"data":data},safe=False)
+
+
+
+
+
+
+
+
+

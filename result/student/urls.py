@@ -21,6 +21,8 @@ urlpatterns = [
     path('fetch_semester_result/<int:batch>/<int:sem>/<str:branch>/',views.fetch_semester_result,name="fetch_semester_result"), 
     path('fetch_test/<int:num>',views.fetch_test,name="fetch_test"),
     path('cancel',views.cancel),
+    path('get_topper_data/<int:batch>/<int:sem>/<str:branch>',views.get_topper_data,name="get_topper_data"),
+    path('get_sec_wise_topper_data/<int:batch>/<int:sem>/<str:branch>/<int:sec>',views.get_sec_wise_topper_data,name="get_sec_wise_topper_data"),
 ]
 
 
