@@ -76,6 +76,7 @@ SIMPLE_JWT = {
 # ROOT_URLCONF = 'auth_system.urls'
 CORS_ALLOW_ALL_ORIGINS=True
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TEMPLATES = [
     {
@@ -111,7 +112,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "mohammadfirozkhan609@gmail.com"
-EMAIL_HOST_PASSWORD = "irfdkbjzaokoggav"
+EMAIL_HOST_PASSWORD = "wdrunuovcyakshds"
 EMAIL_USE_TLS = True
 
 
@@ -121,7 +122,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'result',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': '52123500',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
         'OPTIONS': {
