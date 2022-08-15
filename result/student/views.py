@@ -5,6 +5,9 @@ from urllib import response
 from django.http import request
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
+
+from .analysis.section_subj_analysis import get_pass_fail_count_of_each_subject
+from .preprocesssing import convert_num_to_sem, lst_of_sect_of_sem
 from student.Fetch.preprocessing import fetch_and_add_student_sem
 from student.Fetch.preprocessing import add_preformance_table
 from student.Fetch.preprocessing import add_subject,check_sem_exist,get_subject_from_fetch_obj
@@ -565,10 +568,10 @@ async def cancel(request):
 # Toppers Data API for single semester
 
 def get_topper_data(request,batch,sem,branch):
-    sems = {1:"I",2:"II",3:"III",4:"IV",5:"V",6:"VI",7:"VII",8:"VIII"}
+    sem = convert_num_to_sem(sem)
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
-    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sems[sem])
+    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sem)
     performance =  Performance.objects.filter(batch=batch,regulation=sem.regulation,sem=sem).order_by('-SCGPA')
     k = 0
     data = []
@@ -582,10 +585,10 @@ def get_topper_data(request,batch,sem,branch):
 
 
 def get_sec_wise_topper_data(request,batch,sem,branch,sec):
-    sems = {1:"I",2:"II",3:"III",4:"IV",5:"V",6:"VI",7:"VII",8:"VIII"}
+    sem = convert_num_to_sem(sem)
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
-    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sems[sem])
+    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sem)
     students = Student.objects.filter(batch=batch,branch=branch_obj,section=sec)
     firoz = Student.objects.filter(roll="20135A0516").values()
     print(firoz)
@@ -605,6 +608,52 @@ def get_sec_wise_topper_data(request,batch,sem,branch,sec):
         k+=1
     print(*data)
     return JsonResponse({"data":data},safe=False)
+
+
+
+
+def get_sect_data(request,batch,sem,branch):
+    sem = convert_num_to_sem(sem)
+    batch  = Batch.objects.get(id=batch)
+    branch_obj = Branch.objects.get(branches=branch.upper())
+    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sem)
+    students = Student.objects.filter(batch=batch,branch=branch_obj)
+    secs = []
+    main_k = {}
+    for i in students:
+        if i.section not in main_k.keys() and  i.section != 10:
+            k = {}
+            k["name"] = i.section
+            secs.append(k)
+            main_k[i.section] = 1
+    
+    
+    return JsonResponse({"data":secs},safe=False)
+
+
+
+def get_subj_section_data(request,batch,sem,branch):
+    sem = convert_num_to_sem(sem)
+    batch  = Batch.objects.get(id=batch)
+    branch_obj = Branch.objects.get(branches=branch.upper())
+    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sem)
+    students = Student.objects.filter(batch=batch,branch=branch_obj)
+
+    secs = lst_of_sect_of_sem(students)
+    subjs = sem.subject.split(',')
+    data = []
+    for i in subjs:
+        code,name = i.split('-')[0],i.split('-')[1:]
+
+        l = get_pass_fail_count_of_each_subject(code,i,secs,sem,branch_obj,batch)
+        # msg = f"result Analysis for subject : {name} and analysis = {l}"
+        data.append(l)
+        # subj_data = Subjects.objects.filter(sem=sem,batch=batch,branch=branch_obj,roll=)
+    # print(sem.subject)
+    return JsonResponse({"data":data},safe=False)
+
+
+
 
 
 

@@ -4,9 +4,6 @@
 /frontend/node_modules
 /.pnp
 .pnp.js
-/frontend/build
-/result/build
-*.pyc
 
 # testing
 /coverage

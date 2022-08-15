@@ -1,7 +1,8 @@
 import React from 'react'
 import "./widgetlg.css"
+import btns from "./semsbtn.json"
 export default function WidgetLg() {
-
+    const s=btns.data;
     const Button = ({type}) => {
         return <button className={'widgetLgButton ' + type} >{type}</button>
     }
@@ -9,14 +10,14 @@ export default function WidgetLg() {
     return (
         <div className='widgetLg'>
             <h3 className="widgetLgTitle">
-                Latest Transactions
+                Toppers Data
             </h3>
             <table className="widgetLgTable">
                 <tr className="widgetLgTr">
-                    <th className="widgetLgTh">Customer</th>
-                    <th className="widgetLgTh">Date</th>
-                    <th className="widgetLgTh">Amount</th>
-                    <th className="widgetLgTh">Status</th>
+                    <th className="widgetLgTh">Rank</th>
+                    <th className="widgetLgTh">R.No</th>
+                    <th className="widgetLgTh">Name</th>
+                    <th className="widgetLgTh">CGPA</th>
                 </tr>
                 <tr className="widgetLgTr">
                     <td className="widgetLgUser">
@@ -65,6 +66,12 @@ export default function WidgetLg() {
                     </td>
                 </tr>
             </table>
+
+            <div>
+                {s.map(function(d, idx){
+                    return (<button key={idx}>{d.name}</button>)
+                })}
+             </div>
         </div>
     )
 }

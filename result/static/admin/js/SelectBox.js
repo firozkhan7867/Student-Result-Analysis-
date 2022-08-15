@@ -13,7 +13,10 @@
         redisplay: function(id) {
             // Repopulate HTML select box from cache
             const box = document.getElementById(id);
+<<<<<<< HEAD
+=======
             const scroll_value_from_top = box.scrollTop;
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
             box.innerHTML = '';
             for (const node of SelectBox.cache[id]) {
                 if (node.displayed) {
@@ -23,7 +26,10 @@
                     box.appendChild(new_option);
                 }
             }
+<<<<<<< HEAD
+=======
             box.scrollTop = scroll_value_from_top;
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
         },
         filter: function(id, text) {
             // Redisplay the HTML select box, displaying only the choices containing ALL
@@ -33,7 +39,11 @@
                 node.displayed = 1;
                 const node_text = node.text.toLowerCase();
                 for (const token of tokens) {
+<<<<<<< HEAD
+                    if (node_text.indexOf(token) === -1) {
+=======
                     if (!node_text.includes(token)) {
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
                         node.displayed = 0;
                         break; // Once the first token isn't found we're done
                     }
