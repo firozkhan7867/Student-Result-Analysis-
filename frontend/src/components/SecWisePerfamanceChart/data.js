@@ -2,6 +2,7 @@ const maleAgeData = [
     {
       state: "java",
       section1pass: 60,
+      
       section1fail: 10,
       section2pass: 59,
       section2fail: 11,

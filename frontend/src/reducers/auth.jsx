@@ -22,6 +22,8 @@ import {
     FETCH_VIS_DATA_FAIL,
     FETCH_SUBJ_DATA_SUCCESS,
     FETCH_SUBJ_DATA_FAIL,
+    FETCH_SUBJ_SECT_DATA_FAIL,
+    FETCH_SUBJ_SECT_DATA_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -33,6 +35,8 @@ const initialState = {
     backdata:null,
     semVisData:null,
     subjVisData:null,
+    subjSectAnalysis:null,
+    semId :null,
 };
 
 export default function(state = initialState, action) {
@@ -75,6 +79,18 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 backdata: null
+            }
+        case FETCH_SUBJ_SECT_DATA_SUCCESS:
+            localStorage.setItem('subjSectAnalysis', payload.data);
+            return{
+                ...state,
+                subjSectAnalysis: payload.data
+            }
+        case FETCH_SUBJ_SECT_DATA_FAIL:
+            localStorage.removeItem('subjSectAnalysis');
+            return{
+                ...state,
+                subjSectAnalysis: null
             }
         case SIGNUP_SUCCESS:
             return{
@@ -150,3 +166,6 @@ export default function(state = initialState, action) {
             return state
     }
 };
+
+
+

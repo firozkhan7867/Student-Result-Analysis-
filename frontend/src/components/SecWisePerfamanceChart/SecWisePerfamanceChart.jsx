@@ -12,58 +12,75 @@ import {
     Border
   } from "devextreme-react/chart";
   import service from "./data.js";
+  import { fetchSubjSectAnalysys } from '../../actions/visua';
+  import { connect } from 'react-redux';
+
   
   const dataSource = service.getMaleAgeData();
   
-  class SecWisePerfamanceChart extends React.Component {
-    render() {
-      return (
+  const SecWisePerfamanceChart= ({subjSectAnalysisdata,fetchSubjSectAnalysys}) => {
+  //console.log(subjSectAnalysisdata);
+    return (
+      
         <Chart
           id="chart"
           
-          dataSource={dataSource}
+          dataSource={subjSectAnalysisdata}
         >
-          <CommonSeriesSettings argumentField="state" type="stackedBar" />
+          <CommonSeriesSettings argumentField="subject_name" type="stackedBar" />
+
+          
+          {/* {
+            subjSectAnalysisdata.map((value,index)=>{
+              return (
+                <Series valueField={value.}/>
+              )
+
+
+            })
+          } */}
+          
+          
           <Series
-            valueField="section1pass"
+            valueField="section-1-Pass"
             name="Male: 0-14"
-            stack="section1"
+            stack="section-1"
             color="red"
           />
           <Series
-            valueField="section1fail"
+            valueField="section-1-Fail"
             name="Male: 15-64"
-            stack="section1"
+            stack="section-1"
             color="green"
           />
           <Series
-            valueField="section2pass"
+            valueField="section-2-Pass"
             name="Male: 65 and older"
-            stack="section2"
+            stack="section-2"
             color="pink"
           />
           <Series
-            valueField="section2fail"
+            valueField="section-2-Fail"
             name="Female: 0-14"
-            stack="section2"
+            stack="section-2"
           />
   
-          <Series valueField="section3pass" name="Male: 0-14" stack="section3" />
-          <Series valueField="section3fail" name="Male: 15-64" stack="section3" />
+          <Series valueField="section-3-Pass" name="Male: 0-14" stack="section-3" />
+          <Series valueField="section-3-Fail" name="Male: 15-64" stack="section-3" />
           <Series
-            valueField="section4pass"
+            valueField="section-4-Pass"
             name="Male: 65 and older"
-            stack="section4"
+            stack="section-4"
           />
           <Series
-            valueField="section4fail"
-            name="Female: 0-14"
-            stack="section4"
+            valueField="section-4-Fail"
+            name="section-4-Fail"
+            stack="section-4"
           />
   
-          <ValueAxis>
+          {/* <ValueAxis>
             <Title text="Populations, millions" />
-          </ValueAxis>
+          </ValueAxis> */}
           {/* <Legend
             position="inside"
             columnCount={4}
@@ -77,7 +94,6 @@ import {
         </Chart>
       );
     }
-  }
   
   // function customizeItems(items) {
   //   const sortedItems = [];
@@ -99,5 +115,9 @@ import {
   //   return sortedItems;
   // }
   
-  export default SecWisePerfamanceChart;
-  
+  const mapStateToProps = state => ({
+    subjSectAnalysisdata: state.auth.subjSectAnalysis
+});
+
+export default connect(mapStateToProps, { fetchSubjSectAnalysys })(SecWisePerfamanceChart);
+

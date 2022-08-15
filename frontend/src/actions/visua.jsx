@@ -3,6 +3,8 @@ import {
     FETCH_VIS_DATA_FAIL,
     FETCH_SUBJ_DATA_SUCCESS,
     FETCH_SUBJ_DATA_FAIL,
+    FETCH_SUBJ_SECT_DATA_FAIL,
+    FETCH_SUBJ_SECT_DATA_SUCCESS,
 } from "./types";
 import axios from "axios";
 
@@ -46,4 +48,26 @@ export const fetchSubjData = (id) => async dispatch => {
         })
     }
 
+}
+
+
+export const fetchSubjSectAnalysys = (id) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/get_subj_section_data/${id}`,config)
+        //console.log(res.data);
+        dispatch({
+            type: FETCH_SUBJ_SECT_DATA_SUCCESS,
+            payload: res.data,
+        })
+        
+    }catch(err){
+        dispatch({
+            type: FETCH_SUBJ_SECT_DATA_FAIL,
+        })
+    }
 }
