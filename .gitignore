@@ -4,8 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
-/result/result/settings.py
-
+.result.result.settings.py
+*.pyc
 
 # testing
 /coverage
