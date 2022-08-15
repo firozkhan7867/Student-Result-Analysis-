@@ -6,7 +6,7 @@
 .pnp.js
 /frontend/build
 /result/build
-
+*.pyc
 
 # testing
 /coverage
