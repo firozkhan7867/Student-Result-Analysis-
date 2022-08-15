@@ -1,6 +1,10 @@
 /* CHANGELISTS */
 
 #changelist {
+<<<<<<< HEAD
+    position: relative;
+    width: 100%;
+=======
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -9,6 +13,7 @@
 #changelist .changelist-form-container {
     flex: 1 1 auto;
     min-width: 0;
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 #changelist table {
@@ -27,6 +32,10 @@
 
 .change-list .filtered .results, .change-list .filtered .paginator,
 .filtered #toolbar, .filtered div.xfull {
+<<<<<<< HEAD
+    margin-right: 280px;
+=======
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     width: auto;
 }
 
@@ -35,6 +44,19 @@
 }
 
 #changelist-form .results {
+<<<<<<< HEAD
+  overflow-x: auto;
+}
+
+#changelist .toplinks {
+    border-bottom: 1px solid #ddd;
+}
+
+#changelist .paginator {
+    color: #666;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+=======
     overflow-x: auto;
     width: 100%;
 }
@@ -47,6 +69,7 @@
     color: var(--body-quiet-color);
     border-bottom: 1px solid var(--hairline-color);
     background: var(--body-bg);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     overflow: hidden;
 }
 
@@ -68,11 +91,36 @@
 }
 
 #changelist table tfoot {
+<<<<<<< HEAD
+    color: #666;
+=======
     color: var(--body-quiet-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 /* TOOLBAR */
 
+<<<<<<< HEAD
+#changelist #toolbar {
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    background: #f8f8f8;
+    color: #666;
+}
+
+#changelist #toolbar form input {
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 5px;
+    color: #333;
+}
+
+#changelist #toolbar form #searchbar {
+    height: 19px;
+    border: 1px solid #ccc;
+=======
 #toolbar {
     padding: 8px 10px;
     margin-bottom: 15px;
@@ -92,10 +140,22 @@
 #toolbar #searchbar {
     height: 19px;
     border: 1px solid var(--border-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     padding: 2px 5px;
     margin: 0;
     vertical-align: top;
     font-size: 13px;
+<<<<<<< HEAD
+    max-width: 230px;
+}
+
+#changelist #toolbar form #searchbar:focus {
+    border-color: #999;
+}
+
+#changelist #toolbar form input[type="submit"] {
+    border: 1px solid #ccc;
+=======
     max-width: 100%;
 }
 
@@ -105,10 +165,25 @@
 
 #toolbar form input[type="submit"] {
     border: 1px solid var(--border-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     font-size: 13px;
     padding: 4px 8px;
     margin: 0;
     vertical-align: middle;
+<<<<<<< HEAD
+    background: #fff;
+    box-shadow: 0 -15px 20px -10px rgba(0, 0, 0, 0.15) inset;
+    cursor: pointer;
+    color: #333;
+}
+
+#changelist #toolbar form input[type="submit"]:focus,
+#changelist #toolbar form input[type="submit"]:hover {
+    border-color: #999;
+}
+
+#changelist #changelist-search img {
+=======
     background: var(--body-bg);
     box-shadow: 0 -15px 20px -10px rgba(0, 0, 0, 0.15) inset;
     cursor: pointer;
@@ -121,6 +196,7 @@
 }
 
 #changelist-search img {
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     vertical-align: middle;
     margin-right: 4px;
 }
@@ -128,11 +204,22 @@
 /* FILTER COLUMN */
 
 #changelist-filter {
+<<<<<<< HEAD
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    width: 240px;
+    background: #f8f8f8;
+    border-left: none;
+    margin: 0;
+=======
     flex: 0 0 240px;
     order: 1;
     background: var(--darkened-bg);
     border-left: none;
     margin: 0 0 0 30px;
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 #changelist-filter h2 {
@@ -146,6 +233,10 @@
 
 #changelist-filter h3 {
     font-weight: 400;
+<<<<<<< HEAD
+    font-size: 14px;
+=======
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     padding: 0 15px;
     margin-bottom: 10px;
 }
@@ -153,7 +244,11 @@
 #changelist-filter ul {
     margin: 5px 0;
     padding: 0 15px 15px;
+<<<<<<< HEAD
+    border-bottom: 1px solid #eaeaea;
+=======
     border-bottom: 1px solid var(--hairline-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 #changelist-filter ul:last-child {
@@ -168,31 +263,51 @@
 
 #changelist-filter a {
     display: block;
+<<<<<<< HEAD
+    color: #999;
+=======
     color: var(--body-quiet-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     text-overflow: ellipsis;
     overflow-x: hidden;
 }
 
 #changelist-filter li.selected {
+<<<<<<< HEAD
+    border-left: 5px solid #eaeaea;
+=======
     border-left: 5px solid var(--hairline-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     padding-left: 10px;
     margin-left: -15px;
 }
 
 #changelist-filter li.selected a {
+<<<<<<< HEAD
+    color: #5b80b2;
+=======
     color: var(--link-selected-fg);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 #changelist-filter a:focus, #changelist-filter a:hover,
 #changelist-filter li.selected a:focus,
 #changelist-filter li.selected a:hover {
+<<<<<<< HEAD
+    color: #036;
+=======
     color: var(--link-hover-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 #changelist-filter #changelist-filter-clear a {
     font-size: 13px;
     padding-bottom: 10px;
+<<<<<<< HEAD
+    border-bottom: 1px solid #eaeaea;
+=======
     border-bottom: 1px solid var(--hairline-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 /* DATE DRILLDOWN */
@@ -213,12 +328,20 @@
 }
 
 .change-list ul.toplinks .date-back a {
+<<<<<<< HEAD
+    color: #999;
+=======
     color: var(--body-quiet-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 .change-list ul.toplinks .date-back a:focus,
 .change-list ul.toplinks .date-back a:hover {
+<<<<<<< HEAD
+    color: #036;
+=======
     color: var(--link-hover-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 /* PAGINATOR */
@@ -229,26 +352,44 @@
     padding-bottom: 10px;
     line-height: 22px;
     margin: 0;
+<<<<<<< HEAD
+    border-top: 1px solid #ddd;
+=======
     border-top: 1px solid var(--hairline-color);
     width: 100%;
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 .paginator a:link, .paginator a:visited {
     padding: 2px 6px;
+<<<<<<< HEAD
+    background: #79aec8;
+    text-decoration: none;
+    color: #fff;
+=======
     background: var(--button-bg);
     text-decoration: none;
     color: var(--button-fg);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 .paginator a.showall {
     border: none;
     background: none;
+<<<<<<< HEAD
+    color: #5b80b2;
+=======
     color: var(--link-fg);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 .paginator a.showall:focus, .paginator a.showall:hover {
     background: none;
+<<<<<<< HEAD
+    color: #036;
+=======
     color: var(--link-hover-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 .paginator .end {
@@ -264,12 +405,20 @@
 
 .paginator a:focus, .paginator a:hover {
     color: white;
+<<<<<<< HEAD
+    background: #036;
+=======
     background: var(--link-hover-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 /* ACTIONS */
 
 .filtered .actions {
+<<<<<<< HEAD
+    margin-right: 280px;
+=======
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     border-right: none;
 }
 
@@ -279,11 +428,27 @@
 }
 
 #changelist table tbody tr.selected {
+<<<<<<< HEAD
+    background-color: #FFFFCC;
+=======
     background-color: var(--selected-row);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 #changelist .actions {
     padding: 10px;
+<<<<<<< HEAD
+    background: #fff;
+    border-top: none;
+    border-bottom: none;
+    line-height: 24px;
+    color: #999;
+}
+
+#changelist .actions.selected {
+    background: #fffccf;
+    border-top: 1px solid #fffee8;
+=======
     background: var(--body-bg);
     border-top: none;
     border-bottom: none;
@@ -295,6 +460,7 @@
 #changelist .actions.selected { /* XXX Probably unused? */
     background: var(--body-bg);
     border-top: 1px solid var(--body-bg);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     border-bottom: 1px solid #edecd6;
 }
 
@@ -304,6 +470,10 @@
 #changelist .actions span.question {
     font-size: 13px;
     margin: 0 0.5em;
+<<<<<<< HEAD
+    display: none;
+=======
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 #changelist .actions:last-child {
@@ -313,8 +483,14 @@
 #changelist .actions select {
     vertical-align: top;
     height: 24px;
+<<<<<<< HEAD
+    background: none;
+    color: #000;
+    border: 1px solid #ccc;
+=======
     color: var(--body-fg);
     border: 1px solid var(--border-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     border-radius: 4px;
     font-size: 14px;
     padding: 0 0 0 4px;
@@ -323,7 +499,11 @@
 }
 
 #changelist .actions select:focus {
+<<<<<<< HEAD
+    border-color: #999;
+=======
     border-color: var(--body-quiet-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }
 
 #changelist .actions label {
@@ -334,18 +514,32 @@
 
 #changelist .actions .button {
     font-size: 13px;
+<<<<<<< HEAD
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+=======
     border: 1px solid var(--border-color);
     border-radius: 4px;
     background: var(--body-bg);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
     box-shadow: 0 -15px 20px -10px rgba(0, 0, 0, 0.15) inset;
     cursor: pointer;
     height: 24px;
     line-height: 1;
     padding: 4px 8px;
     margin: 0;
+<<<<<<< HEAD
+    color: #333;
+}
+
+#changelist .actions .button:focus, #changelist .actions .button:hover {
+    border-color: #999;
+=======
     color: var(--body-fg);
 }
 
 #changelist .actions .button:focus, #changelist .actions .button:hover {
     border-color: var(--body-quiet-color);
+>>>>>>> 65fea550b8e6f20eb9c1d43b288381b9b9fa10c9
 }

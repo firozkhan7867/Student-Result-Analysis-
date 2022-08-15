@@ -1,7 +1,11 @@
 import { Visibility } from '@material-ui/icons'
 import React from 'react'
 import "./widgetsm.css"
+import btns from "./semsbtn.json"
 export default function WidgetSm() {
+    
+    //  btns =[{"name":"sem-1"},{"name":"sem-2"}];
+    const s=btns.data;
     return (
         <div className='widgetSm'>
             <span className="widgetSmTitle"> 
@@ -69,7 +73,11 @@ export default function WidgetSm() {
                         </button>
                     </li>
                 </ul>
+                 <div>
+                {s.map(function(d, idx){
+                    return (<button key={idx}>{d.name}</button>)
+                })}
+             </div>
         </div>
     )
 }
- 
