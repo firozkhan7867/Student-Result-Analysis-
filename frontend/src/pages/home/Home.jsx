@@ -3,6 +3,7 @@ import React, { Fragment } from 'react';
 import FeaturedInfo from '../../components/featuredinfo/FeaturedInfo';
 import "./home.css";
 import WidgetSm from '../../components/widgetSm/WidgetSm';
+import SecWisePerfamanceChart from '../../components/SecWisePerfamanceChart/SecWisePerfamanceChart';
 import WidgetLg from '../../components/widgetLg/WidgetLg';
 import { connect } from "react-redux";
 import {fetchSemData} from "../../actions/visua"
@@ -45,6 +46,7 @@ const Home = (props) => {
                         {/* <WidgetSm /> */}
                         <WidgetLg  /> 
                     </div>
+                    <SecWisePerfamanceChart/>
                 </Fragment>
         }
         else{
