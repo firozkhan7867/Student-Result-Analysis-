@@ -1,12 +1,17 @@
 import React from 'react'
 import "./widgetlg.css"
+//import Button from 'react-bootstrap/Button';
+import { useState } from "react";
+import Modal from "../../components/model/Model";
+
 import btns from "./semsbtn.json"
 export default function WidgetLg() {
     const s=btns.data;
     const Button = ({type}) => {
-        return <button className={'widgetLgButton ' + type} >{type}</button>
+        return 
+        <button className={'widgetLgButton ' + type} >{type}</button>
     }
-
+    const [modalOpen, setModalOpen] = useState(false);
     return (
         <div className='widgetLg'>
             <h3 className="widgetLgTitle">
@@ -21,55 +26,62 @@ export default function WidgetLg() {
                 </tr>
                 <tr className="widgetLgTr">
                     <td className="widgetLgUser">
-                        <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" 
-                        alt="" className='widgetLgImg' />
+                        
                     <span className="widgetLgNa">Firoz Khan</span>
                     </td>
                     <td className="widgetLgDate">2 Jun 2021</td>
                     <td className="widgetLgAmount">$122.00</td>
                     <td className="widgetLgStatus">
-                    <Button type="Approved" />
+                    9.00
                     </td>
                 </tr>
                 <tr className="widgetLgTr">
                     <td className="widgetLgUser">
-                        <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" 
-                        alt="" className='widgetLgImg' />
+                        
                     <span className="widgetLgNa">Firoz Khan</span>
                     </td>
                     <td className="widgetLgDate">2 Jun 2021</td>
                     <td className="widgetLgAmount">$122.00</td>
                     <td className="widgetLgStatus">
-                    <Button type="Declined" />
+                    8.33
                     </td>
                 </tr><tr className="widgetLgTr">
                     <td className="widgetLgUser">
-                        <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" 
-                        alt="" className='widgetLgImg' />
+                       
                     <span className="widgetLgNa">Firoz Khan</span>
                     </td>
                     <td className="widgetLgDate">2 Jun 2021</td>
-                    <td className="widgetLgAmount">$122.00</td>
+                    <td className="widgetLgAmount">Firoz Khan</td>
                     <td className="widgetLgStatus">
-                    <Button type="Pending" />
+                    8.99
                     </td>
                 </tr><tr className="widgetLgTr">
                     <td className="widgetLgUser">
-                        <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" 
-                        alt="" className='widgetLgImg' />
+                       
                     <span className="widgetLgNa">Firoz Khan</span>
                     </td>
                     <td className="widgetLgDate">2 Jun 2021</td>
                     <td className="widgetLgAmount">$122.00</td>
                     <td className="widgetLgStatus">
-                    <Button type="Approved" />
+                    7.99
                     </td>
                 </tr>
             </table>
 
             <div>
                 {s.map(function(d, idx){
-                    return (<button key={idx}>{d.name}</button>)
+                    return ( 
+                        <>
+                    <button className="button" key={idx} onClick={() => {
+                        setModalOpen(true);
+                      }}>{d.name}</button>
+                       {modalOpen && <Modal setOpenModal={setModalOpen} />}
+                      </>
+                      )
+                   
+
+                      
+                    //
                 })}
              </div>
         </div>

@@ -65,7 +65,22 @@
     font-weight: 600;
 }
 
+.button{
+    color: blue;
+    margin: 0.5rem;
+    /* background-color: blue; */
+    border: 1px solid blue;
+    border-radius: 0.3rem;
 
+    
+}
+.button:hover{
+    color: white;
+    margin: 0.5rem;
+    background-color: blue;
+    border: 1px solid blue;
+    border-radius: 0.2rem;
+}
 
 
 

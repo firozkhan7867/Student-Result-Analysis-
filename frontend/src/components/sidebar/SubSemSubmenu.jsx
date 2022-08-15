@@ -3,8 +3,9 @@ import "./sidebar.css";
 import styled from 'styled-components';
 import { Link } from '@material-ui/core';
 import * as RiIcons from 'react-icons/ri';
-import { fetchSemData, fetchSubjData } from '../../actions/visua';
+import { fetchSemData, fetchSubjData ,fetchSubjSectAnalysys} from '../../actions/visua';
 import { connect } from 'react-redux';
+
 
 const SidebarLinksem = styled(Link)`
 display: flex;
@@ -58,7 +59,7 @@ z-index:10000;
 }
 `;
 
-const SubSemSubmenu = ({item, fetchSemData,fetchSubjData}) => {
+const SubSemSubmenu = ({item, fetchSemData,fetchSubjData,fetchSubjSectAnalysys}) => {
 
   const [subnava1, setSubnava1] = useState(false);
 
@@ -67,6 +68,9 @@ const SubSemSubmenu = ({item, fetchSemData,fetchSubjData}) => {
     const get = (id) =>{
       fetchSemData(id);
       fetchSubjData(id);
+      fetchSubjSectAnalysys(id);
+      localStorage.setItem('semid', id);
+
     }
   
   
@@ -95,5 +99,5 @@ const SubSemSubmenu = ({item, fetchSemData,fetchSubjData}) => {
 
 
 
-  export default connect(null, {fetchSemData,fetchSubjData})(SubSemSubmenu);
+  export default connect(null, {fetchSemData,fetchSubjData,fetchSubjSectAnalysys})(SubSemSubmenu);
   
