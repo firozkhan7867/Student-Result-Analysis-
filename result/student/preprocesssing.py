@@ -3,6 +3,24 @@ import pandas as pd
 from student.models import Batch, Regulation, Semester
 from student.models import Student, Subjects
 pd.options.mode.chained_assignment = None
+
+
+
+def convert_num_to_sem(num):
+    sems = {1:"I",2:"II",3:"III",4:"IV",5:"V",6:"VI",7:"VII",8:"VIII"}
+    return sems[num]
+
+
+
+def lst_of_sect_of_sem(students):
+    secs = []
+    for i in students:
+        if i.section not in secs and  i.section != 10:
+            secs.append(i.section)
+    
+    return secs 
+
+
 def get_subj_list(data,row_index):
     title = data.iloc[row_index]
     title = title.dropna()[2:]
