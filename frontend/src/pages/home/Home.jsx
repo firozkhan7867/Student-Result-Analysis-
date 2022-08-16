@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import {fetchSemData} from "../../actions/visua"
 import Combo from '../../components/chart/Combo';
 import { Link } from 'react-router-dom';
+import PieChartSecWiseFail from '../../components/chart/PieChartSecWiseFail'
 const Home = (props) => {
 
     const cgpa = () =>{
@@ -47,6 +48,9 @@ const Home = (props) => {
                         <WidgetLg  /> 
                     </div>
                     <SecWisePerfamanceChart/>
+                    <div className='PieChartSecWiseFail'>
+                    <PieChartSecWiseFail/>
+                    </div>
                 </Fragment>
         }
         else{
