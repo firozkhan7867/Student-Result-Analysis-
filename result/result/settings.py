@@ -225,5 +225,3 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
 
 
-
-# this text should not be in github

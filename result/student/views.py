@@ -632,11 +632,11 @@ def get_sect_data(request,batch,sem,branch):
 
 
 
-def get_subj_section_data(request,batch,sem,branch):
-    sem = convert_num_to_sem(sem)
-    batch  = Batch.objects.get(id=batch)
-    branch_obj = Branch.objects.get(branches=branch.upper())
-    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sem)
+def get_subj_section_data(request,sem_id):
+    sem = Semester.objects.get(id=sem_id)
+    # sem = convert_num_to_sem(sem)
+    batch  = Batch.objects.get(id=sem.batch.id)
+    branch_obj = Branch.objects.get(id=sem.branch.id)
     students = Student.objects.filter(batch=batch,branch=branch_obj)
 
     secs = lst_of_sect_of_sem(students)
@@ -651,9 +651,6 @@ def get_subj_section_data(request,batch,sem,branch):
         # subj_data = Subjects.objects.filter(sem=sem,batch=batch,branch=branch_obj,roll=)
     # print(sem.subject)
     return JsonResponse({"data":data},safe=False)
-
-
-
 
 
 
