@@ -1,4 +1,5 @@
 import React from "react";
+import "./featuredinfo.css"
 
 import {
     Chart,
@@ -25,7 +26,7 @@ import {
         <Chart
           id="chart"
           
-          dataSource={subjSectAnalysisdata}
+          dataSource={subjSectAnalysisdata.subjSectionData}
         >
           <CommonSeriesSettings argumentField="subject_name" type="stackedBar" />
 

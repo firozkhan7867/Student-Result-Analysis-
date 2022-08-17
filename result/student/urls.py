@@ -18,11 +18,11 @@ urlpatterns = [
     path('batch/<int:batch_id>/<int:branch_id>',views.get_batch_analysis,name="batch_data"),
     path('batch/sem/<int:batch_id>/<int:branch_id>',views.get_all_sems_backlog,name="Sem_backlog_data"),
     path('fetch_result/<str:roll>/<str:branch>/<int:sem>',views.fetch_result,name="fetch_result"), 
-    path('fetch_semester_result/<int:batch>/<int:sem>/<str:branch>/',views.fetch_semester_result,name="fetch_semester_result"), 
+    path('fetch_semester_result/<int:batch>/<int:sem>/<str:branch>',views.fetch_semester_result,name="fetch_semester_result"), 
     path('fetch_test/<int:num>',views.fetch_test,name="fetch_test"),
     path('cancel',views.cancel),
     path('get_topper_data/<int:batch>/<int:sem>/<str:branch>',views.get_topper_data,name="get_topper_data"),
-    path('get_sect_data/<int:batch>/<int:sem>/<str:branch>',views.get_sect_data,name="get_sect_data"),
+    path('get_sect_data/<int:sem_id>',views.get_sect_data,name="get_sect_data"),
     path('get_subj_section_data/<int:sem_id>',views.get_subj_section_data,name="get_subj_section_data"),
     path('get_sec_wise_topper_data/<int:batch>/<int:sem>/<str:branch>/<int:sec>',views.get_sec_wise_topper_data,name="get_sec_wise_topper_data"),
 ]

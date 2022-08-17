@@ -1,8 +1,10 @@
 import React from 'react'
-import "./widgetlg.css"
+// import "./widgetlg.css"
 //import Button from 'react-bootstrap/Button';
 import { useState } from "react";
 import Modal from "../../components/model/Model";
+
+
 
 import btns from "./semsbtn.json"
 export default function WidgetLg() {
@@ -13,10 +15,7 @@ export default function WidgetLg() {
     }
     const [modalOpen, setModalOpen] = useState(false);
     return (
-        <div className='widgetLg'>
-            <h3 className="widgetLgTitle">
-                Toppers Data
-            </h3>
+        <div className=''>
             <table className="widgetLgTable">
                 <tr className="widgetLgTr">
                     <th className="widgetLgTh">Rank</th>

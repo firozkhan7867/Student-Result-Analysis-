@@ -82,6 +82,7 @@ export default function(state = initialState, action) {
             }
         case FETCH_SUBJ_SECT_DATA_SUCCESS:
             localStorage.setItem('subjSectAnalysis', payload.data);
+            // console.log(payload.sectionList.data);
             return{
                 ...state,
                 subjSectAnalysis: payload.data

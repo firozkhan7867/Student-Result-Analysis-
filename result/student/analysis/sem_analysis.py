@@ -17,7 +17,7 @@ def title_and_code(subj_list):
 
 
 def subj_analysis_one_more(sem,batch,reg,branch,code,name):
-    print("inside    subj_analysis_one_more ")
+    # print("inside    subj_analysis_one_more ")
     subs = Subjects.objects.all().filter(sem=sem,batch=batch,regulation=reg,branch=branch,code=code,name=name)
     fail_count = 0
     num_of_student = 0
@@ -94,7 +94,7 @@ def get_sem_performance_analysis(sem):
 # SEM ANALYSIS FUNCTION       
         
 def get_subject_analysis_data(sem):
-    print("Inside get_subject_analysis_data () -----")
+    # print("Inside get_subject_analysis_data () -----")
     if Semester.objects.filter(id=sem.id).exists():
         sem = Semester.objects.get(id=sem.id)
         batch = sem.batch

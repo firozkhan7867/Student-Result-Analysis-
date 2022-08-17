@@ -87,13 +87,13 @@ def check_sem_exist(result,branch,batch,reg,sem,subj):
     
 
 def get_subject_from_fetch_obj(result):
-    print("*"*30)
+    # print("*"*30)
     print(result)
     subj_list = ""
     data = result[0]["SubjectCode"] + "-"+result[0]["SubjectName"] 
     subj_list += data
 
-    for i in result:
+    for i in result[1:]:
         data = ""
         data +=   "," + i["SubjectCode"] + "-"+i["SubjectName"] 
         subj_list +=  data.strip()
