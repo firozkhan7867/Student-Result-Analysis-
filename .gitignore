@@ -29,3 +29,4 @@ yarn-error.log*
 frontend/package-lock.json
 frontend/package.json
 frontend/.env
+frontend/.env
