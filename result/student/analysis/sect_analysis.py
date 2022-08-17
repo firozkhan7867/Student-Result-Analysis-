@@ -45,7 +45,7 @@ def subj_analysis_one_more_sec(sem,batch,reg,branch,subs, sect):
             
             num_of_student +=1
     # pass_percentage = float(str((pass_count/num_of_student) * 100)[:4])
-    pass_percentage= 10
+    pass_percentage= int(pass_count/num_of_student * 100)
     return {"fail":fail_count,"total_student":num_of_student,"passed_student":pass_count,"Pass_percentage":pass_percentage}
     
 
@@ -121,7 +121,7 @@ def get_subject_analysis_data_sec(sem,sect,subj):
         batch = sem.batch
         reg = sem.regulation
         branch = sem.branch
-        print(subj)
+        # print(subj)
         title_code = extract_name(subj)
         if len(title_code) <2:
             return
@@ -135,10 +135,10 @@ def get_subject_analysis_data_sec(sem,sect,subj):
         tt["code"] = code
         tt["cc"] = subj
         
-        for i in sect.keys():
+        for sec in sect.keys():
             temp = {}
-            d = subj_analysis_one_more_sec(sem,batch,reg,branch,subjs,i)
-            temp["sect"] = i
+            d = subj_analysis_one_more_sec(sem,batch,reg,branch,subjs,sec)
+            temp["sect"] = sec
             temp["analysis"] = d
             data.append(temp)
         tt["data"] = data
@@ -152,23 +152,6 @@ def get_subject_analysis_data_sec(sem,sect,subj):
 
 def section_analysis(subj,reg,batch,branch,sem,students,sect):
     return get_subject_analysis_data_sec(sem,sect,subj)
-
-
-
-
-
-
-def get_sect_data(sect,reg,batch,branch,sem):
-    fail_count = 0
-    student = Student.objects.filter(section=sect,regulation=reg,batch=batch, branch=branch)
-    
-            
-
-
-def get_complete_sect_wise_subj_analysis(sect_list,reg,batch,branch,sem):
-    data = {}
-    for i in sect_list:
-        get_sect_data(i,reg,batch,branch,sem)
 
 
 

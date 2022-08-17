@@ -4,12 +4,13 @@ import FeaturedInfo from '../../components/featuredinfo/FeaturedInfo';
 import "./home.css";
 // import WidgetSm from '../../components/widgetSm/WidgetSm';
 import SecWisePerfamanceChart from '../../components/SecWisePerfamanceChart/SecWisePerfamanceChart';
-import WidgetLg from '../../components/widgetLg/WidgetLg';
+// import WidgetLg from '../../components/widgetLg/WidgetLg';
 import { connect } from "react-redux";
 import {fetchSemData} from "../../actions/visua"
 import Combo from '../../components/chart/Combo';
 import { Link } from 'react-router-dom';
-import PieChartSecWiseFail from '../../components/chart/PieChartSecWiseFail'
+// import PieChartSecWiseFail from '../../components/chart/PieChartSecWiseFail'
+import ErrorBoundary from "../error/ErrorBoundary";
 const Home = (props) => {
 
     const cgpa = () =>{
@@ -51,7 +52,10 @@ const Home = (props) => {
                     <PieChartSecWiseFail/>
                     </div> */}
                     <br /><br /><br /><br />
-                    <SecWisePerfamanceChart/>
+
+                    <ErrorBoundary>
+                        <SecWisePerfamanceChart/>
+                    </ErrorBoundary>
                 </Fragment>
         }
         else{

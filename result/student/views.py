@@ -6,7 +6,7 @@ from django.http import request
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
 
-from .analysis.section_subj_analysis import get_pass_fail_count_of_each_subject
+from .analysis.section_subj_analysis import get_pass_fail_count_of_each_subject, get_pass_fail_count_of_each_subject_for_table
 from .preprocesssing import convert_num_to_sem, lst_of_sect_of_sem
 from student.Fetch.preprocessing import fetch_and_add_student_sem
 from student.Fetch.preprocessing import add_preformance_table
@@ -19,7 +19,7 @@ from student.add_to_DB import split_data
 from .add_to_DB import check_repeated_subj, split_data_student
 from student.back_log_handler import split_data_backlog
 from .analysis.sem_analysis import get_subject_analysis_data,all_subj
-from .analysis.sect_analysis import get_complete_sect_wise_subj_analysis, section_analysis
+from .analysis.sect_analysis import  section_analysis
 from student.preprocesssing import get_subj_list, get_subject_analysis, get_transformed_data
 from .models import BacklogData, Batch, Branch, Performance, Regulation, Semester, Student, Subjects
 import os
@@ -261,16 +261,35 @@ def get_sect_analysis(request, sem_id):
         batch = Batch.objects.get(id=sem.batch.id)
         branch = Branch.objects.get(id=sem.branch.id)
         if Student.objects.filter(regulation=reg, batch=batch,branch=branch).exists():
+
+
+            #### ------- Warning ---------- Testing area -----------------###
+
+            dsecs = get_sect_data(sem_id)
+            secs = []
+            for i in dsecs["data"]:
+                secs.append(i["name"])
+
+            subjs = sem.subject.split(',')
+            # print(subjs)
+            data = []
+            for i in subjs:
+                code,name = i.split('-')[0],i.split('-')[1:]
+
+                l = get_pass_fail_count_of_each_subject_for_table(code,i,secs,sem,branch,batch)
+                # msg = f"result Analysis for subject : {name} and analysis = {l}"
+                data.append(l)
+                # subj_data = Subjects.objects.filter(sem=sem,batch=batch,branch=branch_obj,roll=)
+            
+
+            ##### --------------  wait for while --------------------  ####
             students = Student.objects.all().filter(regulation=reg, batch=batch,branch=branch)
             sect_list = get_section_list(students)
-            subj = sem.subject.split(',')
-            data = []
-            for i in subj:  
-                analyse = section_analysis(i,reg,batch,branch,sem,students,sect_list)
-                data.append(analyse)
-            newdata = get_complete_sect_wise_subj_analysis(sect_list,reg,batch,branch,sem)
-            tt =  {"subj":"TOTAL ANALYSIS","cc":"Total Analysis for all sujects",'code':'all subject analysis','data':newdata}
-            # data.append(tt)
+            # subj = sem.subject.split(',')
+            # data = []
+            # for i in subj:  
+            #     analyse = section_analysis(i,reg,batch,branch,sem,students,sect_list)
+            #     data.append(analyse)
             main = {}   
             # print(data)
             main["sect"] = list(sect_list.keys())
@@ -633,6 +652,9 @@ def get_sect_data(sem_id):
 
 
 def get_subj_section_data(request,sem_id):
+
+
+
     dsecs = get_sect_data(sem_id)
     # print(dsecs)
     sem = Semester.objects.get(id=sem_id)

@@ -13,20 +13,21 @@ import {
     Border
   } from "devextreme-react/chart";
   import service from "./data.js";
-  import { fetchSubjSectAnalysys } from '../../actions/visua';
+  // import { fetchSubjSectAnalysys } from '../../actions/visua';
   import { connect } from 'react-redux';
 
   
   const dataSource = service.getMaleAgeData();
   
-  const SecWisePerfamanceChart= ({subjSectAnalysisdata,fetchSubjSectAnalysys}) => {
-  //console.log(subjSectAnalysisdata);
+  const SecWisePerfamanceChart= ({subjSectAnalysisdata}) => {
+    const data = JSON.parse(localStorage.getItem('subjSectAnalysis'));
+    // console.log(data);
     return (
       
         <Chart
           id="chart"
           
-          dataSource={subjSectAnalysisdata.subjSectionData}
+          dataSource={data.subjSectionData}
         >
           <CommonSeriesSettings argumentField="subject_name" type="stackedBar" />
 
@@ -120,5 +121,5 @@ import {
     subjSectAnalysisdata: state.auth.subjSectAnalysis
 });
 
-export default connect(mapStateToProps, { fetchSubjSectAnalysys })(SecWisePerfamanceChart);
+export default connect(mapStateToProps, null)(SecWisePerfamanceChart);
 
