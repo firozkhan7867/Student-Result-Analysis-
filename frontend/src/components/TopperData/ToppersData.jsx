@@ -10,6 +10,8 @@ const  ToppersData = ({}) => {
     const getdata = JSON.parse(localStorage.getItem("subjSectAnalysis"));
 
     const data = getdata.semtopData;
+    const sectionData = getdata.onlysections;
+    // console.log(sectionData);
     // console.log(getdata);
     // console.log(data);
 
@@ -41,6 +43,13 @@ const  ToppersData = ({}) => {
                     })}
                 </tbody>
             </table>
+            <div className="d-flex justify-content-between">
+                {sectionData.map((value,index) => {
+                    return (
+                        <button key={index} type="button" class="btn btn-primary">section-{value}</button>
+                    )
+                })}
+            </div>
         </div>
     )
 }

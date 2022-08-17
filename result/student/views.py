@@ -665,7 +665,7 @@ def get_subj_section_data(request,sem_id):
         data.append(l)
         # subj_data = Subjects.objects.filter(sem=sem,batch=batch,branch=branch_obj,roll=)
     
-    temp = {"subjSectionData":data,"sectionList":dsecs,"semtopData":top_data,"failPercentageSection":fails}
+    temp = {"subjSectionData":data,"sectionList":dsecs,"semtopData":top_data,"failPercentageSection":fails,"onlysections":secs}
     return JsonResponse({"data":temp},safe=False)
 
 
