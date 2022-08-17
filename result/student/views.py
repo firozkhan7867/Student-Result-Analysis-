@@ -6,6 +6,8 @@ from django.http import request
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
 
+from .Fetch.preprocessing import get_section_fail_perc, get_topper_data
+
 from .analysis.section_subj_analysis import get_pass_fail_count_of_each_subject, get_pass_fail_count_of_each_subject_for_table
 from .preprocesssing import convert_num_to_sem, lst_of_sect_of_sem
 from student.Fetch.preprocessing import fetch_and_add_student_sem
@@ -586,22 +588,6 @@ async def cancel(request):
 
 # Toppers Data API for single semester
 
-def get_topper_data(request,batch,sem,branch):
-    sem = convert_num_to_sem(sem)
-    batch  = Batch.objects.get(id=batch)
-    branch_obj = Branch.objects.get(branches=branch.upper())
-    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sem)
-    performance =  Performance.objects.filter(batch=batch,regulation=sem.regulation,sem=sem).order_by('-SCGPA')
-    k = 0
-    data = []
-    for i in performance:
-        if k==10:
-            break
-        data.append({"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA})
-        k+=1
-
-    return JsonResponse({"data":data},safe=False)
-
 
 def get_sec_wise_topper_data(request,batch,sem,branch,sec):
     sem = convert_num_to_sem(sem)
@@ -652,9 +638,7 @@ def get_sect_data(sem_id):
 
 
 def get_subj_section_data(request,sem_id):
-
-
-
+    top_data = get_topper_data(sem_id)
     dsecs = get_sect_data(sem_id)
     # print(dsecs)
     sem = Semester.objects.get(id=sem_id)
@@ -671,6 +655,7 @@ def get_subj_section_data(request,sem_id):
     # print(sec_data)
     subjs = sem.subject.split(',')
     # print(subjs)
+    fails = get_section_fail_perc(sem_id,secs)
     data = []
     for i in subjs:
         code,name = i.split('-')[0],i.split('-')[1:]
@@ -680,7 +665,7 @@ def get_subj_section_data(request,sem_id):
         data.append(l)
         # subj_data = Subjects.objects.filter(sem=sem,batch=batch,branch=branch_obj,roll=)
     
-    temp = {"subjSectionData":data,"sectionList":dsecs}
+    temp = {"subjSectionData":data,"sectionList":dsecs,"semtopData":top_data,"failPercentageSection":fails}
     return JsonResponse({"data":temp},safe=False)
 
 

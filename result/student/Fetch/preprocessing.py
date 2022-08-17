@@ -1,3 +1,4 @@
+from ..models import Batch, Branch
 from student.Fetch.main_code import get_formated_result
 from student.back_log_handler import add_student_performance
 from student.models import Performance
@@ -5,6 +6,7 @@ from student.models import Subjects
 from student.models import Student
 from student.models import Regulation
 from student.models import Semester
+from django.db.models import Count,Value,Case,When,F,DecimalField,Q,IntegerField
 
 
 
@@ -194,3 +196,43 @@ def fetch_and_add_student_sem(roll,sem,branch):
 
 
 
+
+
+
+
+
+# Toppers Data API for single semester
+
+def get_topper_data(sem_id):
+    sem = Semester.objects.get(id=sem_id)
+    # sem = convert_num_to_sem(sem)
+    batch  = Batch.objects.get(id=sem.batch.id)
+    # branch_obj = Branch.objects.get(id=sem.branch.id)
+    # students = Student.objects.filter(batch=batch,branch=branch_obj)
+    performance =  Performance.objects.filter(batch=batch,regulation=sem.regulation,sem=sem).order_by('-SCGPA')
+    k = 0
+    data = []
+    for i in performance:
+        if k==10:
+            break
+        data.append({"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA})
+        k+=1
+
+    return data
+
+
+def get_section_fail_perc(sem_id,secs):
+    
+    sem = Semester.objects.get(id=sem_id)
+    batch  = Batch.objects.get(id=sem.batch.id)
+    branch_obj = Branch.objects.get(id=sem.branch.id)
+    failcount = []
+    for sec in secs:
+        students = Student.objects.filter(batch=batch,branch=branch_obj,section=sec)
+        fCount = Subjects.objects.filter(roll__in=(students),sem=sem,branch=branch_obj,batch=batch).aggregate(total=Count(Case(When(result__icontains="F",then=1),output_field=IntegerField())))
+        failcount.append(fCount["total"])
+    
+    data = []
+    for i in failcount:
+        data.append(int(i/sum(failcount)*100))
+    return data

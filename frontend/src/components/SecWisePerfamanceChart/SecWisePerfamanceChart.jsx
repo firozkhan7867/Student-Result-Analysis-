@@ -5,19 +5,10 @@ import {
     Chart,
     Series,
     CommonSeriesSettings,
-    Legend,
-    ValueAxis,
-    Title,
-    Export,
     Tooltip,
-    Border
   } from "devextreme-react/chart";
-  import service from "./data.js";
   // import { fetchSubjSectAnalysys } from '../../actions/visua';
   import { connect } from 'react-redux';
-
-  
-  const dataSource = service.getMaleAgeData();
   
   const SecWisePerfamanceChart= ({subjSectAnalysisdata}) => {
     const data = JSON.parse(localStorage.getItem('subjSectAnalysis'));
@@ -45,38 +36,38 @@ import {
           
           <Series
             valueField="section-1-Pass"
-            name="Male: 0-14"
+            name="Section 1 Pass"
             stack="section-1"
             color="red"
           />
           <Series
             valueField="section-1-Fail"
-            name="Male: 15-64"
+            name="Section 1 Fail"
             stack="section-1"
             color="green"
           />
           <Series
             valueField="section-2-Pass"
-            name="Male: 65 and older"
+            name="Section 2 Pass"
             stack="section-2"
             color="pink"
           />
           <Series
             valueField="section-2-Fail"
-            name="Female: 0-14"
+            name="Section 2 Fail"
             stack="section-2"
           />
   
-          <Series valueField="section-3-Pass" name="Male: 0-14" stack="section-3" />
-          <Series valueField="section-3-Fail" name="Male: 15-64" stack="section-3" />
+          <Series valueField="section-3-Pass" name="Section 3 Pass" stack="section-3" />
+          <Series valueField="section-3-Fail" name="Section 3 Fail" stack="section-3" />
           <Series
             valueField="section-4-Pass"
-            name="Male: 65 and older"
+            name="Section 4 Pass"
             stack="section-4"
           />
           <Series
             valueField="section-4-Fail"
-            name="section-4-Fail"
+            name="section 4 Fail"
             stack="section-4"
           />
   

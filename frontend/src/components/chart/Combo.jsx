@@ -3,9 +3,11 @@ import PieChart from "./PieChart";
 import Bargraph from "./Bargraph"
 import "./featuredinfo.css"
 import Table from './Table';
-import WidgetLg from '../widgetLg/WidgetLg';
+// import WidgetLg from '../TopperData/ToppersData';
 // import SecWisePerfamanceChart from '../SecWisePerfamanceChart/SecWisePerfamanceChart';
 import PieChartSecWiseFail from './PieChartSecWiseFail';
+import ToppersData from '../TopperData/ToppersData';
+import ErrorBoundary from '../../pages/error/ErrorBoundary';
 const Combo = (props) => {
     
     return (
@@ -83,8 +85,9 @@ const Combo = (props) => {
                         <br />
 
                     <div className="mx-4">
-                        <WidgetLg  />
-                        
+                        <ErrorBoundary>
+                            <ToppersData/>
+                        </ErrorBoundary>
                     </div>
                 </div>
             </div>

@@ -6,12 +6,17 @@ class PieChartSecWiseFail extends React.Component {
     constructor(props) {
       super(props);
 
+      const getData = JSON.parse(localStorage.getItem("subjSectAnalysis"));
+      // console.log(getData);
+      const data = getData.failPercentageSection;
+      // console.log(data);
+
       this.state = {
       
-        series: [30,30,30,10],
+        series: data,
         options: {
           chart: {
-            width: 380,
+            width: 420,
             type: 'donut',
           },
           plotOptions: {
@@ -51,17 +56,14 @@ class PieChartSecWiseFail extends React.Component {
       };
     }
 
+
   
 
     render() {
       return (
-        
-
             <div id="chart">
-              <ReactApexChart options={this.state.options} series={this.state.series} type="donut" width={430}/>
+              <ReactApexChart options={this.state.options} series={this.state.series} type="donut" width={460}/>
               </div>
-
-
       );
     }
   }
