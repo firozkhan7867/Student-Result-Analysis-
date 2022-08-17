@@ -5,7 +5,11 @@
 /.pnp
 .pnp.js
 /backend/build
-
+/frontend/build
+/frontend/.env
+/frontend/package-lock.json
+/result/build
+*.pyc
 # testing
 /coverage
 
