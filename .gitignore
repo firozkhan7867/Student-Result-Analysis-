@@ -16,3 +16,11 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+frontend/package-lock.json
+frontend/package-lock.json
+result/build/
+result/build/static/css/main.bbf783f5.css
+result/build/static/css/main.bbf783f5.css.map
+result/build/static/js/main.ba570708.js
+result/build/static/js/main.ba570708.js.LICENSE.txt
+result/build/static/js/main.ba570708.js.map
