@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 /backend/build
+*.pyc
 
 # testing
 /coverage
