@@ -3,6 +3,11 @@ import PieChart from "./PieChart";
 import Bargraph from "./Bargraph"
 import "./featuredinfo.css"
 import Table from './Table';
+// import WidgetLg from '../TopperData/ToppersData';
+// import SecWisePerfamanceChart from '../SecWisePerfamanceChart/SecWisePerfamanceChart';
+import PieChartSecWiseFail from './PieChartSecWiseFail';
+import ToppersData from '../TopperData/ToppersData';
+import ErrorBoundary from '../../pages/error/ErrorBoundary';
 const Combo = (props) => {
     
     return (
@@ -64,6 +69,38 @@ const Combo = (props) => {
                     <Table />
                 </div>
             </div>
+
+            <div className="featured">
+                
+                <div className="featuredItem">
+                        <h1 className='d-flex justify-content-center'>Section Wise analysis of failure data</h1>
+                        <hr />
+                            <br />
+                            <PieChartSecWiseFail/>
+
+                </div>
+                <div className="featuredItem">
+                    <h1 className='d-flex justify-content-center'>Topper's Data of each Section</h1>
+                    <hr />
+                        <br />
+
+                    <div className="mx-4">
+                        <ErrorBoundary>
+                            <ToppersData/>
+                        </ErrorBoundary>
+                    </div>
+                </div>
+            </div>
+
+            {/* <div className="featured">
+                <div className="featuredItem">
+                    <h1 className='d-flex justify-content-center'>Section Wise Subject Analysis</h1>
+                    <hr />
+                        <br />
+                        <SecWisePerfamanceChart/>
+                </div>
+            </div> */}
+
         </div>
     )
 }

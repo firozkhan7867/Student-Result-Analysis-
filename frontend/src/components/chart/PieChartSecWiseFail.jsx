@@ -1,17 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import ReactApexChart from 'react-apexcharts';
 
 class PieChartSecWiseFail extends React.Component {
     constructor(props) {
       super(props);
 
+      const getData = JSON.parse(localStorage.getItem("subjSectAnalysis"));
+      // console.log(getData);
+      const data = getData.failPercentageSection;
+      // console.log(data);
+
       this.state = {
       
-        series: [30,30,30,10],
+        series: data,
         options: {
           chart: {
-            width: 380,
+            width: 420,
             type: 'donut',
           },
           plotOptions: {
@@ -32,7 +37,7 @@ class PieChartSecWiseFail extends React.Component {
             }
           },
           title: {
-            text: 'Section Wise analysis of failure data'
+            text: ''
           },
           responsive: [{
             breakpoint: 480,
@@ -51,17 +56,14 @@ class PieChartSecWiseFail extends React.Component {
       };
     }
 
+
   
 
     render() {
       return (
-        
-
-  <div id="chart">
-<ReactApexChart options={this.state.options} series={this.state.series} type="donut" width={380} />
-</div>
-
-
+            <div id="chart">
+              <ReactApexChart options={this.state.options} series={this.state.series} type="donut" width={460}/>
+              </div>
       );
     }
   }

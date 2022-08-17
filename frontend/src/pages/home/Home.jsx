@@ -2,14 +2,15 @@ import React, { Fragment } from 'react';
 // import Chart from '../../components/chart/Chart';
 import FeaturedInfo from '../../components/featuredinfo/FeaturedInfo';
 import "./home.css";
-import WidgetSm from '../../components/widgetSm/WidgetSm';
+// import WidgetSm from '../../components/widgetSm/WidgetSm';
 import SecWisePerfamanceChart from '../../components/SecWisePerfamanceChart/SecWisePerfamanceChart';
-import WidgetLg from '../../components/widgetLg/WidgetLg';
+// import WidgetLg from '../../components/widgetLg/WidgetLg';
 import { connect } from "react-redux";
 import {fetchSemData} from "../../actions/visua"
 import Combo from '../../components/chart/Combo';
 import { Link } from 'react-router-dom';
-import PieChartSecWiseFail from '../../components/chart/PieChartSecWiseFail'
+// import PieChartSecWiseFail from '../../components/chart/PieChartSecWiseFail'
+import ErrorBoundary from "../error/ErrorBoundary";
 const Home = (props) => {
 
     const cgpa = () =>{
@@ -43,27 +44,31 @@ const Home = (props) => {
                     <Combo cgpa_data={cgpa_data} back_data={back_data} />
                     {/* <Combo */}
                     {/* <Chart data={userData} title="User Analytics" grid datakey="Active User" /> */}
-                    <div className="homeWidgets">
-                        {/* <WidgetSm /> */}
+                    {/* <div className="homeWidgets">
                         <WidgetLg  /> 
                     </div>
                     <SecWisePerfamanceChart/>
                     <div className='PieChartSecWiseFail'>
                     <PieChartSecWiseFail/>
-                    </div>
+                    </div> */}
+                    <br /><br /><br /><br />
+
+                    <ErrorBoundary>
+                        <SecWisePerfamanceChart/>
+                    </ErrorBoundary>
                 </Fragment>
         }
         else{
             return <Fragment>
                         <div className="container">
-                        <div class="jumbotron ff">
-                        <h1 class="display-4">Select The Semester </h1>
-                        <p class="lead">You are seeing this page because you have not selected  any Semester View the analysis.</p>
-                        <hr class="my-4" />
+                        <div className="jumbotron ff">
+                        <h1 className="display-4">Select The Semester </h1>
+                        <p className="lead">You are seeing this page because you have not selected  any Semester View the analysis.</p>
+                        <hr className="my-4" />
                         <p>Please Select the Semester from the Sidebar in the left side of this page where you can see Hierarchy ,
                             Select Branch then  select  Regulation then Batch then Semester  .</p>
-                        <p class="lead">
-                            <Link class="btn btn-primary btn-lg" to="/upload" role="button">Upload New Data</Link>
+                        <p className="lead">
+                            <Link className="btn btn-primary btn-lg" to="/upload" role="button">Upload New Data</Link>
                         </p>
                         </div>
                     </div>

@@ -6,7 +6,9 @@ from django.http import request
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
 
-from .analysis.section_subj_analysis import get_pass_fail_count_of_each_subject
+from .Fetch.preprocessing import get_section_fail_perc, get_topper_data
+
+from .analysis.section_subj_analysis import get_pass_fail_count_of_each_subject, get_pass_fail_count_of_each_subject_for_table
 from .preprocesssing import convert_num_to_sem, lst_of_sect_of_sem
 from student.Fetch.preprocessing import fetch_and_add_student_sem
 from student.Fetch.preprocessing import add_preformance_table
@@ -19,7 +21,7 @@ from student.add_to_DB import split_data
 from .add_to_DB import check_repeated_subj, split_data_student
 from student.back_log_handler import split_data_backlog
 from .analysis.sem_analysis import get_subject_analysis_data,all_subj
-from .analysis.sect_analysis import get_complete_sect_wise_subj_analysis, section_analysis
+from .analysis.sect_analysis import  section_analysis
 from student.preprocesssing import get_subj_list, get_subject_analysis, get_transformed_data
 from .models import BacklogData, Batch, Branch, Performance, Regulation, Semester, Student, Subjects
 import os
@@ -261,18 +263,37 @@ def get_sect_analysis(request, sem_id):
         batch = Batch.objects.get(id=sem.batch.id)
         branch = Branch.objects.get(id=sem.branch.id)
         if Student.objects.filter(regulation=reg, batch=batch,branch=branch).exists():
+
+
+            #### ------- Warning ---------- Testing area -----------------###
+
+            dsecs = get_sect_data(sem_id)
+            secs = []
+            for i in dsecs["data"]:
+                secs.append(i["name"])
+
+            subjs = sem.subject.split(',')
+            # print(subjs)
+            data = []
+            for i in subjs:
+                code,name = i.split('-')[0],i.split('-')[1:]
+
+                l = get_pass_fail_count_of_each_subject_for_table(code,i,secs,sem,branch,batch)
+                # msg = f"result Analysis for subject : {name} and analysis = {l}"
+                data.append(l)
+                # subj_data = Subjects.objects.filter(sem=sem,batch=batch,branch=branch_obj,roll=)
+            
+
+            ##### --------------  wait for while --------------------  ####
             students = Student.objects.all().filter(regulation=reg, batch=batch,branch=branch)
             sect_list = get_section_list(students)
-            subj = sem.subject.split(',')
-            data = []
-            for i in subj:  
-                analyse = section_analysis(i,reg,batch,branch,sem,students,sect_list)
-                data.append(analyse)
-            newdata = get_complete_sect_wise_subj_analysis(sect_list,reg,batch,branch,sem)
-            tt =  {"subj":"TOTAL ANALYSIS","cc":"Total Analysis for all sujects",'code':'all subject analysis','data':newdata}
-            # data.append(tt)
+            # subj = sem.subject.split(',')
+            # data = []
+            # for i in subj:  
+            #     analyse = section_analysis(i,reg,batch,branch,sem,students,sect_list)
+            #     data.append(analyse)
             main = {}   
-            print(data)
+            # print(data)
             main["sect"] = list(sect_list.keys())
             main["data"] = data
             main2 = {}
@@ -490,7 +511,7 @@ def reduced_fetch_semester_result(batch,sem,branch):
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
     students = Student.objects.filter(batch=batch,branch=branch_obj)
-    print(students)
+    # print(students)
 
     print("-------------------------------------------------------------------------------------------------")
 
@@ -504,10 +525,10 @@ def reduced_fetch_semester_result(batch,sem,branch):
     #     time.sleep(10)
     #     fetch_and_add_student_sem(students[i].roll.upper(),sem,branch)
     
-    print("="*40)
-    print("\n\n\n")
+    # print("="*40)
+    # print("\n\n\n")
     
-    print("successfully completed process")
+    # print("successfully completed process")
     
 
     
@@ -567,22 +588,6 @@ async def cancel(request):
 
 # Toppers Data API for single semester
 
-def get_topper_data(request,batch,sem,branch):
-    sem = convert_num_to_sem(sem)
-    batch  = Batch.objects.get(id=batch)
-    branch_obj = Branch.objects.get(branches=branch.upper())
-    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sem)
-    performance =  Performance.objects.filter(batch=batch,regulation=sem.regulation,sem=sem).order_by('-SCGPA')
-    k = 0
-    data = []
-    for i in performance:
-        if k==10:
-            break
-        data.append({"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA})
-        k+=1
-
-    return JsonResponse({"data":data},safe=False)
-
 
 def get_sec_wise_topper_data(request,batch,sem,branch,sec):
     sem = convert_num_to_sem(sem)
@@ -612,11 +617,11 @@ def get_sec_wise_topper_data(request,batch,sem,branch,sec):
 
 
 
-def get_sect_data(request,batch,sem,branch):
-    sem = convert_num_to_sem(sem)
-    batch  = Batch.objects.get(id=batch)
-    branch_obj = Branch.objects.get(branches=branch.upper())
-    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sem)
+def get_sect_data(sem_id):
+    sem = Semester.objects.get(id=sem_id)
+    # sem = convert_num_to_sem(sem)
+    batch  = Batch.objects.get(id=sem.batch.id)
+    branch_obj = Branch.objects.get(id=sem.branch.id)
     students = Student.objects.filter(batch=batch,branch=branch_obj)
     secs = []
     main_k = {}
@@ -628,19 +633,29 @@ def get_sect_data(request,batch,sem,branch):
             main_k[i.section] = 1
     
     
-    return JsonResponse({"data":secs},safe=False)
+    return {"data":secs}
 
 
 
 def get_subj_section_data(request,sem_id):
+    top_data = get_topper_data(sem_id)
+    dsecs = get_sect_data(sem_id)
+    # print(dsecs)
     sem = Semester.objects.get(id=sem_id)
     # sem = convert_num_to_sem(sem)
     batch  = Batch.objects.get(id=sem.batch.id)
     branch_obj = Branch.objects.get(id=sem.branch.id)
     students = Student.objects.filter(batch=batch,branch=branch_obj)
 
-    secs = lst_of_sect_of_sem(students)
+    # secs = lst_of_sect_of_sem(students)
+    # print(secs)
+    secs = []
+    for i in dsecs["data"]:
+        secs.append(i["name"])
+    # print(sec_data)
     subjs = sem.subject.split(',')
+    # print(subjs)
+    fails = get_section_fail_perc(sem_id,secs)
     data = []
     for i in subjs:
         code,name = i.split('-')[0],i.split('-')[1:]
@@ -649,12 +664,13 @@ def get_subj_section_data(request,sem_id):
         # msg = f"result Analysis for subject : {name} and analysis = {l}"
         data.append(l)
         # subj_data = Subjects.objects.filter(sem=sem,batch=batch,branch=branch_obj,roll=)
-    # print(sem.subject)
-    return JsonResponse({"data":data},safe=False)
+    
+    temp = {"subjSectionData":data,"sectionList":dsecs,"semtopData":top_data,"failPercentageSection":fails,"onlysections":secs}
+    return JsonResponse({"data":temp},safe=False)
 
 
 
-
+ 
 
 
 
