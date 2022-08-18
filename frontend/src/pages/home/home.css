@@ -9,6 +9,34 @@
 
 
 .ff{
-    background-color: #e9ecef;
+    background-color: #cadfe6;
     padding: 30px;
+    /* color: white; */
+    font-weight: 400;
+}
+
+.ff2{
+    background-color: #2c7873;
+    padding: 30px;
+    width: 97%;
+}
+
+.titp{
+    font-size: .77rem;
+}
+
+.bb{
+    background-color: #d6b83a !important;
+    color: white;
+}
+
+
+
+.ss{
+
+    /* background-color: #ebeff2; */
+    background-color: #eee;
+    padding: 20px 15px;
+    width: 100% !important;
+    /* background-color: aliceblue; */
 }

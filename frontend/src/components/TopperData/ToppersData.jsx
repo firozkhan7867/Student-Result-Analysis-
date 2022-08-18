@@ -8,12 +8,23 @@ import { useState } from "react";
 import btns from "./semsbtn.json"
 const  ToppersData = ({}) => {
     const getdata = JSON.parse(localStorage.getItem("subjSectAnalysis"));
+    const [section, setsection] = useState("allSection");
+
+
+
 
     const data = getdata.semtopData;
-    const sectionData = getdata.onlysections;
-    // console.log(sectionData);
+    var sectionData = getdata.onlysections;
+    const eachsection = getdata["eachSectionTopData"];
+    var data2 = eachsection[section];
+
     // console.log(getdata);
     // console.log(data);
+
+    const onPress = (e) =>{
+        setsection(`${e}`);
+        data2 = eachsection[section];
+    }
 
     return (
         <div className=''>
@@ -44,9 +55,10 @@ const  ToppersData = ({}) => {
                 </tbody>
             </table>
             <div className="d-flex justify-content-between">
+                <button type="button" onClick={setsection("allSection")} class="btn btn-primary">ALL</button>
                 {sectionData.map((value,index) => {
                     return (
-                        <button key={index} type="button" class="btn btn-primary">section-{value}</button>
+                        <button key={index} type="button"  class="btn btn-primary">section-{value}</button>
                     )
                 })}
             </div>

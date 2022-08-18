@@ -647,7 +647,7 @@ def get_sec_wise_topper_data(sem_id,secs):
     # firoz = Student.objects.filter(roll="20135A0516").values()
     # print(firoz)
 
-    data = []
+    data = {}
 
     for sec in secs:
         k = {}
@@ -656,11 +656,10 @@ def get_sec_wise_topper_data(sem_id,secs):
         performance =  Performance.objects.filter(roll__in=(students),batch=batch,regulation=sem.regulation,sem=sem).order_by('-SCGPA')[:10]
         for i in performance:
             per_data.append({"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA})
-        k[sec] = per_data
-        data.append(k)
+        data[f"{sec}"] = per_data
     
-    p = {"allSection":get_topper_data(sem_id)}
-    data.append(p)
+    # p = {"allSection":get_topper_data(sem_id)}
+    data["allSection"] = get_topper_data(sem_id)
 
 
     return data
@@ -683,6 +682,7 @@ def get_subj_section_data(request,sem_id):
     for i in dsecs["data"]:
         secs.append(i["name"])
     sectionTopData = get_sec_wise_topper_data(sem_id,secs)
+    print(sectionTopData)
     # print(sec_data)
     subjs = sem.subject.split(',')
     # print(subjs)
