@@ -30,3 +30,4 @@ frontend/package-lock.json
 frontend/package.json
 frontend/.env
 frontend/.env
+result/result/settings.py
