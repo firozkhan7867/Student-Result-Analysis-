@@ -30,3 +30,6 @@ frontend/package-lock.json
 frontend/package.json
 frontend/.env
 frontend/.env
+result/build/asset-manifest.json
+result/build/index.html
+result/result/settings.py
