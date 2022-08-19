@@ -82,6 +82,4 @@ class SemWiseBacklogAnalysis extends React.Component {
     }
   }
 
-//   const domContainer = document.querySelector('#app');
-//   ReactDOM.render(React.createElement(ApexChart), domContainer);
 export default SemWiseBacklogAnalysis;
