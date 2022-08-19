@@ -30,7 +30,3 @@ frontend/package-lock.json
 frontend/package.json
 frontend/.env
 frontend/.env
-result/build/asset-manifest.json
-result/build/index.html
-result/build/asset-manifest.json
-frontend/src/App.js
