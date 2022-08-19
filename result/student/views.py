@@ -589,30 +589,30 @@ async def cancel(request):
 # Toppers Data API for single semester
 
 
-def get_sec_wise_topper_data(request,batch,sem,branch,sec):
-    sem = convert_num_to_sem(sem)
-    batch  = Batch.objects.get(id=batch)
-    branch_obj = Branch.objects.get(branches=branch.upper())
-    sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sem)
-    students = Student.objects.filter(batch=batch,branch=branch_obj,section=sec)
-    firoz = Student.objects.filter(roll="20135A0516").values()
-    print(firoz)
+# def get_sec_wise_topper_data(request,batch,sem,branch,sec):
+#     sem = convert_num_to_sem(sem)
+#     batch  = Batch.objects.get(id=batch)
+#     branch_obj = Branch.objects.get(branches=branch.upper())
+#     sem = Semester.objects.get(batch=batch,branch=branch_obj,name=sem)
+#     students = Student.objects.filter(batch=batch,branch=branch_obj,section=sec)
+#     # firoz = Student.objects.filter(roll="20135A0516").values()
+#     # print(firoz)
 
-    for i in students:
-        print(i)
+#     for i in students:
+#         print(i)
     
-    print('--------------------------------')
+#     print('--------------------------------')
 
-    performance =  Performance.objects.filter(batch=batch,regulation=sem.regulation,sem=sem,roll__in=students).order_by('-SCGPA')
-    k = 0
-    data = []
-    for i in performance:
-        if k==20:
-            break
-        data.append({"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA})
-        k+=1
-    print(*data)
-    return JsonResponse({"data":data},safe=False)
+#     performance =  Performance.objects.filter(batch=batch,regulation=sem.regulation,sem=sem,roll__in=students).order_by('-SCGPA')
+#     k = 0
+#     data = []
+#     for i in performance:
+#         if k==20:
+#             break
+#         data.append({"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA})
+#         k+=1
+#     print(*data)
+#     return JsonResponse({"data":data},safe=False)
 
 
 
@@ -637,6 +637,35 @@ def get_sect_data(sem_id):
 
 
 
+
+def get_sec_wise_topper_data(sem_id,secs):
+    # print(dsecs)
+    sem = Semester.objects.get(id=sem_id)
+    # sem = convert_num_to_sem(sem)
+    batch  = Batch.objects.get(id=sem.batch.id)
+    branch_obj = Branch.objects.get(id=sem.branch.id)
+    # firoz = Student.objects.filter(roll="20135A0516").values()
+    # print(firoz)
+
+    data = {}
+
+    for sec in secs:
+        k = {}
+        per_data=[]
+        students = Student.objects.filter(batch=batch,branch=branch_obj,section=sec)
+        performance =  Performance.objects.filter(roll__in=(students),batch=batch,regulation=sem.regulation,sem=sem).order_by('-SCGPA')[:10]
+        for i in performance:
+            per_data.append({"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA})
+        data[f"{sec}"] = per_data
+    
+    # p = {"allSection":get_topper_data(sem_id)}
+    data["allSection"] = get_topper_data(sem_id)
+
+
+    return data
+
+
+
 def get_subj_section_data(request,sem_id):
     top_data = get_topper_data(sem_id)
     dsecs = get_sect_data(sem_id)
@@ -652,6 +681,8 @@ def get_subj_section_data(request,sem_id):
     secs = []
     for i in dsecs["data"]:
         secs.append(i["name"])
+    sectionTopData = get_sec_wise_topper_data(sem_id,secs)
+    print(sectionTopData)
     # print(sec_data)
     subjs = sem.subject.split(',')
     # print(subjs)
@@ -665,7 +696,7 @@ def get_subj_section_data(request,sem_id):
         data.append(l)
         # subj_data = Subjects.objects.filter(sem=sem,batch=batch,branch=branch_obj,roll=)
     
-    temp = {"subjSectionData":data,"sectionList":dsecs,"semtopData":top_data,"failPercentageSection":fails,"onlysections":secs}
+    temp = {"subjSectionData":data,"sectionList":dsecs,"semtopData":top_data,"failPercentageSection":fails,"onlysections":secs,"eachSectionTopData":sectionTopData}
     return JsonResponse({"data":temp},safe=False)
 
 
