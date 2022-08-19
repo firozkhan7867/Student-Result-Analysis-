@@ -185,18 +185,23 @@ const StudentHome = (props) => {
                                 </div>
                                 </div>
                             </div>
-                            <ErrorBoundary>
+                    <div className='component-cards'>
+                        <div className="component">
+                        <ErrorBoundary >
                         <SemWiseBacklogAnalysis/>
 
                         </ErrorBoundary>
+                        </div>
                         <br/>
                         <br/>
-                        
-                        
+
+                        <div className="component">
                         <ErrorBoundary>
                             <SemWisePerformanceAnalysis/>
                         </ErrorBoundary>
                         </div>
+                    </div>
+                    </div>
                         
                     </Fragment>
         }
