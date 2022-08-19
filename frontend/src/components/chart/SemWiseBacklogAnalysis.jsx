@@ -1,6 +1,8 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 import ReactApexChart from 'react-apexcharts';
+import { CCard, CCardBody, CCardHeader} from '@coreui/react';
+
 class SemWiseBacklogAnalysis extends React.Component {
     constructor(props) {
       super(props);
@@ -63,11 +65,14 @@ class SemWiseBacklogAnalysis extends React.Component {
     render() {
       return (
         
-
+<CCard>
+    <CCardBody>
   <div id="chart">
     <h3>Sem wise Backlog analysis</h3>
 <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={350} />
 </div>
+</CCardBody>
+</CCard>
 
 
       );

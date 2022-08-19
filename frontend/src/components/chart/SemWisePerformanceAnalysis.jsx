@@ -1,5 +1,7 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
+import { CCard, CCardBody, CCardHeader} from '@coreui/react';
+
 import ReactApexChart from 'react-apexcharts';
 
 class SemWisePerformanceAnalysis extends React.Component {
@@ -56,11 +58,13 @@ class SemWisePerformanceAnalysis extends React.Component {
     render() {
       return (
         
-
+<CCard>
+    <CCardBody>
   <div id="chart">
 <ReactApexChart options={this.state.options} series={this.state.series} type="line" height={350} />
 </div>
-
+</CCardBody>
+</CCard>
 
       );
     }
