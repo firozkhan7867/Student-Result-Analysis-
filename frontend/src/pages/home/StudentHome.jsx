@@ -10,7 +10,7 @@ import {fetchSemData} from "../../actions/visua"
 import Combo from '../../components/chart/Combo';
 import { Link } from 'react-router-dom';
 import SemWiseBacklogAnalysis from '../../components/chart/SemWiseBacklogAnalysis'
-
+import SemWisePerformanceAnalysis from '../../components/chart/SemWisePerformanceAnalysis';
 // import PieChartSecWiseFail from '../../components/chart/PieChartSecWiseFail'
 import ErrorBoundary from "../error/ErrorBoundary";
 // import Student from '../forms/Student';
@@ -185,10 +185,17 @@ const StudentHome = (props) => {
                                 </div>
                                 </div>
                             </div>
-                            <div>
+                            <ErrorBoundary>
                         <SemWiseBacklogAnalysis/>
 
-                        </div>
+                        </ErrorBoundary>
+                        <br/>
+                        <br/>
+                        
+                        
+                        <ErrorBoundary>
+                            <SemWisePerformanceAnalysis/>
+                        </ErrorBoundary>
                         </div>
                         
                     </Fragment>
