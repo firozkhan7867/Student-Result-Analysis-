@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 import {fetchSemData} from "../../actions/visua"
 import Combo from '../../components/chart/Combo';
 import { Link } from 'react-router-dom';
+import SemWiseBacklogAnalysis from '../../components/chart/SemWiseBacklogAnalysis'
+
 // import PieChartSecWiseFail from '../../components/chart/PieChartSecWiseFail'
 import ErrorBoundary from "../error/ErrorBoundary";
 // import Student from '../forms/Student';
@@ -183,7 +185,12 @@ const StudentHome = (props) => {
                                 </div>
                                 </div>
                             </div>
+                            <div>
+                        <SemWiseBacklogAnalysis/>
+
                         </div>
+                        </div>
+                        
                     </Fragment>
         }
     }
