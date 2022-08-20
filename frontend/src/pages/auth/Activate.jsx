@@ -11,6 +11,7 @@ const Activate = ({verify, match}) => {
         const token = match.params.token;
         verify(uid,token);
         setVerified(true);
+        
     }
 
     if (verified){

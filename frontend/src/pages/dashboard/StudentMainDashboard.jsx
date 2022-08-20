@@ -6,10 +6,11 @@ import { connect } from "react-redux";
 import "./dashboard.css";
 import { checkAuthenticated, load_user } from "../../actions/auth";
 import {fetchSemData,fetchSubjSectAnalysys} from "../../actions/visua";
-import StudentHome from '../home/StudentHome';
+// import StudentHome from '../home/StudentHome';
+import StudentMainPage from '../home/StudentMainPage';
 // import Navbar from '../../components/navbar/Navbar';
 // import DashboardNav from '../../components/navbar/DashboardNav';
-const StudentReportDashboard = (props) => {
+const StudentMainDashboard = (props) => {
 
     useEffect(() => {
         props.checkAuthenticated();
@@ -25,7 +26,7 @@ const StudentReportDashboard = (props) => {
                 <Sidebar/>
                 {/* <Home/> */}
 
-                <StudentHome />
+                <StudentMainPage />
                 {props.children}
                 
             </div>
@@ -38,5 +39,5 @@ const StudentReportDashboard = (props) => {
 const mapsStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 })
-export default connect(mapsStateToProps, {checkAuthenticated, load_user, fetchSemData,fetchSubjSectAnalysys })(StudentReportDashboard);
+export default connect(mapsStateToProps, {checkAuthenticated, load_user, fetchSemData,fetchSubjSectAnalysys })(StudentMainDashboard);
 

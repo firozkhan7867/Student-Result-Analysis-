@@ -17,6 +17,8 @@ import UploadSem from "./pages/forms/UploadSem";
 import BackUpSem from "./pages/forms/BackUpSem";
 import Student from "./pages/forms/Student";
 import StudentReportDashboard from "./pages/dashboard/StudentReportDashboard";
+// import StudentHome from "./pages/home/StudentHome";
+import StudentMainDashboard from "./pages/dashboard/StudentMainDashboard";
 function App() {
   return (
     <div className="App">
@@ -32,12 +34,14 @@ function App() {
                     <Route exact path='/upload' component={UploadSem} />
                     <Route exact path='/backdata' component={BackUpSem} />
                     <Route exact path='/student' component={Student} />
-                    <Route exact path='/studentReport' component={StudentReportDashboard} />
+                    <Route exact path='/studentReport' component={StudentMainDashboard} />
+                    <Route exact path='/studentReport/:roll' component={StudentReportDashboard} />
                 </Switch>
         </Router>
     </Provider>
     </div>
   );
 }
+
 
 export default App;
