@@ -28,6 +28,10 @@ class SemWiseBacklogAnalysis extends React.Component {
               endingShape: 'rounded'
             },
           },
+          title: {
+            text: 'Sem wise Backlog analysis',
+            align: 'center'
+          },
           dataLabels: {
             enabled: false
           },
@@ -68,7 +72,6 @@ class SemWiseBacklogAnalysis extends React.Component {
 <CCard>
     <CCardBody>
   <div id="chart">
-    <h3>Sem wise Backlog analysis</h3>
 <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={350} />
 </div>
 </CCardBody>
