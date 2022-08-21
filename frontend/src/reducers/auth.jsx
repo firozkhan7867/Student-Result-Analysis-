@@ -24,6 +24,8 @@ import {
     FETCH_SUBJ_DATA_FAIL,
     FETCH_SUBJ_SECT_DATA_FAIL,
     FETCH_SUBJ_SECT_DATA_SUCCESS,
+    FETCH_REGULATION_DATA_FAIL,
+    FETCH_REGULATION_DATA_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -37,6 +39,7 @@ const initialState = {
     subjVisData:null,
     subjSectAnalysis:null,
     semId :null,
+    RegulationData:null,
 };
 
 export default function(state = initialState, action) {
@@ -92,6 +95,18 @@ export default function(state = initialState, action) {
             return{
                 ...state,
                 subjSectAnalysis: null
+            }
+        case FETCH_REGULATION_DATA_SUCCESS:
+            localStorage.setItem('regulationData',JSON.stringify(payload.data));
+            return {
+                ...state,
+                RegulationData: payload.data
+            }
+        case FETCH_REGULATION_DATA_FAIL:
+            localStorage.removeItem('regulationData');
+            return {
+                ...state,
+                RegulationData: {regData:[],batchData:[],branchData:[]},
             }
         case SIGNUP_SUCCESS:
             return{

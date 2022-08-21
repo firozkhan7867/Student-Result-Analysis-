@@ -6,188 +6,97 @@ import Selected, { Select } from '../../components/FetchSelectCompos/select';
 //
 
 class FetchMainPage extends Component {
-    state = {
+    constructor(props){ 
+        super(props) 
+
+    this.state = {
         source: {
-            branch: [
-                {
-                    id: 1,
-                    name: "CSE"
-                },
-                {
-                    id: 2,
-                    name: "ECE"
-                },
-                {
-                    id: 3,
-                    name: "MECH"
-                }
-            ],
-            reg: [
-                {
-                    id: 1,
-                    name: "R-16",
-                    branch: 1
-                },
-                {
-                    id: 2,
-                    name: "R-17",
-                    branch: 1
-                },
-                {
-                    id: 3,
-                    name: "R-18",
-                    branch: 1
-                },
-                {
-                    id: 4,
-                    name: "R-19",
-                    branch: 1
-                },
-                {
-                    id: 5,
-                    name: "R-20",
-                    branch: 1
-                },
-                {
-                    id: 1,
-                    name: "R-16",
-                    branch: 2
-                },
-                {
-                    id: 2,
-                    name: "R-17",
-                    branch: 2
-                },
-                {
-                    id: 3,
-                    name: "R-18",
-                    branch: 2
-                },
-                {
-                    id: 4,
-                    name: "R-19",
-                    branch: 2
-                },
-                {
-                    id: 5,
-                    name: "R-20",
-                    branch: 2
-                },
-                {
-                    id: 1,
-                    name: "R-16",
-                    branch: 3
-                },
-                {
-                    id: 2,
-                    name: "R-17",
-                    branch: 3
-                },
-                {
-                    id: 3,
-                    name: "R-18",
-                    branch: 3
-                },
-                {
-                    id: 4,
-                    name: "R-19",
-                    branch: 3
-                },
-                {
-                    id: 5,
-                    name: "R-20",
-                    branch: 3
-                }
-            ],
-            batch: [
-                {
-                    id: 1,
-                    name: "2016-2020",
-                    reg: 1
-                },
-                {
-                    id: 2,
-                    name: "2017-2021",
-                    reg: 2
-                },
-                {
-                    id: 3,
-                    name: "2018-2022",
-                    reg: 3
-                },
-                {
-                    id: 4,
-                    name: "2019-2023",
-                    reg: 3
-                },
-                {
-                    id: 5,
-                    name: "2020-2024",
-                    reg: 4
-                }
-            ],
-            sem: [
-                {
-                    id: 1,
-                    name: "I Semester",
-                    batch: 1
-                },
-                {
-                    id: 2,
-                    name: "II Semester",
-                    batch: 1
-                },
-                {
-                    id: 3,
-                    name: "III Semester",
-                    batch: 1
-                },
-                {
-                    id: 4,
-                    name: "IV Semester",
-                    batch: 1
-                },
-                {
-                    id: 5,
-                    name: "V Semester",
-                    batch: 2
-                },
-                {
-                    id: 6,
-                    name: "VI Semester",
-                    batch: 2
-                },
-                {
-                    id: 7,
-                    name: "VII Semester",
-                    batch: 2
-                },
-                {
-                    id: 8,
-                    name: "VIII Semester",
-                    batch: 3
-                }
-            ]
+            reg: JSON.parse(localStorage.getItem('regulationData')).regData,
+            batch:JSON.parse(localStorage.getItem('regulationData')).batchData,
+            // reg:[],
+            // batch:[],
+            sem: []
         },
 
-        branch: [],
         reg: [],
         batch: [],
         sem: [],
 
         sourceMap: {
-            branch: 0,
-            reg: 1,
-            batch: 2,
-            sem: 3
+            reg: 0,
+            batch: 1,
+            sem: 2
         }
-    };
+        };
+
+        // this.setData = this.setData.bind(this) ;
+    }
+
+
+    // setData2 = () =>{
+        
+    //     this.props.fetchRegulationData();
+    //     console.log(this.props.regData);
+
+    //     if (this.props.regData){
+    //         console.log(this.props.regData);
+    //         this.setState({
+    //             source:{
+    //                 reg:this.props.regData.regData,
+    //                 batch:this.props.regData.batchData,
+    //             }
+    //         })
+    //     }else{
+    //         this.setState({
+    //             source:{
+    //                 reg:[],
+    //                 batch:[],
+    //             }
+    //         })
+    //     }
+    // }
+
+
+    // setData = () => {
+        
+    //     // console.log(this.props.regData);
+    //     if (this.props.regData){
+    //         console.log(this.props.regData);
+    //         const reg = this.props.regData.regData;
+    //         const batch= this.props.regData.batchData;
+    //         this.setState({
+    //             reg
+    //         })
+    //         console.log(this.state);
+    //     }else{
+    //         // this.setData2();
+    //         this.setState({
+    //             source:{
+    //                 reg:[],
+    //                 batch:[],
+    //             }
+    //         })
+    //     }
+    // }
 
     componentDidMount = () => {
-        const { branch } = this.state.source;
+        const { reg } = this.state.source;
         this.setState({
-            branch
+            reg
         });
+
+        
+        // console.log(this.props.regData);
+
+        
+        // this.setData();
+
+        // this.setState({
+        //     source:{
+        //         reg:this.props.regData.regData,
+        //         batch:this.props.regData.batchData,
+        //     }
+        // });
     };
 
     handleChange = params => ev => {
@@ -223,8 +132,9 @@ class FetchMainPage extends Component {
             });
     };
 
+
     render() {
-        const { branch, reg, batch, sem } = this.state;
+        const { reg, batch, sem } = this.state;
         return (
             <div className='home'>
                 <div className="ss h-100">
@@ -239,12 +149,17 @@ class FetchMainPage extends Component {
                                     <div className="form-group my-3 row">
                                         <label htmlFor="branch" className="col-sm-4 col-form-label">Branch</label>
                                         <div className="col-sm-8">
-                                            <Selected
-                                                data={branch}
-                                                action={this.handleChange}
-                                                current="branch"
-                                                next="reg"
-                                            />
+                                            <select name="branch" onChange={this.setData} className="form-control w-75" id="">
+                                                <option value="CSE">CSE</option>
+                                                <option value="ECE">ECE</option>
+                                                <option value="EEE">EEE</option>
+                                                <option value="CIVIL">CIVIL</option>
+                                                <option value="IT">IT</option>
+                                                <option value="MECH">MECH</option>
+                                                <option value="CHEM">CHEM</option>
+                                                <option value="CSD">CSD</option>
+                                                <option value="CSAIML">CS-AI-ML</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div className="form-group my-3 row">
@@ -272,7 +187,14 @@ class FetchMainPage extends Component {
                                     <div className="form-group my-3 row">
                                         <label htmlFor="sem" className="col-sm-4 col-form-label">Semester</label>
                                         <div className="col-sm-8">
-                                            <Selected data={sem} />
+                                            {/* <Selected data={sem} /> */}
+                                            <select name="" className="form-control w-75">
+                                                <option value="1">I - Semester</option>
+                                                <option value="1">II - Semester</option>
+                                                <option value="1">III - Semester</option>
+                                                <option value="1">VI - Semester</option>
+                                                <option value="1">V - Semester</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div className="form-group">
@@ -281,7 +203,7 @@ class FetchMainPage extends Component {
                                 </form>
                             </div>
                             <div className="text-center mt-5">
-                                <h6 className='card-subtitle card-subtitle mb-2 text-muted'>Please enter the student roll number to generate Results report Analysis</h6>
+                                <h6 className='card-subtitle card-subtitle mb-2 text-muted'>Please follow the hierarchy while selecting the dropdown menus to ensure you get the correct data</h6>
                             </div>
                         </div>
                     </div>

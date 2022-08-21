@@ -249,3 +249,6 @@ def get_section_fail_perc(sem_id,secs):
     for i in failcount:
         data.append(int(i/sum(failcount)*100))
     return data
+
+
+    

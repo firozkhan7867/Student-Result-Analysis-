@@ -6,7 +6,7 @@ import "./home.css";
 import SecWisePerfamanceChart from '../../components/SecWisePerfamanceChart/SecWisePerfamanceChart';
 // import WidgetLg from '../../components/widgetLg/WidgetLg';
 import { connect } from "react-redux";
-import {fetchSemData} from "../../actions/visua"
+import {fetchSemData,fetchRegulationData} from "../../actions/visua"
 import Combo from '../../components/chart/Combo';
 import { Link } from 'react-router-dom';
 // import PieChartSecWiseFail from '../../components/chart/PieChartSecWiseFail'
@@ -72,7 +72,7 @@ const Home = (props) => {
                                         <Link className="btn btn-primary btn-lg" to="/upload" role="button">Upload New Data</Link>
                                     </p>
                                     <p className="lead">
-                                        <Link className="btn btn-info btn-lg" to="/fetch" role="button">Fetch New Data</Link>
+                                        <Link className="btn btn-info btn-lg" to="/fetch" onClick={props.fetchRegulationData} role="button">Fetch New Data</Link>
                                     </p>
                                 </div>
                             </div>
@@ -121,5 +121,5 @@ const mapStateToProps = state => ({
     semVisData: state.auth.semVisData
 });
 
-export default connect(mapStateToProps, { fetchSemData })(Home);
+export default connect(mapStateToProps, { fetchSemData,fetchRegulationData })(Home);
 

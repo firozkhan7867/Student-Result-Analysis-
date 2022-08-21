@@ -2,12 +2,15 @@ import React from 'react'
 // import "./widgetlg.css"
 //import Button from 'react-bootstrap/Button';
 import { useState } from "react";
+import { connect } from 'react-redux';
 
 
 
-import btns from "./semsbtn.json"
-const  ToppersData = ({}) => {
+// import btns from "./semsbtn.json"
+const  ToppersData = ({subjSectAnalysisdata}) => {
     const getdata = JSON.parse(localStorage.getItem("subjSectAnalysis"));
+    console.log(getdata);
+    console.log(subjSectAnalysisdata);
     const [section, setsection] = useState("allSection");
 
 
@@ -55,16 +58,21 @@ const  ToppersData = ({}) => {
                 </tbody>
             </table>
             <div className="d-flex justify-content-between">
-                <button type="button" onClick={setsection("allSection")} class="btn btn-primary">ALL</button>
-                {sectionData.map((value,index) => {
+                {/* <button type="button" onClick={setsection("allSection")} class="btn btn-primary">ALL</button> */}
+                {/* {sectionData.map((value,index) => {
                     return (
                         <button key={index} type="button"  class="btn btn-primary">section-{value}</button>
                     )
-                })}
+                })} */}
             </div>
         </div>
     )
 }
  
 
-export default ToppersData;
+const mapStateToProps = state => ({
+    subjSectAnalysisdata: state.auth.subjSectAnalysis
+});
+
+
+export default connect(mapStateToProps,null)(ToppersData);

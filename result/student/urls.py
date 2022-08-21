@@ -23,6 +23,7 @@ urlpatterns = [
     path('roll/<str:roll>',views.get_roll_details,name="get_roll_details"),
     # path('get_topper_data/<int:batch>/<int:sem>/<str:branch>',views.get_topper_data,name="get_topper_data"),
     path('get_sect_data/<int:sem_id>',views.get_sect_data,name="get_sect_data"),
+    path('get_fetch_data',views.get_fetch_data,name="get_fetch_data"),
     path('get_subj_section_data/<int:sem_id>',views.get_subj_section_data,name="get_subj_section_data"),
     path('get_sec_wise_topper_data/<int:batch>/<int:sem>/<str:branch>/<int:sec>',views.get_sec_wise_topper_data,name="get_sec_wise_topper_data"),
 ]

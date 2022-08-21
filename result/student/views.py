@@ -727,7 +727,42 @@ def get_roll_details(request,roll):
     
     return JsonResponse({"data":k},safe=True)
 
- 
+
+
+
+def get_fetch_data(request):
+    branchs = Branch.objects.all().order_by('id')
+    regs = Regulation.objects.all().order_by('id')
+    data = []
+    regdata = []
+    branchData = []
+
+    for branch in branchs:
+        t = {}
+        t[f"{branch.branches}"] = branch.branches
+        branchData.append(t)
+
+    for reg in regs:
+        p = {}
+        p["id"] = reg.id
+        p["name"] = reg.regulation
+        regdata.append(p)
+        batchs = Batch.objects.filter(reg=reg).order_by('reg')
+        for batch in batchs:
+            k = {}
+            k["id"] = batch.id
+            k["name"] = batch.name
+            k["reg"] = batch.reg.id
+            data.append(k)
+    finalData = {}
+    finalData["regData"] = regdata
+    finalData["batchData"] = data
+    finalData["branchData"] = branchData
+
+    return JsonResponse({"data":finalData},safe=False)
+
+
+
 
 
 
