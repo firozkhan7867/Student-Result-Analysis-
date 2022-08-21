@@ -701,6 +701,16 @@ def get_subj_section_data(request,sem_id):
 
 
 
+def get_roll_details(request,roll):
+
+    roll = Student.objects.get(roll=roll)
+
+
+    print(roll)
+    print(roll.sem.all())
+
+    return HttpResponse(roll.sem.all())
+
  
 
 

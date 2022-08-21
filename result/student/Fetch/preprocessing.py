@@ -19,6 +19,17 @@ def check_subject_fetch(roll,subj_obj,sem):
         batch = stud_obj.batch
         name = subj_obj["SubjectName"].upper()
         code = subj_obj["SubjectCode"]
+        
+        stud = Student.objects.get(roll=roll)
+
+        if sem not in stud.sem.all():
+            print(sem)
+        else:
+            print("does not exists")
+            stud.sem.add(sem)
+            stud.save()
+            
+
         # sem = stud_obj.sem
         if Subjects.objects.filter(regulation=regulation,branch=branch,sem=sem,roll=stud_obj,name=name,code=code).exists():
             print(f"!!! .... Subject for {stud_obj.roll} cannot be created for {name}")
@@ -43,6 +54,8 @@ def check_subject_fetch(roll,subj_obj,sem):
         
         subj = Subjects.objects.create(roll=stud_obj,name=name,regulation=regulation,branch=branch,batch=batch,attendance=attendance,
         cgpa=cgpa,result=result,fail=fail,sem=sem,credit=credit,code=code,grade=grade)
+
+
         
     
         print(f"subject created for {stud_obj.roll} of {name}")

@@ -67,9 +67,14 @@ const Home = (props) => {
                                 <hr className="my-4" />
                                 <p>Please Select the Semester from the Sidebar in the left side of this page where you can see Hierarchy ,
                                     Select Branch then  select  Regulation then Batch then Semester  .</p>
-                                <p className="lead">
-                                    <Link className="btn btn-primary btn-lg" to="/upload" role="button">Upload New Data</Link>
-                                </p>
+                                <div className="d-flex justify-content-start">
+                                    <p className="lead mx-5">
+                                        <Link className="btn btn-primary btn-lg" to="/upload" role="button">Upload New Data</Link>
+                                    </p>
+                                    <p className="lead">
+                                        <Link className="btn btn-info btn-lg" to="/fetch" role="button">Fetch New Data</Link>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <div className="container">

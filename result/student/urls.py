@@ -20,7 +20,7 @@ urlpatterns = [
     path('fetch_result/<str:roll>/<str:branch>/<int:sem>',views.fetch_result,name="fetch_result"), 
     path('fetch_semester_result/<int:batch>/<int:sem>/<str:branch>',views.fetch_semester_result,name="fetch_semester_result"), 
     path('fetch_test/<int:num>',views.fetch_test,name="fetch_test"),
-    # path('cancel',views.cancel),
+    path('roll/<str:roll>',views.get_roll_details,name="get_roll_details"),
     # path('get_topper_data/<int:batch>/<int:sem>/<str:branch>',views.get_topper_data,name="get_topper_data"),
     path('get_sect_data/<int:sem_id>',views.get_sect_data,name="get_sect_data"),
     path('get_subj_section_data/<int:sem_id>',views.get_subj_section_data,name="get_subj_section_data"),
