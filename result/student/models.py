@@ -88,6 +88,7 @@ class Semester(models.Model):
     # def all_subject(self):
     #     subj = Subjects.objects.all().filter(sem=self.id)
     #     return subj
+
     
 class Student(models.Model):
     roll = models.CharField(max_length=15,unique=True)
@@ -109,6 +110,29 @@ class Student(models.Model):
     class Meta:
         verbose_name_plural = "Students"
     
+
+
+
+class StudentDetails(models.Model):
+    roll = models.ForeignKey(Student,on_delete=models.CASCADE)
+    name = models.CharField(max_length=250,blank=True)
+    father = models.CharField(max_length=250,blank=True)
+    mother = models.CharField(max_length=250,blank=True)
+    dob = models.DateField(blank=True)
+    dobstr = models.CharField(max_length=50,blank=True)
+    nationality = models.CharField(max_length=50,blank=True)
+    religion = models.CharField(max_length=50,blank=True)
+    father_occupation = models.CharField(max_length=50,blank=True)
+    mother_occupation = models.CharField(max_length=50,blank=True)
+    mobile = models.CharField(max_length=20,blank=True)
+    alter_mobile = models.CharField(max_length=20,blank=True)
+    mail = models.EmailField(max_length=40,blank=True)
+    alter_mail = models.EmailField(max_length=40,blank=True)
+    aadhar = models.EmailField(max_length=20,blank=True)
+    address = models.TextField(max_length=200,blank=True)
+
+    class Meta:
+        verbose_name_plural = "StudentDetails"
 
 class Subjects(models.Model):
     roll = models.ForeignKey(Student,on_delete=models.CASCADE)
