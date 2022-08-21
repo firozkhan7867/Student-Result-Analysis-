@@ -11,6 +11,15 @@ def getResult(rno,branch):
     res = json.loads(res.text)
     return res
 
+
+def getDetails(rno):
+    BASE_URL="http://123.108.200.174/studdetails?"
+    URL=BASE_URL+"rollno="+rno
+    res=req.get(URL)
+    data = str(res.text).strip("['\"']").split("½")
+    return data
+
+
 # d=getResult("20135A0514","CSE")
 # print(len(d))
 # print(d)
@@ -54,6 +63,8 @@ def get_formated_result(roll,branch):
 
 # print(get_formated_result("s","sf")["7"])
 
+def fetchDetails(roll):
+    return getDetails(roll)
 
 
 

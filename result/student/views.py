@@ -5,6 +5,8 @@ from urllib import response
 from django.http import request
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
+from datetime import datetime
+from student.Fetch.main_code import fetchDetails
 
 from .Fetch.preprocessing import get_section_fail_perc, get_topper_data
 
@@ -23,7 +25,7 @@ from student.back_log_handler import split_data_backlog
 from .analysis.sem_analysis import get_subject_analysis_data,all_subj
 from .analysis.sect_analysis import  section_analysis
 from student.preprocesssing import get_subj_list, get_subject_analysis, get_transformed_data
-from .models import BacklogData, Batch, Branch, Performance, Regulation, Semester, Student, Subjects
+from .models import BacklogData, Batch, Branch, Performance, Regulation, Semester, Student, StudentDetails, Subjects
 import os
 import time
 import pandas as pd
@@ -702,14 +704,28 @@ def get_subj_section_data(request,sem_id):
 
 
 def get_roll_details(request,roll):
+    rolld = Student.objects.get(roll=roll)
 
-    roll = Student.objects.get(roll=roll)
+    if StudentDetails.objects.filter(roll=rolld).exists() :
+        data = StudentDetails.objects.get(roll=rolld)
+    else:
+        data = fetchDetails(roll)
+        dob = data[3]
+        dob = datetime.strptime(dob,"%d/%m/%Y")
+        data = StudentDetails.objects.create(roll=rolld,name=data[0],father=data[1],mother=data[2],
+            dobstr=data[3],dob=dob,nationality=data[5],religion=data[6],
+            father_occupation= data[7],mother_occupation=data[8], mobile=data[10],
+            alter_mobile=data[11],mail=data[13],alter_mail=data[14],aadhar=data[15],
+            address=data[23]
+            )
 
-
-    print(roll)
-    print(roll.sem.all())
-
-    return HttpResponse(roll.sem.all())
+    k = {"roll":data.roll.roll,"name":data.name,"father":data.father,"mother":data.mother,
+            "dob":data.dobstr,"religion":data.religion,"fatherOccupation":data.father_occupation,
+            "Aadhar":data.aadhar,"mai":data.mail, "AlterMail":data.alter_mail,
+            "address":data.address
+            }
+    
+    return JsonResponse({"data":k},safe=True)
 
  
 
