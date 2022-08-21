@@ -1,29 +1,231 @@
-import React ,{useState}from 'react';
-// import "./home.css";
-import "./student.css";
+import React, { Component } from "react";
+import Selected, { Select } from '../../components/FetchSelectCompos/select';
 
+// import "./student.css";
+// styled components
+//
 
+class FetchMainPage extends Component {
+    state = {
+        source: {
+            branch: [
+                {
+                    id: 1,
+                    name: "CSE"
+                },
+                {
+                    id: 2,
+                    name: "ECE"
+                },
+                {
+                    id: 3,
+                    name: "MECH"
+                }
+            ],
+            reg: [
+                {
+                    id: 1,
+                    name: "R-16",
+                    branch: 1
+                },
+                {
+                    id: 2,
+                    name: "R-17",
+                    branch: 1
+                },
+                {
+                    id: 3,
+                    name: "R-18",
+                    branch: 1
+                },
+                {
+                    id: 4,
+                    name: "R-19",
+                    branch: 1
+                },
+                {
+                    id: 5,
+                    name: "R-20",
+                    branch: 1
+                },
+                {
+                    id: 1,
+                    name: "R-16",
+                    branch: 2
+                },
+                {
+                    id: 2,
+                    name: "R-17",
+                    branch: 2
+                },
+                {
+                    id: 3,
+                    name: "R-18",
+                    branch: 2
+                },
+                {
+                    id: 4,
+                    name: "R-19",
+                    branch: 2
+                },
+                {
+                    id: 5,
+                    name: "R-20",
+                    branch: 2
+                },
+                {
+                    id: 1,
+                    name: "R-16",
+                    branch: 3
+                },
+                {
+                    id: 2,
+                    name: "R-17",
+                    branch: 3
+                },
+                {
+                    id: 3,
+                    name: "R-18",
+                    branch: 3
+                },
+                {
+                    id: 4,
+                    name: "R-19",
+                    branch: 3
+                },
+                {
+                    id: 5,
+                    name: "R-20",
+                    branch: 3
+                }
+            ],
+            batch: [
+                {
+                    id: 1,
+                    name: "2016-2020",
+                    reg: 1
+                },
+                {
+                    id: 2,
+                    name: "2017-2021",
+                    reg: 2
+                },
+                {
+                    id: 3,
+                    name: "2018-2022",
+                    reg: 3
+                },
+                {
+                    id: 4,
+                    name: "2019-2023",
+                    reg: 3
+                },
+                {
+                    id: 5,
+                    name: "2020-2024",
+                    reg: 4
+                }
+            ],
+            sem: [
+                {
+                    id: 1,
+                    name: "I Semester",
+                    batch: 1
+                },
+                {
+                    id: 2,
+                    name: "II Semester",
+                    batch: 1
+                },
+                {
+                    id: 3,
+                    name: "III Semester",
+                    batch: 1
+                },
+                {
+                    id: 4,
+                    name: "IV Semester",
+                    batch: 1
+                },
+                {
+                    id: 5,
+                    name: "V Semester",
+                    batch: 2
+                },
+                {
+                    id: 6,
+                    name: "VI Semester",
+                    batch: 2
+                },
+                {
+                    id: 7,
+                    name: "VII Semester",
+                    batch: 2
+                },
+                {
+                    id: 8,
+                    name: "VIII Semester",
+                    batch: 3
+                }
+            ]
+        },
 
-const FetchMainPage = ({}) => {
+        branch: [],
+        reg: [],
+        batch: [],
+        sem: [],
 
-    const [formData, setFormData] = useState({
-        branch:'',
-        regulation:'',
-        batch:'',
-        sem:'',
-    });
+        sourceMap: {
+            branch: 0,
+            reg: 1,
+            batch: 2,
+            sem: 3
+        }
+    };
 
-    const {branch,regulation, batch,sem} = formData;
+    componentDidMount = () => {
+        const { branch } = this.state.source;
+        this.setState({
+            branch
+        });
+    };
 
-    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
+    handleChange = params => ev => {
+        const target = ev.currentTarget;
+        const { value } = target;
+        const { current, next } = params;
+        this.setNewValues({ value, current, next });
+    };
 
-    const onSubmit = e =>{
-        e.preventDefault();
-        console.log(branch,regulation,batch,sem);
-    }
+    setNewValues = ({ value, current, next }) => {
+        const { source } = this.state;
+        const data = source[next];
 
+        if (data) {
+            this.setState({
+                [next]: data.filter(el => el[current] === Number(value))
+            });
+        }
 
-  return (
+        this.clearValues(next);
+    };
+
+    clearValues = next => {
+        const { sourceMap } = this.state;
+        const nextkey = sourceMap[next];
+
+        Object.entries(sourceMap)
+            .filter(([_, value]) => value > nextkey)
+            .forEach(([key]) => {
+                this.setState({
+                    [key]: []
+                });
+            });
+    };
+
+    render() {
+        const { branch, reg, batch, sem } = this.state;
+        return (
             <div className='home'>
                 <div className="ss h-100">
                     <div className="d-flex justify-content-center ">
@@ -33,57 +235,50 @@ const FetchMainPage = ({}) => {
                                 <hr />
                             </div>
                             <div className="d-flex w-75 justify-content-center my-5 text-center">
-                            <form className='w-50' onSubmit={e => onSubmit(e)}>
-                                <div className="form-group my-3 row">
-                                    <label for="branch" className="col-sm-4 col-form-label">Branch</label>
-                                    <div className="col-sm-8">
-                                        <select name="branch" onChange={e => onChange(e)} id="" className='form-control'>
-                                            <option value="1">CSE</option>
-                                            <option value="2">ECE</option>
-                                            <option value="3">MECH</option>
-                                        </select>
+                                <form className='w-50' >
+                                    <div className="form-group my-3 row">
+                                        <label htmlFor="branch" className="col-sm-4 col-form-label">Branch</label>
+                                        <div className="col-sm-8">
+                                            <Selected
+                                                data={branch}
+                                                action={this.handleChange}
+                                                current="branch"
+                                                next="reg"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="form-group my-3 row">
-                                    <label for="regulation" className="col-sm-4 col-form-label">Regulation</label>
-                                    <div className="col-sm-8">
-                                        <select name="regulation" onChange={e => onChange(e)} id="" className='form-control'>
-                                            <option value="1">R-15</option>
-                                            <option value="2">R-19</option>
-                                            <option value="3">R-20</option>
-                                        </select>
+                                    <div className="form-group my-3 row">
+                                        <label htmlFor="regulation" className="col-sm-4 col-form-label">Regulation</label>
+                                        <div className="col-sm-8">
+                                            <Selected
+                                                data={reg}
+                                                action={this.handleChange}
+                                                current="reg"
+                                                next="batch"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="form-group my-3 row">
-                                    <label for="batch" className="col-sm-4 col-form-label">Batch</label>
-                                    <div className="col-sm-8">
-                                        <select name="batch" id="" onChange={e => onChange(e)} className='form-control'>
-                                            <option value="1">2018-2022</option>
-                                            <option value="2">2019-2023</option>
-                                            <option value="3">2020-2024</option>
-                                            <option value="4">2021-2025</option>
-                                        </select>
+                                    <div className="form-group my-3 row">
+                                        <label htmlFor="batch" className="col-sm-4 col-form-label">Batch</label>
+                                        <div className="col-sm-8">
+                                            <Selected
+                                                data={batch}
+                                                action={this.handleChange}
+                                                current="batch"
+                                                next="sem"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="form-group my-3 row">
-                                    <label for="sem" className="col-sm-4 col-form-label">Semester</label>
-                                    <div className="col-sm-8">
-                                        <select name="sem" id="" onChange={e => onChange(e)} className='form-control'>
-                                            <option value="1">I - Semester</option>
-                                            <option value="2">II - Semester</option>
-                                            <option value="3">III - Semester</option>
-                                            <option value="4">VI - Semester</option>
-                                            <option value="5">V - Semester</option>
-                                            <option value="6">VI - Semester</option>
-                                            <option value="7">VII - Semester</option>
-                                            <option value="8">VIII - Semester</option>
-                                        </select>
+                                    <div className="form-group my-3 row">
+                                        <label htmlFor="sem" className="col-sm-4 col-form-label">Semester</label>
+                                        <div className="col-sm-8">
+                                            <Selected data={sem} />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="form-group">
-                                    <button type='submit' className="btn btn-primary w-50">Submit</button>
-                                </div>
-                            </form>
+                                    <div className="form-group">
+                                        <button type='submit' className="btn btn-primary w-50">Submit</button>
+                                    </div>
+                                </form>
                             </div>
                             <div className="text-center mt-5">
                                 <h6 className='card-subtitle card-subtitle mb-2 text-muted'>Please enter the student roll number to generate Results report Analysis</h6>
@@ -92,7 +287,8 @@ const FetchMainPage = ({}) => {
                     </div>
                 </div>
             </div>
-        )
+        );
+    }
 }
 
 export default FetchMainPage;
