@@ -22,6 +22,12 @@ class FetchMainPage extends Component {
         batch: [],
         sem: [],
 
+        regs:"",
+        batchs:"",
+        sems:"",
+        branchs:"",
+        
+
         sourceMap: {
             reg: 0,
             batch: 1,
@@ -29,56 +35,38 @@ class FetchMainPage extends Component {
         }
         };
 
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+
         // this.setData = this.setData.bind(this) ;
     }
 
 
-    // setData2 = () =>{
-        
-    //     this.props.fetchRegulationData();
-    //     console.log(this.props.regData);
+    handleSubmit(event) {
+        event.preventDefault();
+        // console.log(this.state);
+      }
+    
+    handleInputChange2 = (name,value)=> {
+        // event.preventDefault();
 
-    //     if (this.props.regData){
-    //         console.log(this.props.regData);
-    //         this.setState({
-    //             source:{
-    //                 reg:this.props.regData.regData,
-    //                 batch:this.props.regData.batchData,
-    //             }
-    //         })
-    //     }else{
-    //         this.setState({
-    //             source:{
-    //                 reg:[],
-    //                 batch:[],
-    //             }
-    //         })
-    //     }
-    // }
+        // console.log(e.target.name);
+        // const target = event.target;
+        this.setState({
+            [name]: value,
+        });
 
+        console.log(this.state);
+    }
 
-    // setData = () => {
-        
-    //     // console.log(this.props.regData);
-    //     if (this.props.regData){
-    //         console.log(this.props.regData);
-    //         const reg = this.props.regData.regData;
-    //         const batch= this.props.regData.batchData;
-    //         this.setState({
-    //             reg
-    //         })
-    //         console.log(this.state);
-    //     }else{
-    //         // this.setData2();
-    //         this.setState({
-    //             source:{
-    //                 reg:[],
-    //                 batch:[],
-    //             }
-    //         })
-    //     }
-    // }
-
+    handleInputChange(event) {
+        event.preventDefault();
+        const target = event.target;
+        this.setState({
+          [target.name]: target.value,
+        });
+      }
+    
     componentDidMount = () => {
         const { reg } = this.state.source;
         this.setState({
@@ -102,8 +90,10 @@ class FetchMainPage extends Component {
     handleChange = params => ev => {
         const target = ev.currentTarget;
         const { value } = target;
-        const { current, next } = params;
+        const { current, next,name } = params;
         this.setNewValues({ value, current, next });
+        this.handleInputChange2(name,value);
+        // console.log(target,value);
     };
 
     setNewValues = ({ value, current, next }) => {
@@ -132,6 +122,11 @@ class FetchMainPage extends Component {
             });
     };
 
+    onSubmit = params => e =>{
+        e.preventDefault();
+        console.log(this.state.sourceMap);
+    }
+
 
     render() {
         const { reg, batch, sem } = this.state;
@@ -145,11 +140,11 @@ class FetchMainPage extends Component {
                                 <hr />
                             </div>
                             <div className="d-flex w-75 justify-content-center my-5 text-center">
-                                <form className='w-50' >
+                                <form className='w-50'  onSubmit={this.handleSubmit}>
                                     <div className="form-group my-3 row">
                                         <label htmlFor="branch" className="col-sm-4 col-form-label">Branch</label>
                                         <div className="col-sm-8">
-                                            <select name="branch" onChange={this.setData} className="form-control w-75" id="">
+                                            <select name="branchs" onChange={this.handleInputChange}  className="form-control w-75" id="">
                                                 <option value="CSE">CSE</option>
                                                 <option value="ECE">ECE</option>
                                                 <option value="EEE">EEE</option>
@@ -170,6 +165,7 @@ class FetchMainPage extends Component {
                                                 action={this.handleChange}
                                                 current="reg"
                                                 next="batch"
+                                                name="regs"
                                             />
                                         </div>
                                     </div>
@@ -181,6 +177,7 @@ class FetchMainPage extends Component {
                                                 action={this.handleChange}
                                                 current="batch"
                                                 next="sem"
+                                                name="batchs"
                                             />
                                         </div>
                                     </div>
@@ -188,15 +185,28 @@ class FetchMainPage extends Component {
                                         <label htmlFor="sem" className="col-sm-4 col-form-label">Semester</label>
                                         <div className="col-sm-8">
                                             {/* <Selected data={sem} /> */}
-                                            <select name="" className="form-control w-75">
-                                                <option value="1">I - Semester</option>
-                                                <option value="1">II - Semester</option>
-                                                <option value="1">III - Semester</option>
-                                                <option value="1">VI - Semester</option>
-                                                <option value="1">V - Semester</option>
+                                            <select name="sems" onChange={this.handleInputChange} className="form-control w-75">
+                                                <option value="I">I - Semester</option>
+                                                <option value="II">II - Semester</option>
+                                                <option value="III">III - Semester</option>
+                                                <option value="VI">VI - Semester</option>
+                                                <option value="V">V - Semester</option>
+                                                <option value="VI">VI - Semester</option>
+                                                <option value="VII">VII - Semester</option>
+                                                <option value="VIII">VIII - Semester</option>
                                             </select>
                                         </div>
                                     </div>
+                                    <div className="form-group my-3 row">
+                                        <label htmlFor="ok" className="col-sm-2 col-form-label"></label>
+                                        <div className="col-sm-10 d-flex justify-content-center">
+                                            {/* <Selected data={sem} /> */}
+                                            <input type="checkbox" name="ok" className="col-sm-2 form-group" onChange={this.handleInputChange} />
+                                            <label  className="">Are you sure to fetch ?   </label>
+                                            
+                                        </div>
+                                    </div>
+
                                     <div className="form-group">
                                         <button type='submit' className="btn btn-primary w-50">Submit</button>
                                     </div>

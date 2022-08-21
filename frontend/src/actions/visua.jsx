@@ -7,6 +7,8 @@ import {
     FETCH_SUBJ_SECT_DATA_SUCCESS,
     FETCH_REGULATION_DATA_SUCCESS,
     FETCH_REGULATION_DATA_FAIL,
+    POST_REGULATION_DATA_FAIL,
+    POST_REGULATION_DATA_SUCCESS,
 } from "./types";
 import axios from "axios";
 
@@ -81,6 +83,28 @@ export const fetchRegulationData = () => async dispatch => {
             'Content-Type': 'application/json'
         }
     };
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/get_fetch_data`,config)
+        //console.log(res.data);
+        dispatch({
+            type: FETCH_REGULATION_DATA_SUCCESS,
+            payload: res.data,
+        })
+        
+    }catch(err){
+        dispatch({
+            type: FETCH_REGULATION_DATA_FAIL,
+        })
+    }
+}
+
+export const postRegulationData = (branch,batch,sem) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/get_fetch_data`,config)
         //console.log(res.data);
