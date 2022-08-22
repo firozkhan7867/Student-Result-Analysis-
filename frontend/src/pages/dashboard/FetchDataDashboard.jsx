@@ -6,7 +6,7 @@ import Home from "../home/Home";
 import { connect } from "react-redux";
 import "./dashboard.css";
 import { checkAuthenticated, load_user } from "../../actions/auth";
-import {fetchSemData,fetchSubjSectAnalysys,fetchRegulationData} from "../../actions/visua";
+import {fetchSemData,fetchSubjSectAnalysys,fetchRegulationData,postRegulationData} from "../../actions/visua";
 import FetchMainPage from '../home/FetchMainPage';
 // import Navbar from '../../components/navbar/Navbar';
 // import DashboardNav from '../../components/navbar/DashboardNav';
@@ -28,7 +28,7 @@ const FetchDataDashboard = (props) => {
             <div className="container-1">
                 <Sidebar/>
                 {/* <Home/> */}
-                <FetchMainPage regData={props.RegulationData} fetchRegulationData={props.fetchRegulationData} />
+                <FetchMainPage regData={props.RegulationData} fetchRegulationData={props.fetchRegulationData} postRegulationData={props.postRegulationData} />
                 {props.children}
                 
             </div>
@@ -42,5 +42,5 @@ const mapsStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     RegulationData: state.auth.RegulationData,
 })
-export default connect(mapsStateToProps, {checkAuthenticated, load_user, fetchSemData,fetchSubjSectAnalysys,fetchRegulationData })(FetchDataDashboard);
+export default connect(mapsStateToProps, {checkAuthenticated, load_user, fetchSemData,fetchSubjSectAnalysys,fetchRegulationData,postRegulationData })(FetchDataDashboard);
 

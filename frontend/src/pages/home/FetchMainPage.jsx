@@ -45,6 +45,7 @@ class FetchMainPage extends Component {
     handleSubmit(event) {
         event.preventDefault();
         // console.log(this.state);
+        this.props.postRegulationData(this.state.branchs,this.state.batchs,this.state.sems);
       }
     
     handleInputChange2 = (name,value)=> {
@@ -186,14 +187,14 @@ class FetchMainPage extends Component {
                                         <div className="col-sm-8">
                                             {/* <Selected data={sem} /> */}
                                             <select name="sems" onChange={this.handleInputChange} className="form-control w-75">
-                                                <option value="I">I - Semester</option>
-                                                <option value="II">II - Semester</option>
-                                                <option value="III">III - Semester</option>
-                                                <option value="VI">VI - Semester</option>
-                                                <option value="V">V - Semester</option>
-                                                <option value="VI">VI - Semester</option>
-                                                <option value="VII">VII - Semester</option>
-                                                <option value="VIII">VIII - Semester</option>
+                                                <option value="1">I - Semester</option>
+                                                <option value="2">II - Semester</option>
+                                                <option value="3">III - Semester</option>
+                                                <option value="4">VI - Semester</option>
+                                                <option value="5">V - Semester</option>
+                                                <option value="6">VI - Semester</option>
+                                                <option value="7">VII - Semester</option>
+                                                <option value="8">VIII - Semester</option>
                                             </select>
                                         </div>
                                     </div>

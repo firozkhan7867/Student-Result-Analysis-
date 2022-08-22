@@ -537,6 +537,7 @@ def reduced_fetch_semester_result(batch,sem,branch):
 
 
 async def fetch_semester_result(request,batch,sem,branch):
+    print("started")
     asyncio.create_task(reduced_fetch_semester_result(batch,sem,branch))
     return HttpResponse("Success")
     

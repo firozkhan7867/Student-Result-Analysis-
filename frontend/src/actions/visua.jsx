@@ -61,6 +61,7 @@ export const fetchSubjSectAnalysys = (id) => async dispatch => {
             'Content-Type': 'application/json'
         }
     };
+
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/get_subj_section_data/${id}`,config)
         //console.log(res.data);
@@ -104,9 +105,12 @@ export const postRegulationData = (branch,batch,sem) => async dispatch => {
             'Content-Type': 'application/json'
         }
     };
+
+    const batchs = parseInt(batch);
+    const sems = parseInt(sem);
     
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/get_fetch_data`,config)
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/fetch_semester_result/${batchs}/${sems}/${branch}`,config)
         //console.log(res.data);
         dispatch({
             type: FETCH_REGULATION_DATA_SUCCESS,
