@@ -120,6 +120,8 @@ export const postRegulationData = (branch,batch,sem) => async dispatch => {
             type: CHECK_FETCH_DATA_SUCCESS,
             payload: res.data,
         })
+
+        return res;
         
     }catch(err){
 
@@ -128,6 +130,8 @@ export const postRegulationData = (branch,batch,sem) => async dispatch => {
         })
         
     }
+
+    return {"code":"not","msg":"something went wrong"}
     
     // return code;
 }

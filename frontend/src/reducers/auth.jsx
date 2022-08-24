@@ -112,11 +112,13 @@ export default function(state = initialState, action) {
                 RegulationData: {regData:[],batchData:[],branchData:[]},
             }
         case CHECK_FETCH_DATA_SUCCESS:
+            localStorage.setItem('checkFetchSem', JSON.stringify(payload));
             return {
                 ...state,
                 checkFetchSem:payload,
             }
         case CHECK_FETCH_DATA_FAIL:
+            localStorage.setItem("checkFetchSem",JSON.stringify({"code":"not","msg":"none"}));
             return {
                 ...state,
                 checkFetchSem:{"code":"not","msg":"none"},

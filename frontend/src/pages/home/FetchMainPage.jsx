@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import Selected, { Select } from '../../components/FetchSelectCompos/select';
+// import { useHistory } from "react-router-dom";
+
+// import { Redirect } from "react-router-dom";
 
 // import "./student.css";
 // styled components
@@ -41,56 +45,37 @@ class FetchMainPage extends Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        // let history = useHistory();
 
         // this.setData = this.setData.bind(this) ;
     }
 
+    
 
 
 
     handleSubmit(event) {
         event.preventDefault();
         // console.log(this.state);
-        this.props.postRegulationData(this.state.branchs,this.state.batchs,this.state.sems);
-        
+        this.props.postRegulationData(this.state.branchs,this.state.batchs,this.state.sems).then(()=>{
+            
+            // console.log(JSON.parse(localStorage.getItem('checkFetchSem')));
+            this.setState({
+                ["alert"]:<div className={`alert alert-${JSON.parse(localStorage.getItem("checkFetchSem")).code} alert-dismissible fade show d-flex justify-content-between`} role="alert">
+                            <div className="">
+                                <strong>{JSON.parse(localStorage.getItem("checkFetchSem")).code} ..!!!</strong> {JSON.parse(localStorage.getItem("checkFetchSem")).msg}
+                             </div>
+                             <NavLink to={"/"} type="button" className="rounded p-2 bg-danger text-white close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                             </NavLink>
+                         </div>
+            })
 
-        console.log(this.props.checkFetchSem);
-        setTimeout(alert(this.props.checkFetchSem), 5000);
+            
 
-        // console.log(code);
-        // if (code.code === "success"){
-
-        //     const all = <div className="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert">
-        //                     <div className="">
-        //                         <strong>Success  ..  !</strong> Semester Result has started fetching data from server, wait for while
-        //                     </div>
-        //                     <button type="button" className="rounded bg-danger text-white close" data-dismiss="alert" aria-label="Close">
-        //                         <span aria-hidden="true">&times;</span>
-        //                     </button>
-        //                 </div>
-        //     this.setState({
-        //         ["alert"]:true 
-        //     });
-        //     this.setState({
-        //         ["alertdata"]: all
-        //     });
-        // }else{
-        //     const all = <div className="alert alert-danger alert-dismissible fade show d-flex justify-content-between" role="alert">
-        //                     <div className="">
-        //                         <strong>Error  ..  !</strong> Semester Result not found in the server .... !!!
-        //                     </div>
-        //                     <button type="button" className="rounded bg-warning text-white close" data-dismiss="alert" aria-label="Close">
-        //                         <span aria-hidden="true">&times;</span>
-        //                     </button>
-        //                 </div>
-        //     this.setState({
-        //         ["alert"]:true
-        //     });
-
-        //     this.setState({
-        //         ["alertdata"]: all
-        //     });
-        // }
+            // setTimeout(,5000);
+            
+        });
         
       }
     
@@ -197,7 +182,7 @@ class FetchMainPage extends Component {
                                 <hr />
                             </div>
                             <div className="w-100">
-                                {alert}
+                                {this.state.alert}
                             </div>
                             <div className="d-flex w-75 justify-content-center my-5 text-center">
                                 <form className='w-50'  onSubmit={this.handleSubmit}>
