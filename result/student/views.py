@@ -1,4 +1,5 @@
 from cgi import test
+from distutils.command.install_egg_info import safe_name
 from pprint import pformat
 from traceback import print_tb
 from urllib import response
@@ -7,8 +8,10 @@ from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
 from datetime import datetime
 from student.Fetch.main_code import fetchDetails
+from rest_framework import status
+from rest_framework.response import Response
 
-from .Fetch.preprocessing import get_section_fail_perc, get_topper_data
+from .Fetch.preprocessing import fetch_check_result, get_section_fail_perc, get_topper_data
 
 from .analysis.section_subj_analysis import get_pass_fail_count_of_each_subject, get_pass_fail_count_of_each_subject_for_table
 from .preprocesssing import convert_num_to_sem, lst_of_sect_of_sem
@@ -496,10 +499,10 @@ def fetch_result(request,roll,branch,sem):
     result = result[str(sem)]
     subj = get_subject_from_fetch_obj(result)
 
-    sem = check_sem_exist(result,student.branch,student.batch,student.regulation,7,subj)
+    sem = check_sem_exist(result,student.branch,student.batch,student.regulation,sem,subj)
     
-    # add_subject(result,roll,sem)
-    # add_preformance_table(roll,sem)
+    add_subject(result,roll,sem)
+    add_preformance_table(roll,sem)
     
     return JsonResponse(result, safe=False)
 
@@ -534,23 +537,26 @@ def reduced_fetch_semester_result(batch,sem,branch):
     
 
     
+# def fetch22(batch,sem,branch):
+#     asyncio.create_task(reduced_fetch_semester_result(batch,sem,branch))
 
-
-async def fetch_semester_result(request,batch,sem,branch):
-    print("started")
-    asyncio.create_task(reduced_fetch_semester_result(batch,sem,branch))
-    return HttpResponse("Success")
     
 
-    # reg = Regulation.objects.all()
-    # branch = Branch.objects.all()
-    # batch = Batch.objects.all()
 
-    # print()
+# @sync_to_async
+async def fetch_semester_result(request,batch,sem,branch):
+    asyncio.create_task(reduced_fetch_semester_result(batch,sem,branch))
+
+    return JsonResponse({"response":"started Fetching"},safe=False)
 
 
-    return JsonResponse(result,safe=False)
-
+def check_sem_data_exists(request,batch,sem,branch):
+    flag = fetch_check_result(batch,sem,branch)
+    if flag == 0:
+        return JsonResponse({"code":"error","msg":{"Error":"Semester Result not found in the server .... !!!"}}, safe=False)
+    elif flag == 1:
+        return JsonResponse({"code":"success","msg":{"Success":"Semester Result has started fetching data from server, wait for while"}},safe=False)
+    
 
 
 def test5(num):

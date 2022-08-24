@@ -26,6 +26,8 @@ import {
     FETCH_SUBJ_SECT_DATA_SUCCESS,
     FETCH_REGULATION_DATA_FAIL,
     FETCH_REGULATION_DATA_SUCCESS,
+    CHECK_FETCH_DATA_SUCCESS,
+    CHECK_FETCH_DATA_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -39,7 +41,8 @@ const initialState = {
     subjVisData:null,
     subjSectAnalysis:null,
     semId :null,
-    RegulationData:null,
+    RegulationData:{regData:[],batchData:[],branchData:[]},
+    checkFetchSem:{"code":"not","msg":"none"},
 };
 
 export default function(state = initialState, action) {
@@ -107,6 +110,16 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 RegulationData: {regData:[],batchData:[],branchData:[]},
+            }
+        case CHECK_FETCH_DATA_SUCCESS:
+            return {
+                ...state,
+                checkFetchSem:payload,
+            }
+        case CHECK_FETCH_DATA_FAIL:
+            return {
+                ...state,
+                checkFetchSem:{"code":"not","msg":"none"},
             }
         case SIGNUP_SUCCESS:
             return{

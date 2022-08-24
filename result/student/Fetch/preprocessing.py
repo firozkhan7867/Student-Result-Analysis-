@@ -20,18 +20,17 @@ def check_subject_fetch(roll,subj_obj,sem):
         name = subj_obj["SubjectName"].upper()
         code = subj_obj["SubjectCode"]
         
-        stud = Student.objects.get(roll=roll)
 
-        if sem not in stud.sem.all():
+        if sem not in stud_obj.sem.all():
             print(sem)
         else:
             print("does not exists")
-            stud.sem.add(sem)
-            stud.save()
+            stud_obj.sem.add(sem)
+            stud_obj.save()
             
 
         # sem = stud_obj.sem
-        if Subjects.objects.filter(regulation=regulation,branch=branch,sem=sem,roll=stud_obj,name=name,code=code).exists():
+        if Subjects.objects.filter(regulation=regulation,branch=branch,sem=sem,roll=stud_obj,name=name,code=code,batch=batch).exists():
             print(f"!!! .... Subject for {stud_obj.roll} cannot be created for {name}")
             return
         attendance = subj_obj["AttendanceGrade"]
@@ -103,7 +102,7 @@ def check_sem_exist(result,branch,batch,reg,sem,subj):
 
 def get_subject_from_fetch_obj(result):
     # print("*"*30)
-    print(result)
+    # print(result)
     subj_list = ""
     data = result[0]["SubjectCode"] + "-"+result[0]["SubjectName"] 
     subj_list += data
@@ -141,7 +140,9 @@ def add_preformance_table(roll,sem):
     student_roll = Student.objects.get(roll=roll)
     if not Performance.objects.filter(roll=student_roll,sem=sem).exists():
         registered_data, no_of_pass_data ,no_of_backlog = get_no_of_pass_count(student_roll,sem)
+        # print("inside perr")
         per_data = add_student_performance(roll,sem)
+        # print("inside agter")
         TCR  = per_data[0]
         TCP  = per_data[1]
         SCGPA  = per_data[2]
@@ -183,6 +184,8 @@ def add_preformance_table(roll,sem):
 
 
 
+
+
 def fetch_and_add_student_sem(roll,sem,branch):
     student = Student.objects.get(roll=roll)
     branch_obj = student.branch
@@ -198,14 +201,18 @@ def fetch_and_add_student_sem(roll,sem,branch):
     subj = get_subject_from_fetch_obj(result)
 
     sem = check_sem_exist(result,student.branch,student.batch,student.regulation,sem,subj)
-    
+
     add_subject(result,roll,sem)
     add_preformance_table(roll,sem)
 
     msg = f"successfully added student data of {roll} sem:{sem} branch: {branch}"
-    print(msg)
+    
 
     return {"success": msg}
+    # else:
+    #     msg = f"Failed to add data for the student {roll} and sem: {sem} branch:{branch}"
+    #     print(msg)
+    #     return {"error":msg}
 
 
 
@@ -252,3 +259,15 @@ def get_section_fail_perc(sem_id,secs):
 
 
     
+def fetch_check_result(batch,sem,branch):
+    batch  = Batch.objects.get(id=batch)
+    branch_obj = Branch.objects.get(branches=branch.upper())
+    if not  Student.objects.filter(batch=batch,branch=branch_obj).exists():
+        return 0
+    roll = str(Student.objects.filter(batch=batch,branch=branch_obj)[0])
+    result = get_formated_result(roll,branch)
+    # print(result[str(sem)])
+    if len(result[str(sem)]) > 0:
+        return 1
+    else:
+        return 0

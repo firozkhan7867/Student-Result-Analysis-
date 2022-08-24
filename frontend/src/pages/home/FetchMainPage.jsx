@@ -9,12 +9,15 @@ class FetchMainPage extends Component {
     constructor(props){ 
         super(props) 
 
+    // console.log(this.props.regData);
+    // console.log(this.props);
+
     this.state = {
         source: {
-            reg: JSON.parse(localStorage.getItem('regulationData')).regData,
-            batch:JSON.parse(localStorage.getItem('regulationData')).batchData,
-            // reg:[],
-            // batch:[],
+            // reg: JSON.parse(localStorage.getItem('regulationData')).regData,
+            // batch:JSON.parse(localStorage.getItem('regulationData')).batchData,
+            reg:this.props.regData.regData,
+            batch:this.props.regData.batchData,
             sem: []
         },
 
@@ -26,6 +29,7 @@ class FetchMainPage extends Component {
         batchs:"",
         sems:"",
         branchs:"",
+        alert:"",
         
 
         sourceMap: {
@@ -42,10 +46,52 @@ class FetchMainPage extends Component {
     }
 
 
+
+
     handleSubmit(event) {
         event.preventDefault();
         // console.log(this.state);
         this.props.postRegulationData(this.state.branchs,this.state.batchs,this.state.sems);
+        
+
+        console.log(this.props.checkFetchSem);
+        setTimeout(alert(this.props.checkFetchSem), 5000);
+
+        // console.log(code);
+        // if (code.code === "success"){
+
+        //     const all = <div className="alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert">
+        //                     <div className="">
+        //                         <strong>Success  ..  !</strong> Semester Result has started fetching data from server, wait for while
+        //                     </div>
+        //                     <button type="button" className="rounded bg-danger text-white close" data-dismiss="alert" aria-label="Close">
+        //                         <span aria-hidden="true">&times;</span>
+        //                     </button>
+        //                 </div>
+        //     this.setState({
+        //         ["alert"]:true 
+        //     });
+        //     this.setState({
+        //         ["alertdata"]: all
+        //     });
+        // }else{
+        //     const all = <div className="alert alert-danger alert-dismissible fade show d-flex justify-content-between" role="alert">
+        //                     <div className="">
+        //                         <strong>Error  ..  !</strong> Semester Result not found in the server .... !!!
+        //                     </div>
+        //                     <button type="button" className="rounded bg-warning text-white close" data-dismiss="alert" aria-label="Close">
+        //                         <span aria-hidden="true">&times;</span>
+        //                     </button>
+        //                 </div>
+        //     this.setState({
+        //         ["alert"]:true
+        //     });
+
+        //     this.setState({
+        //         ["alertdata"]: all
+        //     });
+        // }
+        
       }
     
     handleInputChange2 = (name,value)=> {
@@ -57,7 +103,7 @@ class FetchMainPage extends Component {
             [name]: value,
         });
 
-        console.log(this.state);
+        // console.log(this.state);
     }
 
     handleInputChange(event) {
@@ -69,6 +115,16 @@ class FetchMainPage extends Component {
       }
     
     componentDidMount = () => {
+
+        
+        // fetch( `${process.env.REACT_APP_API_URL}/get_fetch_data`,{
+        //     method: "GET",
+        // }).then(resp => resp.json())
+        // // .then(resp => console.log(resp))
+        // .then(res => this.setdataintoDAta(res))
+        // .catch(error => console.log(error))
+
+
         const { reg } = this.state.source;
         this.setState({
             reg
@@ -130,7 +186,7 @@ class FetchMainPage extends Component {
 
 
     render() {
-        const { reg, batch, sem } = this.state;
+        const { reg, batch, sem,alert } = this.state;
         return (
             <div className='home'>
                 <div className="ss h-100">
@@ -139,6 +195,9 @@ class FetchMainPage extends Component {
                             <div className="text-center my-3">
                                 <h3 className='card-title'>Fetch Student  Results Data Section</h3>
                                 <hr />
+                            </div>
+                            <div className="w-100">
+                                {alert}
                             </div>
                             <div className="d-flex w-75 justify-content-center my-5 text-center">
                                 <form className='w-50'  onSubmit={this.handleSubmit}>

@@ -28,7 +28,7 @@ const FetchDataDashboard = (props) => {
             <div className="container-1">
                 <Sidebar/>
                 {/* <Home/> */}
-                <FetchMainPage regData={props.RegulationData} fetchRegulationData={props.fetchRegulationData} postRegulationData={props.postRegulationData} />
+                <FetchMainPage regData={props.RegulationData} fetchRegulationData={props.fetchRegulationData} postRegulationData={props.postRegulationData} checkFetchSem={props.checkFetchSem} />
                 {props.children}
                 
             </div>
@@ -41,6 +41,7 @@ const FetchDataDashboard = (props) => {
 const mapsStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     RegulationData: state.auth.RegulationData,
+    checkFetchSem: state.auth.checkFetchSem,
 })
 export default connect(mapsStateToProps, {checkAuthenticated, load_user, fetchSemData,fetchSubjSectAnalysys,fetchRegulationData,postRegulationData })(FetchDataDashboard);
 

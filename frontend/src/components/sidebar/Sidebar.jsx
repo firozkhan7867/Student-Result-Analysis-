@@ -3,7 +3,6 @@ import "./sidebar.css";
 import styled from 'styled-components';
 import { Link } from '@material-ui/core';
 import * as RiIcons from 'react-icons/ri';
-import { fetchSemData } from '../../actions/visua';
 // import { Redirect } from 'react-router-dom';
 import SubSemSubmenu from "./SubSemSubmenu";
 

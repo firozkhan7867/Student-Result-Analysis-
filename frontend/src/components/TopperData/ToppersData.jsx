@@ -9,8 +9,8 @@ import { connect } from 'react-redux';
 // import btns from "./semsbtn.json"
 const  ToppersData = ({subjSectAnalysisdata}) => {
     const getdata = JSON.parse(localStorage.getItem("subjSectAnalysis"));
-    console.log(getdata);
-    console.log(subjSectAnalysisdata);
+    // console.log(getdata);
+    // console.log(subjSectAnalysisdata);
     const [section, setsection] = useState("allSection");
 
 
