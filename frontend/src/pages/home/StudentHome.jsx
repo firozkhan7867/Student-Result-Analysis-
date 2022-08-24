@@ -11,8 +11,13 @@ import Combo from '../../components/chart/Combo';
 import { Link } from 'react-router-dom';
 import SemWiseBacklogAnalysis from '../../components/chart/SemWiseBacklogAnalysis'
 import SemWisePerformanceAnalysis from '../../components/chart/SemWisePerformanceAnalysis';
+import Grade_all_sem from '../../components/chart/Grade_all_sem';
+import Backlog from '../../components/Backlog_analysis/Backlog';
 // import PieChartSecWiseFail from '../../components/chart/PieChartSecWiseFail'
 import ErrorBoundary from "../error/ErrorBoundary";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 // import Student from '../forms/Student';
 const StudentHome = (props) => {
 
@@ -123,11 +128,13 @@ const StudentHome = (props) => {
                                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                                         class="rounded-circle img-fluid" width={150}/>
                                         <h5 class="my-3">John Smith</h5>
-                                        <p class="text-muted mb-1">Full Stack Developer</p>
-                                        <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                                        <p class="text-muted mb-1">B Tech</p>
+                                        <p class="text-muted mb-1">CSE</p>
+
+                                        <p class="text-muted mb-4">Roll Number</p>
                                         <div class="d-flex justify-content-center mb-2">
-                                        <button type="button" class="btn btn-primary">Follow</button>
-                                        <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                                        {/* <button type="button" class="btn btn-primary">Follow</button>
+                                        <button type="button" class="btn btn-outline-primary ms-1">Message</button> */}
                                         </div>
                                     </div>
                                     </div>
@@ -164,19 +171,19 @@ const StudentHome = (props) => {
                                         <hr width={600}/>
                                         <div class="row">
                                         <div class="col-sm-3">
-                                            <p class="mb-0">Mobile</p>
+                                            <p class="mb-0">DOB</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <p class="text-muted mb-0">(098) 765-4321</p>
+                                            <p class="text-muted mb-0">12-12-2002</p>
                                         </div>
                                         </div>
                                         <hr width={600}/>
                                         <div class="row">
                                         <div class="col-sm-3">
-                                            <p class="mb-0">Address</p>
+                                            <p class="mb-0">Aadhar</p>
                                         </div>
                                         <div class="col-sm-9">
-                                            <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
+                                            <p class="text-muted mb-0">***********</p>
                                         </div>
                                         </div>
                                     </div>
@@ -185,21 +192,48 @@ const StudentHome = (props) => {
                                 </div>
                                 </div>
                             </div>
+                            
                     <div className='component-cards'>
-                        <div className="component">
-                        <ErrorBoundary >
-                        <SemWiseBacklogAnalysis/>
+                        <Row>
+                            <Col>
+                                <div className="component">
+                                <ErrorBoundary >
+                                    <SemWiseBacklogAnalysis/>
 
-                        </ErrorBoundary>
-                        </div>
+                                </ErrorBoundary>
+                                </div>
+                            </Col>
+                            <Col>
+                                <div className="component">
+                                <ErrorBoundary>
+                                    <SemWisePerformanceAnalysis/>
+                                </ErrorBoundary>
+                                </div>
+                            </Col>
+                        </Row>
                         <br/>
                         <br/>
+                        <Row>
+                            <Col>
+                                <div className="component">
+                                <ErrorBoundary>
+                                    <Grade_all_sem/>
+                                </ErrorBoundary>
+                                </div>
 
-                        <div className="component">
-                        <ErrorBoundary>
-                            <SemWisePerformanceAnalysis/>
-                        </ErrorBoundary>
-                        </div>
+                            </Col>
+                            <Col>
+                                <div className="component">
+                                <ErrorBoundary>
+                                    <Backlog/>
+                                </ErrorBoundary>
+                                </div>
+
+                            </Col>
+                        </Row>
+                        
+                        
+                        
                     </div>
                     </div>
                         
