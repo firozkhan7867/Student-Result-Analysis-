@@ -98,7 +98,7 @@ class Student(models.Model):
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE)
     sem = models.ManyToManyField(Semester)
     batch = models.ForeignKey(Batch,on_delete=models.CASCADE)
-    section = models.IntegerField(default=10,blank=True)
+    section = models.IntegerField(default=1,blank=True)
 
     def __str__(self):
         return self.roll

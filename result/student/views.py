@@ -684,14 +684,13 @@ def get_subj_section_data(request,sem_id):
     batch  = Batch.objects.get(id=sem.batch.id)
     branch_obj = Branch.objects.get(id=sem.branch.id)
     students = Student.objects.filter(batch=batch,branch=branch_obj)
-
     # secs = lst_of_sect_of_sem(students)
     # print(secs)
     secs = []
     for i in dsecs["data"]:
         secs.append(i["name"])
     sectionTopData = get_sec_wise_topper_data(sem_id,secs)
-    print(sectionTopData)
+    # print(sectionTopData)
     # print(sec_data)
     subjs = sem.subject.split(',')
     # print(subjs)
@@ -704,11 +703,11 @@ def get_subj_section_data(request,sem_id):
         # msg = f"result Analysis for subject : {name} and analysis = {l}"
         data.append(l)
         # subj_data = Subjects.objects.filter(sem=sem,batch=batch,branch=branch_obj,roll=)
+
+    sectionTopData["onlysections"] = secs
     
     temp = {"subjSectionData":data,"sectionList":dsecs,"semtopData":top_data,"failPercentageSection":fails,"onlysections":secs,"eachSectionTopData":sectionTopData}
     return JsonResponse({"data":temp},safe=False)
-
-
 
 def get_roll_details(request,roll):
     rolld = Student.objects.get(roll=roll)

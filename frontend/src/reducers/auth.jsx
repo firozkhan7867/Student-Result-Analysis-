@@ -29,6 +29,7 @@ import {
     CHECK_FETCH_DATA_SUCCESS,
     CHECK_FETCH_DATA_FAIL
 } from '../actions/types';
+import ToppersData from '../components/TopperData/ToppersData';
 
 const initialState = {
     access: localStorage.getItem('access'),
@@ -44,6 +45,7 @@ const initialState = {
     RegulationData:{regData:[],batchData:[],branchData:[]},
     checkFetchSem:{"code":"not","msg":"none"},
     failPercentageSection:[0,0,0,0],
+    toppersData:{1:[],2:[],3:[],4:[],"allSection":[],"onlysections":[]},
 };
 
 export default function(state = initialState, action) {
@@ -93,14 +95,16 @@ export default function(state = initialState, action) {
             return{
                 ...state,
                 subjSectAnalysis: payload.data,
-                failPercentageSection:payload.data.failPercentageSection
+                failPercentageSection:payload.data.failPercentageSection,
+                toppersData:payload.data.eachSectionTopData
             }
         case FETCH_SUBJ_SECT_DATA_FAIL:
             localStorage.removeItem('subjSectAnalysis');
             return{
                 ...state,
                 subjSectAnalysis: null,
-                failPercentageSection:[0,0,0,0]
+                failPercentageSection:[0,0,0,0],
+                toppersData:{1:[],2:[],3:[],4:[],"allSection":[],"onlysections":[]}
             }
         case FETCH_REGULATION_DATA_SUCCESS:
             localStorage.setItem('regulationData',JSON.stringify(payload.data));

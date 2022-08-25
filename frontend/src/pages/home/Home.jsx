@@ -1,15 +1,11 @@
 import React, { Fragment } from 'react';
-// import Chart from '../../components/chart/Chart';
 import FeaturedInfo from '../../components/featuredinfo/FeaturedInfo';
 import "./home.css";
-// import WidgetSm from '../../components/widgetSm/WidgetSm';
 import SecWisePerfamanceChart from '../../components/SecWisePerfamanceChart/SecWisePerfamanceChart';
-// import WidgetLg from '../../components/widgetLg/WidgetLg';
 import { connect } from "react-redux";
 import {fetchSemData,fetchRegulationData} from "../../actions/visua"
 import Combo from '../../components/chart/Combo';
 import { Link } from 'react-router-dom';
-// import PieChartSecWiseFail from '../../components/chart/PieChartSecWiseFail'
 import ErrorBoundary from "../error/ErrorBoundary";
 const Home = (props) => {
 
@@ -42,15 +38,6 @@ const Home = (props) => {
 
                     <FeaturedInfo data={fdata}/>
                     <Combo cgpa_data={cgpa_data} back_data={back_data}/>
-                    {/* <Combo */}
-                    {/* <Chart data={userData} title="User Analytics" grid datakey="Active User" /> */}
-                    {/* <div className="homeWidgets">
-                        <WidgetLg  /> 
-                    </div>
-                    <SecWisePerfamanceChart/>
-                    <div className='PieChartSecWiseFail'>
-                    <PieChartSecWiseFail/>
-                    </div> */}
                     <br /><br /><br /><br />
 
                     <ErrorBoundary>
@@ -85,7 +72,7 @@ const Home = (props) => {
                                 <p>Please Enter the roll Number of the Student
                                     Select Branch then  select  Regulation then Batch then Semester</p>
                                 <p className="lead">
-                                    <Link className="btn text-center bb btn-lg" onClick={props.fetchRegulationData()}  to="/studentReport" role="button">Student Report Analysis</Link>
+                                    <Link className="btn text-center bb btn-lg"  to="/studentReport"  onClick={props.fetchRegulationData} role="button">Student Report Analysis</Link>
                                 </p>
                             </div>
                         </div>

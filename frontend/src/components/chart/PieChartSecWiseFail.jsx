@@ -62,7 +62,7 @@ class PieChartSecWiseFail extends React.Component {
   
 
     render() {
-      console.log(this.props.failPercentageSection);
+      // console.log(this.props.failPercentageSection);
       return (
         <CCard>
         <CCardBody>
