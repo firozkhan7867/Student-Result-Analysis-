@@ -170,22 +170,22 @@ class FetchMainPage extends Component {
         console.log(this.state.sourceMap);
     }
 
-
+  
     render() {
         const { reg, batch, sem,alert } = this.state;
         return (
             <div className='home'>
                 <div className="ss h-100">
-                    <div className="d-flex justify-content-center ">
-                        <div className="card w-100 bg-white p-4 my-5">
+                    <div className="d-flex justify-content-center cardd">
+                        <div className="card w-100 bg-white p-4">
                             <div className="text-center my-3">
                                 <h3 className='card-title'>Fetch Student  Results Data Section</h3>
-                                <hr />
+                                <hr style={{width:430,color:"rgb(45, 43, 43)"}}/>
                             </div>
                             <div className="w-100">
                                 {this.state.alert}
                             </div>
-                            <div className="d-flex w-75 justify-content-center my-5 text-center">
+                            <div className="d-flex justify-content-center text-center">
                                 <form className='w-50'  onSubmit={this.handleSubmit}>
                                     <div className="form-group my-3 row">
                                         <label htmlFor="branch" className="col-sm-4 col-form-label">Branch</label>
@@ -244,7 +244,6 @@ class FetchMainPage extends Component {
                                         </div>
                                     </div>
                                     <div className="form-group my-3 row">
-                                        <label htmlFor="ok" className="col-sm-2 col-form-label"></label>
                                         <div className="col-sm-10 d-flex justify-content-center">
                                             {/* <Selected data={sem} /> */}
                                             <input type="checkbox" name="ok" className="col-sm-2 form-group" onChange={this.handleInputChange} />
@@ -258,7 +257,7 @@ class FetchMainPage extends Component {
                                     </div>
                                 </form>
                             </div>
-                            <div className="text-center mt-5">
+                            <div className="text-center mt-3">
                                 <h6 className='card-subtitle card-subtitle mb-2 text-muted'>Please follow the hierarchy while selecting the dropdown menus to ensure you get the correct data</h6>
                             </div>
                         </div>
