@@ -30,10 +30,10 @@ class Bargraph extends Component {
     render() {
         return (
         <CCard className="h">
-          <CCardHeader>Bar Chart  </CCardHeader>
           <CCardBody className='body'>
-            <CChartBar
+            <CChartBar className='graph'
               data={{
+                responsive: true,
                 labels: this.arr_key(),
                 datasets: [
                   {

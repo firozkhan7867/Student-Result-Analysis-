@@ -38,37 +38,40 @@ import {
             valueField="section-1-Pass"
             name="Section 1 Pass"
             stack="section-1"
-            color="red"
+            color="#101e9c"
           />
           <Series
             valueField="section-1-Fail"
             name="Section 1 Fail"
             stack="section-1"
-            color="green"
+            color="#00BFFF"
           />
           <Series
             valueField="section-2-Pass"
             name="Section 2 Pass"
             stack="section-2"
-            color="pink"
+            color="#DC143C"
           />
           <Series
             valueField="section-2-Fail"
             name="Section 2 Fail"
             stack="section-2"
+            color="#FF6347"
           />
   
-          <Series valueField="section-3-Pass" name="Section 3 Pass" stack="section-3" />
-          <Series valueField="section-3-Fail" name="Section 3 Fail" stack="section-3" />
+          <Series valueField="section-3-Pass" name="Section 3 Pass" stack="section-3" color="#DAA520"/>
+          <Series valueField="section-3-Fail" name="Section 3 Fail" stack="section-3" color="#EADDCA"/>
           <Series
             valueField="section-4-Pass"
             name="Section 4 Pass"
             stack="section-4"
+            color="#722F37"
           />
           <Series
             valueField="section-4-Fail"
             name="section 4 Fail"
             stack="section-4"
+            color="#CBC3E3"
           />
   
           {/* <ValueAxis>

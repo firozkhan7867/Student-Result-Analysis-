@@ -1,0 +1,13 @@
+
+.graph1{
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+}
+canvas{
+    height: 300px!important;
+    width: auto;
+    width: 300px!important;
+    align-content: center;
+    text-align: center;
+}
