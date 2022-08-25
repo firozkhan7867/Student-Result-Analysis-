@@ -1,6 +1,7 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 import ReactApexChart from 'react-apexcharts';
+import { CCard, CCardBody, CCardHeader} from '@coreui/react';
 
 class PieChartSecWiseFail extends React.Component {
     constructor(props) {
@@ -61,9 +62,14 @@ class PieChartSecWiseFail extends React.Component {
 
     render() {
       return (
-            <div id="chart">
-              <ReactApexChart options={this.state.options} series={this.state.series} type="donut" width={460}/>
+        <CCard>
+        <CCardBody>
+      <div id="chart">
+              <ReactApexChart options={this.state.options} series={this.state.series} type="donut" width={460} height={300}/>
               </div>
+      </CCardBody>
+      </CCard>
+
       );
     }
   }

@@ -7,8 +7,8 @@
 
 .featuredItem{
     flex: 1;
-    margin: 0px 20px;
-    padding: 30px;
+    margin: 0px 10px;
+    padding: 20px;
     border-radius: 10px;
     cursor: pointer;
     align-items: center;
@@ -24,6 +24,31 @@
 .body{
     height:100% !important;
 }
+
+/* .graph{
+    align-items: center;
+    height: 400px;
+} */
+/* .graph1{
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+} */
+/* canvas{
+    height: 300px!important;
+    width: auto;
+    width: 300px!important;
+    align-content: center;
+    text-align: center;
+} */
+
+/* canvas{
+    height: 256px!important;
+    width: auto;
+    width: 512px!important;
+    align-content: center;
+    text-align: center;
+} */
 
 .featuredTitle{
     font-size: 20px;
@@ -66,7 +91,7 @@
 
 .fail{
     /* background-color: #7fe15c; */
-    background-color: #f6414f;
+    background-color: #ed2738;
     color: black;
     font-weight: 500;
 }
@@ -77,14 +102,15 @@
     /* background-color: #5475ee; */
     /* background-color: rgb(141, 95, 95); */
     /* background-color: #fd8060; */
-    background-color: #7fe15c;
+    background-color: #359fe1;
     color: black;
     font-weight: 700;
 }
 
 
 .pass{
-    background-color: #eec354;
+    background-color: #e9b83f;
     color: black;
     font-weight: 700;
 }
+
