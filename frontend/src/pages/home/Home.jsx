@@ -41,7 +41,7 @@ const Home = (props) => {
             return <Fragment>
 
                     <FeaturedInfo data={fdata}/>
-                    <Combo cgpa_data={cgpa_data} back_data={back_data} />
+                    <Combo cgpa_data={cgpa_data} back_data={back_data}/>
                     {/* <Combo */}
                     {/* <Chart data={userData} title="User Analytics" grid datakey="Active User" /> */}
                     {/* <div className="homeWidgets">

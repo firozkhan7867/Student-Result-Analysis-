@@ -72,7 +72,7 @@ const SubSemSubmenu = ({item, fetchSemData,fetchSubjData,fetchSubjSectAnalysys})
       fetchSubjSectAnalysys(id);
       localStorage.setItem('semid', id);
 
-      <Redirect to="/" />
+      // <Redirect to="/" />
     }
   
   

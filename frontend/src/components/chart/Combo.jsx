@@ -29,7 +29,9 @@ const Combo = (props) => {
                     <h5>BackLog Details and Count</h5>
                     <br />
                     {/* <br /><br /><br /><br /><br /> */}
-                    <Bargraph back_data={props.back_data} />
+                    <ErrorBoundary>
+                        <Bargraph back_data={props.back_data} />
+                    </ErrorBoundary>
                     {/* <Bargraph  /> */}
                 </div>
                 
@@ -38,7 +40,9 @@ const Combo = (props) => {
                 <div className="featuredItem ">
                     <h5>Grade Analysis</h5>
                     <br />
-                    <PieChart cgpa_data={props.cgpa_data}/>
+                    <ErrorBoundary>
+                        <PieChart cgpa_data={props.cgpa_data}/>
+                    </ErrorBoundary>
                     
                 </div>
                 <div className="featuredItem">

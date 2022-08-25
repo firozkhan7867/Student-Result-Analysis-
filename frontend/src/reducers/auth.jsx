@@ -43,6 +43,7 @@ const initialState = {
     semId :null,
     RegulationData:{regData:[],batchData:[],branchData:[]},
     checkFetchSem:{"code":"not","msg":"none"},
+    failPercentageSection:[0,0,0,0],
 };
 
 export default function(state = initialState, action) {
@@ -88,16 +89,18 @@ export default function(state = initialState, action) {
             }
         case FETCH_SUBJ_SECT_DATA_SUCCESS:
             localStorage.setItem('subjSectAnalysis', JSON.stringify(payload.data));
-            // console.log(payload.data);
+            // console.log(payload.data.failPercentageSection);
             return{
                 ...state,
-                subjSectAnalysis: payload.data
+                subjSectAnalysis: payload.data,
+                failPercentageSection:payload.data.failPercentageSection
             }
         case FETCH_SUBJ_SECT_DATA_FAIL:
             localStorage.removeItem('subjSectAnalysis');
             return{
                 ...state,
-                subjSectAnalysis: null
+                subjSectAnalysis: null,
+                failPercentageSection:[0,0,0,0]
             }
         case FETCH_REGULATION_DATA_SUCCESS:
             localStorage.setItem('regulationData',JSON.stringify(payload.data));
