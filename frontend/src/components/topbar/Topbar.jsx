@@ -53,10 +53,10 @@ const Topbar = ({ logout, isAuthenticated ,checkAuthenticated }) => {
                     <div className="">
                         <Link className="tt topbarIconsContainer2" to="/upload" >Upload New Sem Result</Link>
                     </div>
-                    <div className=" mt-2">
+                    <div className="">
                     <Link className="tt topbarIconsContainer2" to="/student">Student Upload</Link>
                     </div>
-                    <div className=" mt-2">
+                    <div className="">
                     <Link className="tt topbarIconsContainer1" to="#!" onClick={logout}>Logout</Link>
                     </div>
                     <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" 
