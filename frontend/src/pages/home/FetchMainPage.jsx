@@ -71,8 +71,9 @@ class FetchMainPage extends Component {
                          </div>
             })
 
-            
-
+            if (JSON.parse(localStorage.getItem("checkFetchSem")).code === "success"){
+                this.props.postFetchData(this.state.branchs,this.state.batchs,this.state.sems);
+            }
             // setTimeout(,5000);
             
         });

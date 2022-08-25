@@ -112,10 +112,11 @@ export const postRegulationData = (branch,batch,sem) => async dispatch => {
 
     const batchs = parseInt(batch);
     const sems = parseInt(sem);
+    // console.log("inside");
 
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/check_sem_data_exists/${batchs}/${sems}/${branch}`,config)
-        //console.log(res.data);
+        // console.log(res.data);
         dispatch({
             type: CHECK_FETCH_DATA_SUCCESS,
             payload: res.data,
@@ -131,7 +132,36 @@ export const postRegulationData = (branch,batch,sem) => async dispatch => {
         
     }
 
-    return {"code":"not","msg":"something went wrong"}
+    return {"code":"warning","msg":"something went wrong and could not fetch...."}
     
-    // return code;
 }
+
+
+
+
+
+export const postFetchData = (branch,batch,sem) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const batchs = parseInt(batch);
+    const sems = parseInt(sem);
+    // console.log("inside");
+
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/fetch_semester_result/${batchs}/${sems}/${branch}`,config)
+        // console.log(res.data);
+        
+    }catch(err){
+
+        console.log(err);
+        
+    }
+}
+
+
+
+
