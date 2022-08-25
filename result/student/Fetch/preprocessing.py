@@ -253,8 +253,13 @@ def get_section_fail_perc(sem_id,secs):
         failcount.append(fCount["total"])
     
     data = []
+    # print(failcount,sum(failcount))
+    if sum(failcount) < 1:
+        return failcount
+
     for i in failcount:
         data.append(int(i/sum(failcount)*100))
+    # print(data)
     return data
 
 
