@@ -638,6 +638,13 @@ def get_sect_data(sem_id):
     
     return {"data":secs}
 
+def get_individual_sem_analysis(request,roll):
+    sems =  Performance.objects.filter(roll=roll)
+    return sems
+
+
+
+
 
 
 
