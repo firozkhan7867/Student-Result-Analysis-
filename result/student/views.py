@@ -645,8 +645,12 @@ def get_sect_data(sem_id):
     return {"data":secs}
 
 def get_individual_sem_analysis(request,roll):
-    sems =  Performance.objects.filter(roll=roll)
-    return sems
+    if Student.objects.filter(roll=roll).exists():
+        stu=Student.objects.get(roll=roll)
+        sems =  Performance.objects.filter(roll=stu)
+        return HttpResponse(sems)
+    else:
+        return HttpResponse("No Data Found")
 
 
 
