@@ -18,13 +18,12 @@ class FetchMainPage extends Component {
 
     this.state = {
         source: {
-            // reg: JSON.parse(localStorage.getItem('regulationData')).regData,
-            // batch:JSON.parse(localStorage.getItem('regulationData')).batchData,
-            reg:this.props.regData.regData,
-            batch:this.props.regData.batchData,
+            reg: JSON.parse(localStorage.getItem('regulationData')).regData,
+            batch:JSON.parse(localStorage.getItem('regulationData')).batchData,
+            // reg:this.props.regData.regData,
+            // batch:this.props.regData.batchData,
             sem: []
         },
-
         reg: [],
         batch: [],
         sem: [],
@@ -45,9 +44,6 @@ class FetchMainPage extends Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        // let history = useHistory();
-
-        // this.setData = this.setData.bind(this) ;
     }
 
     
@@ -101,15 +97,22 @@ class FetchMainPage extends Component {
       }
     
     componentDidMount = () => {
-
-        
+        // console.log("inside component")
+        // this.props.fetchRegulationData().then(() =>
+        //     this.setState({
+        //         ["source"]:{
+        //             ["reg"]:this.props.regData.regData,
+        //             ["batch"]:this.props.regData.batchData,
+        //         }
+        //     })
+        // )
+        // console.log(this.state);
         // fetch( `${process.env.REACT_APP_API_URL}/get_fetch_data`,{
         //     method: "GET",
         // }).then(resp => resp.json())
         // // .then(resp => console.log(resp))
         // .then(res => this.setdataintoDAta(res))
         // .catch(error => console.log(error))
-
 
         const { reg } = this.state.source;
         this.setState({
@@ -173,6 +176,7 @@ class FetchMainPage extends Component {
   
     render() {
         const { reg, batch, sem,alert } = this.state;
+        // console.log(this.props.regData);
         return (
             <div className='home'>
                 <div className="ss h-100">

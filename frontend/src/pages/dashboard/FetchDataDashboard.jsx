@@ -15,13 +15,11 @@ const FetchDataDashboard = (props) => {
     useEffect(() => {
         props.checkAuthenticated();
         props.load_user();
-        props.fetchRegulationData();
+        // props.fetchRegulationData();
         // props.fetchSemData();
     }, []);
 
-    // console.log(props.RegulationData);
-
-
+    // console.log(props.RegulationData);   
     return (
         <div>
             <Topbar />

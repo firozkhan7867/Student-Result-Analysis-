@@ -41,7 +41,7 @@
     /* background-color: aliceblue; */
 }
 
-.component{
+/* .component{
     flex: 1;
     margin: 0px 10px;
     padding: 0px;
@@ -50,8 +50,7 @@
     height: fit-content;
     align-items: center;
     -webkit-box-shadow: 0px 0px 15px -10px  rgba(0,0,0,1);
-    box-shadow: 0px 0px 15px -10px rgba(0,0,0,1);
-}
+} */
 /* .component-cards{
     width: 100%;
     display: flex;

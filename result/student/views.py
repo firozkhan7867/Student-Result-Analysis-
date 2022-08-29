@@ -768,6 +768,16 @@ def get_fetch_data(request):
     return JsonResponse({"data":finalData},safe=False)
 
 
+def check_student_exists(request,roll):
+    if Student.objects.filter(roll=roll).exists():
+        return JsonResponse({"code":"success","msg":"Student Exists in Server DataBase..  Fetching Result data just wait for  a few Seconds"})
+    else:
+        return JsonResponse({"code":"danger","msg":"Student Roll number doesn't exists in the Server DataBase please check roll and try again"})
+
+
+def student_report(request,roll):
+    if Student.objects.filter(roll=roll).exists():
+        pass
 
 
 

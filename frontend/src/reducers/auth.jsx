@@ -27,7 +27,9 @@ import {
     FETCH_REGULATION_DATA_FAIL,
     FETCH_REGULATION_DATA_SUCCESS,
     CHECK_FETCH_DATA_SUCCESS,
-    CHECK_FETCH_DATA_FAIL
+    CHECK_FETCH_DATA_FAIL,
+    CHECK_STUDENT_ROLL_FAIL,
+    CHECK_STUDENT_ROLL_SUCCESS
 } from '../actions/types';
 import ToppersData from '../components/TopperData/ToppersData';
 
@@ -46,6 +48,7 @@ const initialState = {
     checkFetchSem:{"code":"not","msg":"none"},
     failPercentageSection:[0,0,0,0],
     toppersData:{1:[],2:[],3:[],4:[],"allSection":[],"onlysections":[]},
+    checkRoll:{"code":"warning","msg":"something went Wrong .. couldn't  process the request"},
 };
 
 export default function(state = initialState, action) {
@@ -113,7 +116,7 @@ export default function(state = initialState, action) {
                 RegulationData: payload.data
             }
         case FETCH_REGULATION_DATA_FAIL:
-            localStorage.removeItem('regulationData');
+            localStorage.setItem('regulationData',JSON.stringify({regData:[],batchData:[],branchData:[]}));
             return {
                 ...state,
                 RegulationData: {regData:[],batchData:[],branchData:[]},
@@ -129,6 +132,18 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 checkFetchSem:{"code":"not","msg":"none"},
+            }
+        case CHECK_STUDENT_ROLL_SUCCESS:
+            localStorage.setItem("checkRoll",JSON.stringify(payload));
+            return {
+                ...state,
+                checkRoll:payload,
+            }
+        case CHECK_STUDENT_ROLL_FAIL:
+            localStorage.setItem("checkRoll",JSON.stringify({"code":"warning","msg":"something went Wrong .. couldn't  process the request"}));
+            return {
+                ...state,
+                checkRoll:{"code":"warning","msg":"something went Wrong .. couldn't  process the request"},
             }
         case SIGNUP_SUCCESS:
             return{

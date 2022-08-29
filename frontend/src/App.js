@@ -20,6 +20,7 @@ import StudentReportDashboard from "./pages/dashboard/StudentReportDashboard";
 // import StudentHome from "./pages/home/StudentHome";
 import StudentMainDashboard from "./pages/dashboard/StudentMainDashboard";
 import FetchDataDashboard from "./pages/dashboard/FetchDataDashboard";
+import AnalysisDashboard from "./pages/dashboard/AnalysisDashboard";
 function App() {
   return (
     <div className="App">
@@ -27,6 +28,7 @@ function App() {
         <Router>
                 <Switch>
                     <Route exact path='/' component={Dashboard} />
+                    <Route exact path='/analysis' component={AnalysisDashboard} />
                     <Route path="/login"  component={Loginpage}/>
                     <Route exact path='/signup' component={Signup} />
                     <Route path="/reset-password"  component={ResetPassword}/>

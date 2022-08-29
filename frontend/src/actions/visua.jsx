@@ -11,6 +11,8 @@ import {
     POST_REGULATION_DATA_SUCCESS,
     CHECK_FETCH_DATA_SUCCESS,
     CHECK_FETCH_DATA_FAIL,
+    CHECK_STUDENT_ROLL_SUCCESS,
+    CHECK_STUDENT_ROLL_FAIL,
 } from "./types";
 import axios from "axios";
 
@@ -90,7 +92,7 @@ export const fetchRegulationData = () => async dispatch => {
     // console.log("inside vis");
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/get_fetch_data`,config)
-        //console.log(res.data);
+        // console.log(res.data);
         dispatch({
             type: FETCH_REGULATION_DATA_SUCCESS,
             payload: res.data,
@@ -102,6 +104,8 @@ export const fetchRegulationData = () => async dispatch => {
         })
     }
 }
+
+
 
 export const postRegulationData = (branch,batch,sem) => async dispatch => {
     const config = {
@@ -155,12 +159,73 @@ export const postFetchData = (branch,batch,sem) => async dispatch => {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/fetch_semester_result/${batchs}/${sems}/${branch}`,config)
         // console.log(res.data);
         
+
     }catch(err){
 
         console.log(err);
         
     }
+
 }
+
+
+
+
+
+
+// export const checkStudentDetails = (roll) => async dispatch => {
+//     const config = {
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     };
+
+//     try {
+//         const res = await axios.get(`${process.env.REACT_APP_API_URL}/check_student_exists/${roll}`,config)
+//         // console.log(res.data);
+//         dispatch({
+//             type: CHECK_STUDENT_ROLL_SUCCESS,
+//             payload: res.data,
+//         })
+//         return res;
+        
+//     }catch(err){  
+//         dispatch({
+//             type: CHECK_STUDENT_ROLL_FAIL,
+//         })      
+//     }
+
+//     return {"code":"warning","msg":"something went wrong and could not Render Data...."}
+    
+// }
+export const checkStudentDetails = (roll) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/check_student_exists/${roll}`,config)
+        // console.log(res.data);
+        dispatch({
+            type: CHECK_STUDENT_ROLL_SUCCESS,
+            payload: res.data,
+        })
+
+        return res;
+    }catch(err){
+
+        dispatch({
+            type: CHECK_STUDENT_ROLL_FAIL,
+        })
+        
+    }
+
+    return {"code":"warning","msg":"something went wrong and could not fetch...."}
+    
+}
+
 
 
 
