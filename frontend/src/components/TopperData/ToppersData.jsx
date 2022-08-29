@@ -7,31 +7,36 @@ import { connect } from 'react-redux';
 
 
 // import btns from "./semsbtn.json"
-const  ToppersData = ({subjSectAnalysisdata}) => {
-    const getdata = JSON.parse(localStorage.getItem("subjSectAnalysis"));
-    console.log(getdata);
-    console.log(subjSectAnalysisdata);
-    const [section, setsection] = useState("allSection");
-
-
-
-
-    const data = getdata.semtopData;
-    var sectionData = getdata.onlysections;
-    const eachsection = getdata["eachSectionTopData"];
-    var data2 = eachsection[section];
-
+const  ToppersData = ({subjSectAnalysisdata,toppersData}) => {
+    // const getdata = JSON.parse(localStorage.getItem("subjSectAnalysis"));
+    const getdata = toppersData;
     // console.log(getdata);
-    // console.log(data);
+    // console.log(toppersData);
+    const [section, setsection] = useState(JSON.parse(localStorage.getItem("subjSectAnalysis")).eachSectionTopData.allSection);
+    // console.log(section);
+    const [sec, setsec] = useState("allSection");
 
-    const onPress = (e) =>{
-        setsection(`${e}`);
-        data2 = eachsection[section];
+
+
+    // const data = getdata.semtopData;
+    var sectionData = getdata.onlysections;
+    // var data2 = eachsection[section];
+    // console.log(sectionData);
+
+
+    const check = (e) =>{
+        // setsection(`${e}`);
+        // data2 = eachsection[section];
+        setsection(getdata[`${e}`]);
+        setsec(e);
     }
 
     return (
         <div className=''>
-            <table class="table table-hover">
+            <div className="text-center">
+                <h4 className='p-2 rounded'>Section - <strong className='mx-2'> {sec}</strong> Data</h4>
+            </div>
+            <table className="table table-hover">
                 <thead>
                     <tr>
                     <th scope="col">#</th>
@@ -43,7 +48,7 @@ const  ToppersData = ({subjSectAnalysisdata}) => {
                 </thead>
                 <tbody>
 
-                    {data.map((value,index)=>{
+                    {section.map((value,index)=>{
                         return(
                             // {"roll":i.roll.roll,"name":i.roll.name,"sect":i.roll.section,"SCGPA":i.SCGPA
                             <tr key={index}>
@@ -58,12 +63,12 @@ const  ToppersData = ({subjSectAnalysisdata}) => {
                 </tbody>
             </table>
             <div className="d-flex justify-content-between">
-                {/* <button type="button" onClick={setsection("allSection")} class="btn btn-primary">ALL</button> */}
-                {/* {sectionData.map((value,index) => {
+                <p  onClick={() => check("allSection")} className="btn btn-primary">ALL</p>
+                {sectionData.map((value,index) => {
                     return (
-                        <button key={index} type="button"  class="btn btn-primary">section-{value}</button>
+                        <p key={index} onClick={() =>check(value)} className="btn btn-primary">section-{value}</p>
                     )
-                })} */}
+                })}
             </div>
         </div>
     )
@@ -71,7 +76,8 @@ const  ToppersData = ({subjSectAnalysisdata}) => {
  
 
 const mapStateToProps = state => ({
-    subjSectAnalysisdata: state.auth.subjSectAnalysis
+    subjSectAnalysisdata: state.auth.subjSectAnalysis,
+    toppersData:state.auth.toppersData
 });
 
 

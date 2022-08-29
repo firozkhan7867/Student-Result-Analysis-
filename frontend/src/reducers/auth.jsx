@@ -26,7 +26,12 @@ import {
     FETCH_SUBJ_SECT_DATA_SUCCESS,
     FETCH_REGULATION_DATA_FAIL,
     FETCH_REGULATION_DATA_SUCCESS,
+    CHECK_FETCH_DATA_SUCCESS,
+    CHECK_FETCH_DATA_FAIL,
+    CHECK_STUDENT_ROLL_FAIL,
+    CHECK_STUDENT_ROLL_SUCCESS
 } from '../actions/types';
+import ToppersData from '../components/TopperData/ToppersData';
 
 const initialState = {
     access: localStorage.getItem('access'),
@@ -39,7 +44,11 @@ const initialState = {
     subjVisData:null,
     subjSectAnalysis:null,
     semId :null,
-    RegulationData:null,
+    RegulationData:{regData:[],batchData:[],branchData:[]},
+    checkFetchSem:{"code":"not","msg":"none"},
+    failPercentageSection:[0,0,0,0],
+    toppersData:{1:[],2:[],3:[],4:[],"allSection":[],"onlysections":[]},
+    checkRoll:{"code":"warning","msg":"something went Wrong .. couldn't  process the request"},
 };
 
 export default function(state = initialState, action) {
@@ -85,16 +94,20 @@ export default function(state = initialState, action) {
             }
         case FETCH_SUBJ_SECT_DATA_SUCCESS:
             localStorage.setItem('subjSectAnalysis', JSON.stringify(payload.data));
-            // console.log(payload.data);
+            // console.log(payload.data.failPercentageSection);
             return{
                 ...state,
-                subjSectAnalysis: payload.data
+                subjSectAnalysis: payload.data,
+                failPercentageSection:payload.data.failPercentageSection,
+                toppersData:payload.data.eachSectionTopData
             }
         case FETCH_SUBJ_SECT_DATA_FAIL:
             localStorage.removeItem('subjSectAnalysis');
             return{
                 ...state,
-                subjSectAnalysis: null
+                subjSectAnalysis: null,
+                failPercentageSection:[0,0,0,0],
+                toppersData:{1:[],2:[],3:[],4:[],"allSection":[],"onlysections":[]}
             }
         case FETCH_REGULATION_DATA_SUCCESS:
             localStorage.setItem('regulationData',JSON.stringify(payload.data));
@@ -103,10 +116,34 @@ export default function(state = initialState, action) {
                 RegulationData: payload.data
             }
         case FETCH_REGULATION_DATA_FAIL:
-            localStorage.removeItem('regulationData');
+            localStorage.setItem('regulationData',JSON.stringify({regData:[],batchData:[],branchData:[]}));
             return {
                 ...state,
                 RegulationData: {regData:[],batchData:[],branchData:[]},
+            }
+        case CHECK_FETCH_DATA_SUCCESS:
+            localStorage.setItem('checkFetchSem', JSON.stringify(payload));
+            return {
+                ...state,
+                checkFetchSem:payload,
+            }
+        case CHECK_FETCH_DATA_FAIL:
+            localStorage.setItem("checkFetchSem",JSON.stringify({"code":"not","msg":"none"}));
+            return {
+                ...state,
+                checkFetchSem:{"code":"not","msg":"none"},
+            }
+        case CHECK_STUDENT_ROLL_SUCCESS:
+            localStorage.setItem("checkRoll",JSON.stringify(payload));
+            return {
+                ...state,
+                checkRoll:payload,
+            }
+        case CHECK_STUDENT_ROLL_FAIL:
+            localStorage.setItem("checkRoll",JSON.stringify({"code":"warning","msg":"something went Wrong .. couldn't  process the request"}));
+            return {
+                ...state,
+                checkRoll:{"code":"warning","msg":"something went Wrong .. couldn't  process the request"},
             }
         case SIGNUP_SUCCESS:
             return{

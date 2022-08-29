@@ -2,6 +2,7 @@
 import React, { Component,useEffect } from 'react';
 import { CCard, CCardBody, CCardHeader} from '@coreui/react';
 import { CChartPie } from '@coreui/react-chartjs';
+import "./featuredinfo.css"
 
 class Charts extends Component {
 
@@ -31,13 +32,15 @@ class Charts extends Component {
     return (
     
       <CCard className="mb-1">
-        <CCardHeader>{this.props.chartname?this.props.chartname:"Pie Chart"}</CCardHeader>
+        <CCardHeader>Pie Chart</CCardHeader>
         <CCardBody>
           <CChartPie
             data={{
+              
               labels: this.arr_key(),
               datasets: [
                 {
+                  
                   data: this.arry_val(),
                   backgroundColor: [
                     '#FF6384',

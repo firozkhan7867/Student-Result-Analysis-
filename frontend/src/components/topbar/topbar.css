@@ -10,7 +10,7 @@
 
 .topbarWrapper {
     height: 100%;
-    padding: 0px 20px;
+    padding: 0px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -18,7 +18,7 @@
 
 .tt{
     text-decoration: none;
-    color: white;
+    color: black;
 }
 
 .tt:hover{
@@ -27,7 +27,8 @@
 
 .logo{
     font-weight: bold; 
-    font-size: 30px;
+    font-size: 28px;
+    margin-left: 0px!important;
     color: darkblue;
     cursor: pointer;
 }
@@ -36,12 +37,23 @@
     display: flex;
     align-items: center;
 }
-
 .topbarIconsContainer2{
+    cursor: pointer;
+    margin-right: 5px;
+    background-color: white;
+    padding: 5px 10px;
+    color:black;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    
+}
+.topbarIconsContainer2:hover{
     cursor: pointer;
     margin-right: 5px;
     background-color: #0d6efd;
     padding: 5px 10px;
+    color:white;
     margin-top: 10px;
     border-radius: 5px;
     text-decoration: none;
@@ -51,11 +63,22 @@
     background-color: #0257d6;
 }
 
-
 .topbarIconsContainer1{
     cursor: pointer;
     margin-right: 5px;
+    background-color:white;
+    color:black;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.topbarIconsContainer1:hover{
+    cursor: pointer;
+    margin-right: 5px;
     background-color:#ff0f27;
+    color: white;
     padding: 5px 10px;
     margin-top: 10px;
     border-radius: 5px;

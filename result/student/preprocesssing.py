@@ -104,7 +104,7 @@ def get_sem_for_branch(batch,reg,branch):
     reg = Regulation.objects.get(id=reg.id)
     batch = Batch.objects.get(id=batch.id)
     if Semester.objects.all().filter(regulation=reg.id,branch=branch.id,batch=batch.id).exists():
-        sems = Semester.objects.all().filter(regulation=reg.id,branch=branch.id,batch=batch.id)
+        sems = Semester.objects.all().filter(regulation=reg.id,branch=branch.id,batch=batch.id).order_by('name')
         data = []
         for i in sems:
             temp = {}

@@ -1,18 +1,20 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 import ReactApexChart from 'react-apexcharts';
+import { CCard, CCardBody, CCardHeader} from '@coreui/react';
+import { connect } from "react-redux";
 
 class PieChartSecWiseFail extends React.Component {
     constructor(props) {
       super(props);
 
       const getData = JSON.parse(localStorage.getItem("subjSectAnalysis"));
-      // console.log(getData);
-      const data = getData.failPercentageSection;
+      // console.log(this.props.failPercentageSection);
+      // // const data = getData.failPercentageSection;
+      const data = this.props.failPercentageSection;
       // console.log(data);
 
       this.state = {
-      
         series: data,
         options: {
           chart: {
@@ -60,14 +62,27 @@ class PieChartSecWiseFail extends React.Component {
   
 
     render() {
+      // console.log(this.props.failPercentageSection);
       return (
-            <div id="chart">
-              <ReactApexChart options={this.state.options} series={this.state.series} type="donut" width={460}/>
+        <CCard>
+        <CCardBody>
+      <div id="chart">
+              <ReactApexChart options={this.state.options} series={this.props.failPercentageSection} type="donut" width={460} height={300}/>
               </div>
+      </CCardBody>
+      </CCard>
+
       );
     }
   }
 
-//   const domContainer = document.querySelector('#app');
-//   ReactDOM.render(React.createElement(PieChartSecWiseFail), domContainer);
-export default PieChartSecWiseFail;
+
+
+  function mapStateToProps(state) {
+    const failPercentageSection = state.auth.failPercentageSection;
+    return {
+      failPercentageSection
+    };
+  }
+  
+export default connect(mapStateToProps)(PieChartSecWiseFail)

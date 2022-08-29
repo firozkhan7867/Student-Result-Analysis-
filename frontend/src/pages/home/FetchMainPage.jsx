@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import Selected, { Select } from '../../components/FetchSelectCompos/select';
+// import { useHistory } from "react-router-dom";
+
+// import { Redirect } from "react-router-dom";
 
 // import "./student.css";
 // styled components
@@ -9,15 +13,17 @@ class FetchMainPage extends Component {
     constructor(props){ 
         super(props) 
 
+    // console.log(this.props.regData);
+    // console.log(this.props);
+
     this.state = {
         source: {
             reg: JSON.parse(localStorage.getItem('regulationData')).regData,
             batch:JSON.parse(localStorage.getItem('regulationData')).batchData,
-            // reg:[],
-            // batch:[],
+            // reg:this.props.regData.regData,
+            // batch:this.props.regData.batchData,
             sem: []
         },
-
         reg: [],
         batch: [],
         sem: [],
@@ -26,6 +32,7 @@ class FetchMainPage extends Component {
         batchs:"",
         sems:"",
         branchs:"",
+        alert:"",
         
 
         sourceMap: {
@@ -37,15 +44,36 @@ class FetchMainPage extends Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-
-        // this.setData = this.setData.bind(this) ;
     }
+
+    
+
 
 
     handleSubmit(event) {
         event.preventDefault();
         // console.log(this.state);
-        this.props.postRegulationData(this.state.branchs,this.state.batchs,this.state.sems);
+        this.props.postRegulationData(this.state.branchs,this.state.batchs,this.state.sems).then(()=>{
+            
+            // console.log(JSON.parse(localStorage.getItem('checkFetchSem')));
+            this.setState({
+                ["alert"]:<div className={`alert alert-${JSON.parse(localStorage.getItem("checkFetchSem")).code} alert-dismissible fade show d-flex justify-content-between`} role="alert">
+                            <div className="">
+                                <strong>{JSON.parse(localStorage.getItem("checkFetchSem")).code} ..!!!</strong> {JSON.parse(localStorage.getItem("checkFetchSem")).msg}
+                             </div>
+                             <NavLink to={"/"} type="button" className="rounded p-2 bg-danger text-white close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                             </NavLink>
+                         </div>
+            })
+
+            if (JSON.parse(localStorage.getItem("checkFetchSem")).code === "success"){
+                this.props.postFetchData(this.state.branchs,this.state.batchs,this.state.sems);
+            }
+            // setTimeout(,5000);
+            
+        });
+        
       }
     
     handleInputChange2 = (name,value)=> {
@@ -57,7 +85,7 @@ class FetchMainPage extends Component {
             [name]: value,
         });
 
-        console.log(this.state);
+        // console.log(this.state);
     }
 
     handleInputChange(event) {
@@ -69,6 +97,23 @@ class FetchMainPage extends Component {
       }
     
     componentDidMount = () => {
+        // console.log("inside component")
+        // this.props.fetchRegulationData().then(() =>
+        //     this.setState({
+        //         ["source"]:{
+        //             ["reg"]:this.props.regData.regData,
+        //             ["batch"]:this.props.regData.batchData,
+        //         }
+        //     })
+        // )
+        // console.log(this.state);
+        // fetch( `${process.env.REACT_APP_API_URL}/get_fetch_data`,{
+        //     method: "GET",
+        // }).then(resp => resp.json())
+        // // .then(resp => console.log(resp))
+        // .then(res => this.setdataintoDAta(res))
+        // .catch(error => console.log(error))
+
         const { reg } = this.state.source;
         this.setState({
             reg
@@ -128,19 +173,23 @@ class FetchMainPage extends Component {
         console.log(this.state.sourceMap);
     }
 
-
+  
     render() {
-        const { reg, batch, sem } = this.state;
+        const { reg, batch, sem,alert } = this.state;
+        // console.log(this.props.regData);
         return (
             <div className='home'>
                 <div className="ss h-100">
-                    <div className="d-flex justify-content-center ">
-                        <div className="card w-100 bg-white p-4 my-5">
+                    <div className="d-flex justify-content-center cardd">
+                        <div className="card w-100 bg-white p-4">
                             <div className="text-center my-3">
                                 <h3 className='card-title'>Fetch Student  Results Data Section</h3>
-                                <hr />
+                                <hr style={{width:430,color:"rgb(45, 43, 43)"}}/>
                             </div>
-                            <div className="d-flex w-75 justify-content-center my-5 text-center">
+                            <div className="w-100">
+                                {this.state.alert}
+                            </div>
+                            <div className="d-flex justify-content-center text-center">
                                 <form className='w-50'  onSubmit={this.handleSubmit}>
                                     <div className="form-group my-3 row">
                                         <label htmlFor="branch" className="col-sm-4 col-form-label">Branch</label>
@@ -199,7 +248,6 @@ class FetchMainPage extends Component {
                                         </div>
                                     </div>
                                     <div className="form-group my-3 row">
-                                        <label htmlFor="ok" className="col-sm-2 col-form-label"></label>
                                         <div className="col-sm-10 d-flex justify-content-center">
                                             {/* <Selected data={sem} /> */}
                                             <input type="checkbox" name="ok" className="col-sm-2 form-group" onChange={this.handleInputChange} />
@@ -213,7 +261,7 @@ class FetchMainPage extends Component {
                                     </div>
                                 </form>
                             </div>
-                            <div className="text-center mt-5">
+                            <div className="text-center mt-3">
                                 <h6 className='card-subtitle card-subtitle mb-2 text-muted'>Please follow the hierarchy while selecting the dropdown menus to ensure you get the correct data</h6>
                             </div>
                         </div>

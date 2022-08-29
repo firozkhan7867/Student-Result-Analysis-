@@ -1,4 +1,5 @@
 from cgi import test
+from distutils.command.install_egg_info import safe_name
 from pprint import pformat
 from traceback import print_tb
 from urllib import response
@@ -7,8 +8,10 @@ from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
 from datetime import datetime
 from student.Fetch.main_code import fetchDetails
+from rest_framework import status
+from rest_framework.response import Response
 
-from .Fetch.preprocessing import get_section_fail_perc, get_topper_data
+from .Fetch.preprocessing import fetch_check_result, get_section_fail_perc, get_topper_data
 
 from .analysis.section_subj_analysis import get_pass_fail_count_of_each_subject, get_pass_fail_count_of_each_subject_for_table
 from .preprocesssing import convert_num_to_sem, lst_of_sect_of_sem
@@ -496,10 +499,10 @@ def fetch_result(request,roll,branch,sem):
     result = result[str(sem)]
     subj = get_subject_from_fetch_obj(result)
 
-    sem = check_sem_exist(result,student.branch,student.batch,student.regulation,7,subj)
+    sem = check_sem_exist(result,student.branch,student.batch,student.regulation,sem,subj)
     
-    # add_subject(result,roll,sem)
-    # add_preformance_table(roll,sem)
+    add_subject(result,roll,sem)
+    add_preformance_table(roll,sem)
     
     return JsonResponse(result, safe=False)
 
@@ -534,23 +537,26 @@ def reduced_fetch_semester_result(batch,sem,branch):
     
 
     
+# def fetch22(batch,sem,branch):
+#     asyncio.create_task(reduced_fetch_semester_result(batch,sem,branch))
 
-
-async def fetch_semester_result(request,batch,sem,branch):
-    print("started")
-    asyncio.create_task(reduced_fetch_semester_result(batch,sem,branch))
-    return HttpResponse("Success")
     
 
-    # reg = Regulation.objects.all()
-    # branch = Branch.objects.all()
-    # batch = Batch.objects.all()
 
-    # print()
+# @sync_to_async
+async def fetch_semester_result(request,batch,sem,branch):
+    asyncio.create_task(reduced_fetch_semester_result(batch,sem,branch))
+
+    return JsonResponse({"response":"started Fetching"},safe=False)
 
 
-    return JsonResponse(result,safe=False)
-
+def check_sem_data_exists(request,batch,sem,branch):
+    flag = fetch_check_result(batch,sem,branch)
+    if flag == 0:
+        return JsonResponse({"code":"danger","msg":"Semester Result not found in the server .... !!!"}, safe=False)
+    elif flag == 1:
+        return JsonResponse({"code":"success","msg":"Semester Result has started fetching data from server, wait for while"},safe=False)
+    
 
 
 def test5(num):
@@ -685,14 +691,13 @@ def get_subj_section_data(request,sem_id):
     batch  = Batch.objects.get(id=sem.batch.id)
     branch_obj = Branch.objects.get(id=sem.branch.id)
     students = Student.objects.filter(batch=batch,branch=branch_obj)
-
     # secs = lst_of_sect_of_sem(students)
     # print(secs)
     secs = []
     for i in dsecs["data"]:
         secs.append(i["name"])
     sectionTopData = get_sec_wise_topper_data(sem_id,secs)
-    print(sectionTopData)
+    # print(sectionTopData)
     # print(sec_data)
     subjs = sem.subject.split(',')
     # print(subjs)
@@ -705,11 +710,11 @@ def get_subj_section_data(request,sem_id):
         # msg = f"result Analysis for subject : {name} and analysis = {l}"
         data.append(l)
         # subj_data = Subjects.objects.filter(sem=sem,batch=batch,branch=branch_obj,roll=)
+
+    sectionTopData["onlysections"] = secs
     
     temp = {"subjSectionData":data,"sectionList":dsecs,"semtopData":top_data,"failPercentageSection":fails,"onlysections":secs,"eachSectionTopData":sectionTopData}
     return JsonResponse({"data":temp},safe=False)
-
-
 
 def get_roll_details(request,roll):
     rolld = Student.objects.get(roll=roll)
@@ -770,6 +775,16 @@ def get_fetch_data(request):
     return JsonResponse({"data":finalData},safe=False)
 
 
+def check_student_exists(request,roll):
+    if Student.objects.filter(roll=roll).exists():
+        return JsonResponse({"code":"success","msg":"Student Exists in Server DataBase..  Fetching Result data just wait for  a few Seconds"})
+    else:
+        return JsonResponse({"code":"danger","msg":"Student Roll number doesn't exists in the Server DataBase please check roll and try again"})
+
+
+def student_report(request,roll):
+    if Student.objects.filter(roll=roll).exists():
+        pass
 
 
 

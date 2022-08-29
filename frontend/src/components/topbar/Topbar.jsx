@@ -22,7 +22,7 @@ const Topbar = ({ logout, isAuthenticated ,checkAuthenticated }) => {
             <div className="topbarWrapper">
                 <div className="topLeft">
                     <span className="logo">
-                       Result Analysis
+                       Student Result Analysis
                     </span>
                 </div>
                 <div className="topRight">
@@ -44,20 +44,20 @@ const Topbar = ({ logout, isAuthenticated ,checkAuthenticated }) => {
                              2
                          </span>
                     </div> */}
-                    <div className="topbarIconsContainer2">
-                        <Link className="tt" to="/" >Home</Link>
+                    <div className="">
+                        <Link className="tt topbarIconsContainer2" to="/" >Home</Link>
                     </div>
-                    <div className="topbarIconsContainer1">
-                        <Link className="tt" to="/backdata" >Upload Supply Result</Link>
+                    <div className="">
+                        <Link className="tt topbarIconsContainer2" to="/backdata" >Upload Supply Result</Link>
                     </div>
-                    <div className="topbarIconsContainer2">
-                        <Link className="tt" to="/upload" >Upload New Sem Result</Link>
+                    <div className="">
+                        <Link className="tt topbarIconsContainer2" to="/upload" >Upload New Sem Result</Link>
                     </div>
-                    <div className="topbarIconsContainer mt-2">
-                    <Link className="nav-link" to="/student">Student Upload</Link>
+                    <div className="">
+                    <Link className="tt topbarIconsContainer2" to="/student">Student Upload</Link>
                     </div>
-                    <div className="topbarIconsContainer mt-2">
-                    <Link className="nav-link" to="#!" onClick={logout}>Logout</Link>
+                    <div className="">
+                    <Link className="tt topbarIconsContainer1" to="#!" onClick={logout}>Logout</Link>
                     </div>
                     <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" 
                          alt="" className='topAvatar' />
