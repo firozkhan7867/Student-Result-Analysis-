@@ -648,7 +648,10 @@ def get_individual_sem_analysis(request,roll):
     if Student.objects.filter(roll=roll).exists():
         stu=Student.objects.get(roll=roll)
         sems =  Performance.objects.filter(roll=stu)
-        return HttpResponse(sems)
+        data={}
+        for sem in sems:
+            data[sem.sem.name]=sem.SCGPA   
+        return JsonResponse(data)
     else:
         return HttpResponse("No Data Found")
 
