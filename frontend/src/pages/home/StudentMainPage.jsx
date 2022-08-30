@@ -3,11 +3,12 @@ import { useHistory } from "react-router-dom";
 // import "./home.css";
 import "./student.css";
 import { connect } from "react-redux";
-import {checkStudentDetails} from "../../actions/visua";
+import {checkStudentDetails,getStudentDetails} from "../../actions/visua";
 
 
 
-const StudentMainPage = ({checkStudentDetails}) => {
+
+const StudentMainPage = ({checkStudentDetails,getStudentDetails}) => {
 
     const [formData, setFormData] = useState({
         roll:'',
@@ -19,6 +20,8 @@ const StudentMainPage = ({checkStudentDetails}) => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
         setAlert("");
     }
+
+
     const onSubmit = () =>{
         let path= `/studentReport/${roll}`;
         checkStudentDetails(roll).then(() => {
@@ -31,7 +34,7 @@ const StudentMainPage = ({checkStudentDetails}) => {
                              </button>
                          </div>)
              if (JSON.parse(localStorage.getItem("checkRoll")).code === "success"){
-                    
+                    getStudentDetails(roll);
                     history.push(path)
                 }   
         });
@@ -73,7 +76,7 @@ const StudentMainPage = ({checkStudentDetails}) => {
 //     semVisData: state.auth.semVisData
 // });
 
-export default connect(null,{checkStudentDetails})(StudentMainPage);
+export default connect(null,{checkStudentDetails,getStudentDetails})(StudentMainPage);
 
 // export default StudentMainPage;
 

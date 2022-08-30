@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import "./home.css";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 import SemWiseBacklogAnalysis from '../../components/chart/SemWiseBacklogAnalysis'
 import SemWisePerformanceAnalysis from '../../components/chart/SemWisePerformanceAnalysis';
 import Grade_all_sem from '../../components/chart/Grade_all_sem';
@@ -8,15 +8,19 @@ import Backlog from '../../components/Backlog_analysis/Backlog';
 import ErrorBoundary from "../error/ErrorBoundary";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {getStudentDetails} from "../../actions/visua";
+
 
 // import Student from '../forms/Student';
-const StudentHome = () => {
+const StudentHome = ({studentdetails,getStudentDetails}) => {
+
+    useEffect(() => {
+        getStudentDetails();
+    }, []);
 
     const img = (roll) => {
 
     }
-
-
 
     return (
         <div className='home'>
@@ -30,7 +34,7 @@ const StudentHome = () => {
                             <div className="col-lg-4">
                                 <div className="card mb-4">
                                     <div className="card-body text-center">
-                                        <img src="http://123.108.200.174/img/photos/19131A05P1.JPG" alt="avatar"
+                                        <img src={`http://123.108.200.174/img/photos/${studentdetails.roll}.JPG`} alt="avatar"
                                             className="rounded-circle img-fluid" width={150} />
                                         <h5 className="my-3">John Smith</h5>
                                         <p className="text-muted mb-1">B Tech</p>
@@ -128,7 +132,7 @@ const StudentHome = () => {
                             <Col>
                                 <div className="component">
                                     <ErrorBoundary>
-                                        <SemWisePerformanceAnalysis />
+                                        <SemWisePerformanceAnalysis cgpas={studentdetails.cgpas} />
                                     </ErrorBoundary>
                                 </div>
                             </Col>
@@ -164,11 +168,11 @@ const StudentHome = () => {
     );
 }
 
-// const mapStateToProps = state => ({
-//     semVisData: state.auth.semVisData
-// });
+const mapStateToProps = state => ({
+    studentdetails: state.auth.studentdetails
+});
 
-// export default connect(mapStateToProps,null)(StudentHome);
+export default connect(mapStateToProps,{getStudentDetails})(StudentHome);
 
-export default StudentHome;
+// export default StudentHome;
 
