@@ -13,6 +13,8 @@ import {
     CHECK_FETCH_DATA_FAIL,
     CHECK_STUDENT_ROLL_SUCCESS,
     CHECK_STUDENT_ROLL_FAIL,
+    GET_STUDENT_DETAILS_SUCCESS,
+    GET_STUDENT_DETAILS_FAIL
 } from "./types";
 import axios from "axios";
 
@@ -198,6 +200,7 @@ export const postFetchData = (branch,batch,sem) => async dispatch => {
 //     return {"code":"warning","msg":"something went wrong and could not Render Data...."}
     
 // }
+
 export const checkStudentDetails = (roll) => async dispatch => {
     const config = {
         headers: {
@@ -227,6 +230,33 @@ export const checkStudentDetails = (roll) => async dispatch => {
 }
 
 
+export const getStudentDetails = (roll) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/get_individual_sem_analysis/${roll}`,config)
+        // console.log(res.data);
+        dispatch({
+            type: GET_STUDENT_DETAILS_SUCCESS,
+            payload: res.data,
+        })
+
+        return res;
+    }catch(err){
+
+        dispatch({
+            type: GET_STUDENT_DETAILS_FAIL,
+        })
+        
+    }
+
+   // return {"code":"warning","msg":"something went wrong and could not fetch...."}
+    
+}
 
 
 

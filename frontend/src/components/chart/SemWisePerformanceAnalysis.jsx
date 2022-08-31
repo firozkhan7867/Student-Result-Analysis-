@@ -12,7 +12,7 @@ class SemWisePerformanceAnalysis extends React.Component {
       
         series: [{
             name: "CGPA ",
-            data: [10,9.6,9.7,9.1,9.9,9.6,9.1,9.2]
+            data: this.props.cgpas
         }],
         options: {
           chart: {

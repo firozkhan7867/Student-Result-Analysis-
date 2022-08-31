@@ -1,3 +1,4 @@
+
 import React, { Component,useEffect } from 'react';
 import { CCard, CCardBody, CCardHeader} from '@coreui/react';
 import { CChartPie } from '@coreui/react-chartjs';
@@ -30,9 +31,10 @@ class Charts extends Component {
   render() {
     return (
     
-      <CCard className="mb-1 h">
-        <CCardBody className='body'>
-          <CChartPie className='graph1'
+      <CCard className="mb-1">
+        <CCardHeader>Pie Chart</CCardHeader>
+        <CCardBody>
+          <CChartPie
             data={{
               
               labels: this.arr_key(),

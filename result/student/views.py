@@ -644,6 +644,37 @@ def get_sect_data(sem_id):
     
     return {"data":secs}
 
+def get_individual_sem_analysis(request,roll):
+    if Student.objects.filter(roll=roll).exists():
+        stu=Student.objects.get(roll=roll)
+        sems =  Performance.objects.filter(roll=stu)
+        data={"cgpas":[None,None,None,None,None,None,None,None],"roll":roll}
+
+        for sem in sems:
+            if sem.sem.name=="I":
+                data["cgpas"][0]=sem.SCGPA
+            elif sem.sem.name=="II":
+                data["cgpas"][1]=sem.SCGPA
+            elif sem.sem.name=="III":
+                data["cgpas"][2]=sem.SCGPA
+            elif sem.sem.name=="IV":
+                data["cgpas"][3]=sem.SCGPA
+            elif sem.sem.name=="V":
+                data["cgpas"][4]=sem.SCGPA
+            elif sem.sem.name=="VI":
+                data["cgpas"][5]=sem.SCGPA
+            elif sem.sem.name=="VII":
+                data["cgpas"][6]=sem.SCGPA
+            elif sem.sem.name=="VIII":
+                data["cgpas"][7]=sem.SCGPA
+
+        return JsonResponse(data)
+    else:
+        return HttpResponse("No Data Found")
+
+
+
+
 
 
 
