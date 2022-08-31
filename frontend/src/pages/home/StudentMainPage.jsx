@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 import {checkStudentDetails,getStudentDetails} from "../../actions/visua";
 
 
-
-
 const StudentMainPage = ({checkStudentDetails,getStudentDetails}) => {
 
     const [formData, setFormData] = useState({
@@ -34,8 +32,18 @@ const StudentMainPage = ({checkStudentDetails,getStudentDetails}) => {
                              </button>
                          </div>)
              if (JSON.parse(localStorage.getItem("checkRoll")).code === "success"){
-                    getStudentDetails(roll);
-                    history.push(path)
+                    setAlert(<div className={`alert alert-success alert-dismissible fade show d-flex justify-content-between`} role="alert">
+                                <div className="" >
+                                    <strong>Success .. !! </strong> Fetching Student Details. You will be redirected in few second please wait....
+                                </div>
+                                <button type="button" onClick={() => {setAlert('')}} className="rounded p-2 bg-danger text-white close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>);
+                    getStudentDetails(roll).then(
+                        history.push(path));
+                    localStorage.setItem('studentRoll',roll);
+                        
                 }   
         });
     }
