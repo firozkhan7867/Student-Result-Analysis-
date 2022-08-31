@@ -30,7 +30,10 @@ const StudentHome = () => {
                             <div className="col-lg-4">
                                 <div className="card mb-4">
                                     <div className="card-body text-center">
-                                        <img src="http://123.108.200.174/img/photos/19131A05P1.JPG" alt="avatar"
+                                        {/* <img src="http://123.108.200.174/img/photos/19131A05P1.JPG" alt="avatar" */}
+                                        
+                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                                        
                                             className="rounded-circle img-fluid" width={150} />
                                         <h5 className="my-3">John Smith</h5>
                                         <p className="text-muted mb-1">B Tech</p>
