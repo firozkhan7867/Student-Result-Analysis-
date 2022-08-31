@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import "./home.css";
 import { connect } from "react-redux";
 import SemWiseBacklogAnalysis from '../../components/chart/SemWiseBacklogAnalysis'
@@ -10,9 +10,22 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import {getStudentDetails} from "../../actions/visua";
 
 // import Student from '../forms/Student';
-const StudentHome = ({studentdetails}) => {
+const StudentHome = ({studentdetails,getStudentDetails}) => {
+
+    const [details, setdetails] = useState(studentdetails.details);
+
+
+    useEffect(() => {
+      getStudentDetails(localStorage.getItem("studentRoll")).then(() => {
+        if (JSON.parse(localStorage.getItem("studentdetails")).roll !== null || studentdetails.roll === null){
+            setdetails(JSON.parse(localStorage.getItem("studentdetails")).details)
+        }
+        })
+    }, [])
+    
 
     const ok = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp";
     const sutdentProfile= `http://123.108.200.174/img/photos/${studentdetails.roll}.JPG`;
@@ -33,11 +46,11 @@ const StudentHome = ({studentdetails}) => {
                                             onError={(e) => (e.target.onerror = null, e.target.src = ok)}
                                             className="rounded-circle img-fluid" width={150} />
 
-                                        <h5 className="my-3">John Smith</h5>
+                                        <h5 className="my-3">{details.name}</h5>
                                         <p className="text-muted mb-1">B Tech</p>
-                                        <p className="text-muted mb-1">CSE, Section - 1</p>
+                                        <p className="text-muted mb-1">{details.branch}, Section - {details.section}</p>
 
-                                        <p className="text-muted mb-4">Roll Number</p>
+                                        <p className="text-muted mb-4">{details.roll}</p>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +62,7 @@ const StudentHome = ({studentdetails}) => {
                                                 <p className="mb-0">Full Name</p>
                                             </div>
                                             <div className="col-sm-9">
-                                                <p className="text-muted mb-0">Johnatan Smith</p>
+                                                <p className="text-muted mb-0">{details.name}</p>
                                             </div>
                                         </div>
                                         <hr width={600} />
@@ -58,7 +71,7 @@ const StudentHome = ({studentdetails}) => {
                                                 <p className="mb-0">Email</p>
                                             </div>
                                             <div className="col-sm-9">
-                                                <p className="text-muted mb-0">example@example.com</p>
+                                                <p className="text-muted mb-0">{details.email}</p>
                                             </div>
                                         </div>
                                         <hr width={600} />
@@ -67,7 +80,7 @@ const StudentHome = ({studentdetails}) => {
                                                 <p className="mb-0">Phone</p>
                                             </div>
                                             <div className="col-sm-9">
-                                                <p className="text-muted mb-0">(097) 234-5678</p>
+                                                <p className="text-muted mb-0">{details.mobile}</p>
                                             </div>
                                         </div>
                                         <hr width={600} />
@@ -76,7 +89,7 @@ const StudentHome = ({studentdetails}) => {
                                                 <p className="mb-0">DOB</p>
                                             </div>
                                             <div className="col-sm-9">
-                                                <p className="text-muted mb-0">12-12-2002</p>
+                                                <p className="text-muted mb-0">{details.dob}</p>
                                             </div>
                                         </div>
                                         <hr width={600} />
@@ -85,7 +98,7 @@ const StudentHome = ({studentdetails}) => {
                                                 <p className="mb-0">Father Name </p>
                                             </div>
                                             <div className="col-sm-9">
-                                                <p className="text-muted mb-0">NAME kuand</p>
+                                                <p className="text-muted mb-0">{details.father}</p>
                                             </div>
                                         </div>
                                         <hr width={600} />
@@ -94,18 +107,10 @@ const StudentHome = ({studentdetails}) => {
                                                 <p className="mb-0">Aadhar</p>
                                             </div>
                                             <div className="col-sm-9">
-                                                <p className="text-muted mb-0">***********</p>
+                                                <p className="text-muted mb-0">{details.aadhar}</p>
                                             </div>
                                         </div>
                                         <hr width={600} />
-                                        <div className="row my-3">
-                                            <div className="col-sm-3">
-                                                <p className="mb-0">Address</p>
-                                            </div>
-                                            <div className="col-sm-9">
-                                                <p className="text-muted mb-0">***********</p>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +123,6 @@ const StudentHome = ({studentdetails}) => {
                                 <div className="component">
                                     <ErrorBoundary >
                                         <SemWiseBacklogAnalysis />
-
                                     </ErrorBoundary>
                                 </div>
                             </Col>
@@ -165,7 +169,7 @@ const mapStateToProps = state => ({
     studentdetails: state.auth.studentdetails
 });
 
-export default connect(mapStateToProps,null)(StudentHome);
+export default connect(mapStateToProps,{getStudentDetails})(StudentHome);
 
 // export default StudentHome;
 

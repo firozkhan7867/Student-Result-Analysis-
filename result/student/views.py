@@ -650,6 +650,20 @@ def get_individual_sem_analysis(request,roll):
         sems =  Performance.objects.filter(roll=stu)
         data={"cgpas":[None,None,None,None,None,None,None,None],"roll":roll}
 
+        std = StudentDetails.objects.get(roll=stu)
+        details = {
+            "name":std.name,
+            "email":std.alter_mail,
+            "mobile":std.mobile,
+            "dob":std.dobstr,
+            "father":std.father,
+            "aadhar":std.aadhar,
+            "address":std.address,
+            "roll":stu.roll,
+            "section":stu.section,
+            "branch":stu.branch.branches
+        }
+
         for sem in sems:
             if sem.sem.name=="I":
                 data["cgpas"][0]=sem.SCGPA
@@ -667,12 +681,12 @@ def get_individual_sem_analysis(request,roll):
                 data["cgpas"][6]=sem.SCGPA
             elif sem.sem.name=="VIII":
                 data["cgpas"][7]=sem.SCGPA
-
-        return JsonResponse(data)
+        data["details"]= details
+        # print(details)
+        return JsonResponse(data,safe=False)
     else:
-        return HttpResponse("No Data Found")
-
-
+        data={"cgpas":[None,None,None,None,None,None,None,None],"roll":roll}
+        return JsonResponse(data)
 
 
 
@@ -740,7 +754,7 @@ def get_subj_section_data(request,sem_id):
     temp = {"subjSectionData":data,"sectionList":dsecs,"semtopData":top_data,"failPercentageSection":fails,"onlysections":secs,"eachSectionTopData":sectionTopData}
     return JsonResponse({"data":temp},safe=False)
 
-def get_roll_details(request,roll):
+def get_roll_details(roll):
     rolld = Student.objects.get(roll=roll)
 
     if StudentDetails.objects.filter(roll=rolld).exists() :
@@ -762,7 +776,7 @@ def get_roll_details(request,roll):
             "address":data.address
             }
     
-    return JsonResponse({"data":k},safe=True)
+    return k
 
 
 
@@ -801,6 +815,7 @@ def get_fetch_data(request):
 
 def check_student_exists(request,roll):
     if Student.objects.filter(roll=roll).exists():
+        get_roll_details(roll)
         return JsonResponse({"code":"success","msg":"Student Exists in Server DataBase..  Fetching Result data just wait for  a few Seconds"})
     else:
         return JsonResponse({"code":"danger","msg":"Student Roll number doesn't exists in the Server DataBase please check roll and try again"})

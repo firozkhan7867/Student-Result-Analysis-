@@ -33,7 +33,6 @@ import {
     GET_STUDENT_DETAILS_SUCCESS,
     GET_STUDENT_DETAILS_FAIL
 } from '../actions/types';
-import ToppersData from '../components/TopperData/ToppersData';
 
 const initialState = {
     access: localStorage.getItem('access'),
@@ -51,7 +50,7 @@ const initialState = {
     failPercentageSection: [0, 0, 0, 0],
     toppersData: { 1: [], 2: [], 3: [], 4: [], "allSection": [], "onlysections": [] },
     checkRoll: { "code": "warning", "msg": "something went Wrong .. couldn't  process the request" },
-    studentdetails: { "cgpas": [null, null, null, null, null, null, null, null],"roll": null }
+    studentdetails: { "cgpas": [null, null, null, null, null, null, null, null],"roll": null,"details":{ "name":null, "email":null,"mobile":null, "dob":null,"father":null, "aadhar":null, "address":null, "roll":null, "section":null,"branch":null} },
 };
 
 export default function (state = initialState, action) {
@@ -157,10 +156,10 @@ export default function (state = initialState, action) {
                 studentdetails: payload,
             }
         case GET_STUDENT_DETAILS_FAIL:
-            localStorage.setItem("studentdetails", JSON.stringify({ "cgpas": [null, null, null, null, null, null, null, null],"roll": null }));
+            localStorage.setItem("studentdetails", JSON.stringify({ "cgpas": [null, null, null, null, null, null, null, null],"roll": null,"details":{ "name":null, "email":null,"mobile":null, "dob":null,"father":null, "aadhar":null, "address":null, "roll":null, "section":null,"branch":null} }));
             return {
                 ...state,
-                studentdetails: { "cgpas": [null, null, null, null, null, null, null, null],"roll": null },
+                studentdetails: { "cgpas": [null, null, null, null, null, null, null, null],"roll": null,"details":{ "name":null, "email":null,"mobile":null, "dob":null,"father":null, "aadhar":null, "address":null, "roll":null, "section":null,"branch":null} },
             }
 
 

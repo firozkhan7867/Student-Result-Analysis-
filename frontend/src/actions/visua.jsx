@@ -245,7 +245,7 @@ export const getStudentDetails = (roll) => async dispatch => {
             payload: res.data,
         })
 
-        return res;
+        return res.data;
     }catch(err){
 
         dispatch({
