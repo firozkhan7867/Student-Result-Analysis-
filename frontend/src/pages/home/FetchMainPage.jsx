@@ -195,6 +195,7 @@ class FetchMainPage extends Component {
                                         <label htmlFor="branch" className="col-sm-4 col-form-label">Branch</label>
                                         <div className="col-sm-8">
                                             <select name="branchs" onChange={this.handleInputChange}  className="form-control w-75" id="">
+                                                <option value="">Select Value</option>
                                                 <option value="CSE">CSE</option>
                                                 <option value="ECE">ECE</option>
                                                 <option value="EEE">EEE</option>
@@ -236,6 +237,7 @@ class FetchMainPage extends Component {
                                         <div className="col-sm-8">
                                             {/* <Selected data={sem} /> */}
                                             <select name="sems" onChange={this.handleInputChange} className="form-control w-75">
+                                                <option value="0">Select Value</option>
                                                 <option value="1">I - Semester</option>
                                                 <option value="2">II - Semester</option>
                                                 <option value="3">III - Semester</option>

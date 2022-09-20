@@ -9,14 +9,13 @@ import ErrorBoundary from "../error/ErrorBoundary";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import {getStudentDetails} from "../../actions/visua";
 
 // import Student from '../forms/Student';
 const StudentHome = ({studentdetails,getStudentDetails}) => {
 
     const [details, setdetails] = useState(studentdetails.details);
-
 
     useEffect(() => {
       getStudentDetails(localStorage.getItem("studentRoll")).then(() => {
