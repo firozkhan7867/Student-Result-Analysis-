@@ -8,9 +8,11 @@ import Combo from '../../components/chart/Combo';
 // import { Link } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import ErrorBoundary from "../error/ErrorBoundary";
+
+
+
 const AnalysisHome = (props) => {
     let history = useHistory();
-
 
     const cgpa = () =>{
         if (props.semVisData){
@@ -77,8 +79,6 @@ const AnalysisHome = (props) => {
 
             {/* {show()} */}
 
-            
-            
         </div>
     );
 }

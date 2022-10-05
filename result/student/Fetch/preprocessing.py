@@ -19,6 +19,15 @@ def check_subject_fetch(roll,subj_obj,sem):
         batch = stud_obj.batch
         name = subj_obj["SubjectName"].upper()
         code = subj_obj["SubjectCode"]
+        subtype = subj_obj["SubjectType"].upper()
+
+        if subtype == "PROFESSIONAL CORE COURSE":
+            subt = "PROFESSIONAL CORE COURSE"
+            type = False
+        else:
+            subt = subtype
+            type= True
+
         
 
         if sem not in stud_obj.sem.all():
@@ -38,6 +47,7 @@ def check_subject_fetch(roll,subj_obj,sem):
         cgpa = subj_obj["CreditsPoints"]
         credit = subj_obj["Credits"]
 
+        
 
         
         result = "P"
@@ -50,16 +60,23 @@ def check_subject_fetch(roll,subj_obj,sem):
             result = "F"
             credit = 0
         
+        if credit == "--" or grade == "--" or cgpa == "--":
+            result = "F"
+            fail = True
+            credit = 0
+            grade="AB"
+            cgpa = 0
+
         
         subj = Subjects.objects.create(roll=stud_obj,name=name,regulation=regulation,branch=branch,batch=batch,attendance=attendance,
-        cgpa=cgpa,result=result,fail=fail,sem=sem,credit=credit,code=code,grade=grade)
+        cgpa=cgpa,result=result,fail=fail,sem=sem,credit=credit,code=code,grade=grade,subjtype=type, type=subt)
 
 
         
     
         print(f"subject created for {stud_obj.roll} of {name}")
     else:
-        print(f"Subject for {roll} not found ")
+        print(f"Subject for {roll} not found of {name} ")
 
 
 
@@ -175,17 +192,6 @@ def add_preformance_table(roll,sem):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 def fetch_and_add_student_sem(roll,sem,branch):
     student = Student.objects.get(roll=roll)
     branch_obj = student.branch
@@ -199,6 +205,11 @@ def fetch_and_add_student_sem(roll,sem,branch):
         print(msg)
         return {"error":msg}
     subj = get_subject_from_fetch_obj(result)
+
+    # print("-------------------------========================================--------------------------------")
+    # print(subj)
+    
+    # print("-------------------------========================================--------------------------------")
 
     sem = check_sem_exist(result,student.branch,student.batch,student.regulation,sem,subj)
 

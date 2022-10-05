@@ -493,7 +493,7 @@ def get_all_sems_backlog(request,batch_id,branch_id):
 
 def fetch_result(request,roll,branch,sem):
     result = get_formated_result(roll,branch)
-    print(result)
+    # print(result)
     student = Student.objects.get(roll=roll)
     print(f"Branch : {student.branch} Regultaion : {student.regulation} Batch: {student.batch} Section: {student.section}")
     result = result[str(sem)]
@@ -515,7 +515,7 @@ def reduced_fetch_semester_result(batch,sem,branch):
 
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
-    students = Student.objects.filter(batch=batch,branch=branch_obj)
+    students = Student.objects.filter(batch=batch,branch=branch_obj)[82:]
     # print(students)
 
     print("-------------------------------------------------------------------------------------------------")
@@ -523,7 +523,12 @@ def reduced_fetch_semester_result(batch,sem,branch):
 
     for i in students:
         time.sleep(10)
-        fetch_and_add_student_sem(i.roll.upper(),sem,branch)
+        try:
+            fetch_and_add_student_sem(i.roll.upper(),sem,branch)
+        except Exception as e: 
+            print(e)
+            return
+
     
     
     # for i in range(5):

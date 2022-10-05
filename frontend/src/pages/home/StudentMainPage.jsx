@@ -11,9 +11,12 @@ const StudentMainPage = ({checkStudentDetails,getStudentDetails}) => {
     const [formData, setFormData] = useState({
         roll:'',
     });
+    
     const [alert, setAlert] = useState('');
     let history = useHistory();
     const {roll} = formData;
+
+
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
         setAlert("");

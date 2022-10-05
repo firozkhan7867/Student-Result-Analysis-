@@ -9,6 +9,9 @@ import Selected, { Select } from '../../components/FetchSelectCompos/select';
 // styled components
 //
 
+
+
+
 class FetchMainPage extends Component {
     constructor(props){ 
         super(props) 
@@ -45,8 +48,6 @@ class FetchMainPage extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
-    
 
 
 

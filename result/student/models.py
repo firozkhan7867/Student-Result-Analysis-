@@ -1,4 +1,5 @@
-from tabnanny import verbose
+from email.policy import default
+from http.cookies import Morsel
 from django.db import models
 import os
 
@@ -148,6 +149,8 @@ class Subjects(models.Model):
     grade = models.CharField(max_length=5,blank=True)
     cgpa = models.FloatField()
     fail = models.BooleanField(default=False)
+    subjtype = models.BooleanField(default=False)
+    type = models.CharField(max_length=100,blank=True)
     # semester = models.ManyToManyField(Semester)
     def __str__(self):
         return f"{self.name} of  {self.roll.roll} during {self.sem.name} got cgpa of {self.cgpa}"

@@ -6,7 +6,7 @@ from student.preprocesssing import get_subj_list #, get_transformed_data
 
 def add_student_performance(roll,sem):
     # print(roll,sem)
-    grade = {"O":10,"A+":9,"A":8,"B+":7,"B":6,"C":5,"F":0,"AB":0,"D":0}
+    grade = {"O":10,"A+":9,"A":8,"B+":7,"B":6,"C":5,"F":0,"AB":0,"D":0,"H":0}
     # grade = {"A+":10,"A":9,"B":8,"C":7,"D":6,"E":5,"F":0,"AB":0}
     if Student.objects.filter(roll=roll).exists():
         student = Student.objects.get(roll=roll)
