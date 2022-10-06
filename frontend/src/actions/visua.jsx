@@ -14,7 +14,8 @@ import {
     CHECK_STUDENT_ROLL_SUCCESS,
     CHECK_STUDENT_ROLL_FAIL,
     GET_STUDENT_DETAILS_SUCCESS,
-    GET_STUDENT_DETAILS_FAIL
+    GET_STUDENT_DETAILS_FAIL,
+    SAVEID
 } from "./types";
 import axios from "axios";
 
@@ -74,6 +75,11 @@ export const fetchSubjSectAnalysys = (id) => async dispatch => {
         dispatch({
             type: FETCH_SUBJ_SECT_DATA_SUCCESS,
             payload: res.data,
+        })
+
+        dispatch({
+            type: SAVEID,
+            payload: id,
         })
         
     }catch(err){

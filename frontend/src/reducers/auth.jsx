@@ -31,7 +31,8 @@ import {
     CHECK_STUDENT_ROLL_FAIL,
     CHECK_STUDENT_ROLL_SUCCESS,
     GET_STUDENT_DETAILS_SUCCESS,
-    GET_STUDENT_DETAILS_FAIL
+    GET_STUDENT_DETAILS_FAIL,
+    SAVEID
 } from '../actions/types';
 
 const initialState = {
@@ -162,6 +163,13 @@ export default function (state = initialState, action) {
                 studentdetails: { "cgpas": [null, null, null, null, null, null, null, null],"roll": null,"details":{ "name":null, "email":null,"mobile":null, "dob":null,"father":null, "aadhar":null, "address":null, "roll":null, "section":null,"branch":null} },
             }
 
+
+        case SAVEID:
+            localStorage.setItem('semId', payload);
+            return{
+                ...state,
+                semId: payload,
+            }
 
 
 

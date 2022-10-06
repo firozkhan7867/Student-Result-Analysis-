@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import { GetUploadData, semupload } from '../../../actions/auth';
 import React , {useState, Fragment} from 'react';
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const Sem = (props) => {
 
@@ -26,7 +26,9 @@ const Sem = (props) => {
         data.append('batch',batch);
         data.append('file',imagefile);
         props.semupload(data);
-        <Redirect to="/" />
+        // const nav = useNavigate();
+        // nav("/");
+        <Navigate to="/" />
         name="";
         reg="";
         branch="";

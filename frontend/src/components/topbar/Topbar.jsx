@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import "./topbar.css";
 // import { Language, NotificationsNone, Settings } from '@material-ui/icons';
 import {connect} from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import {logout} from '../../actions/auth';
 import { checkAuthenticated } from '../../actions/auth';
 
@@ -15,7 +15,9 @@ const Topbar = ({ logout, isAuthenticated ,checkAuthenticated }) => {
     }, []);
 
     if (isAuthenticated === false){
-        return <Redirect to="/login" />
+        // const nav= useNavigate();
+        // return nav("/login");
+        return <Navigate to="/login" />
     }
     return (
         <div className="topbar">

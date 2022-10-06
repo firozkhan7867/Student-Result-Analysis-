@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import { GetBackData, studentup } from '../../../actions/auth';
 import React , {useState, Fragment} from 'react';
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const StudentUp = (props) => {
 
@@ -24,7 +24,9 @@ const StudentUp = (props) => {
         data.append('batch',batch);
         data.append('file',imagefile);
         props.studentup(data);
-        <Redirect to="/" />
+        // const nav = useNavigate();
+        // nav("/");
+        <Navigate to="/" />
     }
     
     const regdata = () =>{

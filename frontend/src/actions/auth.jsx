@@ -23,7 +23,6 @@ import {
 } from "./types";
 // import React, {useState} from "react";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
 
 export const checkAuthenticated = () => async dispatch => {
     if (localStorage.getItem('access')){
@@ -281,7 +280,6 @@ export const semupload = (data) => async dispatch => {
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/data`, data);
         
-        <Redirect to="/" />
     } catch (err) {
         
     }

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {connect} from "react-redux";
 import { signup } from '../../actions/auth';
 import "./loginTEST.css"
@@ -30,10 +30,12 @@ const Signup = ({signup, isAuthenticated}) => {
     }
 
     if (isAuthenticated){
-        return <Redirect to="/" />
+        // const nav= useNavigate();
+        // nav("/");
+        return <Navigate to="/" />
     }
     if (accountCreated){
-        return <Redirect to="/login" />
+        return <Navigate to="/login" />
     }
 
     return (

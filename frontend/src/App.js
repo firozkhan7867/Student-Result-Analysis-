@@ -1,6 +1,6 @@
 import "./app.css";
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from "./pages/dashboard/Dashboard";
 // import Login from "./pages/auth/Login";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -26,21 +26,21 @@ function App() {
     <div className="App">
     <Provider store={store}>
         <Router>
-                <Switch>
-                    <Route exact path='/' component={Dashboard} />
-                    <Route exact path='/analysis' component={AnalysisDashboard} />
-                    <Route path="/login"  component={Loginpage}/>
-                    <Route exact path='/signup' component={Signup} />
-                    <Route path="/reset-password"  component={ResetPassword}/>
-                    <Route path="/password/reset/confirm/:uid/:token"  component={ResetPasswordConfirm}/>
-                    <Route exact path='/activate/:uid/:token' component={Activate} />
-                    <Route exact path='/upload' component={UploadSem} />
-                    <Route exact path='/backdata' component={BackUpSem} />
-                    <Route exact path='/student' component={Student} />
-                    <Route exact path='/studentReport' component={StudentMainDashboard} />
-                    <Route exact path='/studentReport/:roll' component={StudentReportDashboard} />
-                    <Route exact path='/fetch' component={FetchDataDashboard} />
-                </Switch>
+                <Routes>
+                    <Route exact path='/' element={<Dashboard/>} />
+                    <Route exact path='/analysis' element={<AnalysisDashboard/>} />
+                    <Route path="/login"  element={<Loginpage/>}/>
+                    <Route exact path='/signup' element={<Signup/>} />
+                    <Route path="/reset-password"  element={<ResetPassword/>}/>
+                    <Route path="/password/reset/confirm/:uid/:token"  element={<ResetPasswordConfirm/>}/>
+                    <Route exact path='/activate/:uid/:token' element={<Activate/>} />
+                    <Route exact path='/upload' element={<UploadSem/>} />
+                    <Route exact path='/backdata' element={<BackUpSem/>} />
+                    <Route exact path='/student' element={<Student/>} />
+                    <Route exact path='/studentReport' element={<StudentMainDashboard/>} />
+                    <Route exact path='/studentReport/:roll' element={<StudentReportDashboard/>} />
+                    <Route exact path='/fetch' element={<FetchDataDashboard/>} />
+                </Routes>
         </Router>
     </Provider>
     </div>

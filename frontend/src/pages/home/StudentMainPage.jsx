@@ -1,5 +1,5 @@
 import React ,{useState}from 'react';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import "./home.css";
 import "./student.css";
 import { connect } from "react-redux";
@@ -13,7 +13,7 @@ const StudentMainPage = ({checkStudentDetails,getStudentDetails}) => {
     });
     
     const [alert, setAlert] = useState('');
-    let history = useHistory();
+    let history = useNavigate();
     const {roll} = formData;
 
 
@@ -44,7 +44,7 @@ const StudentMainPage = ({checkStudentDetails,getStudentDetails}) => {
                                 </button>
                             </div>);
                     getStudentDetails(roll).then(
-                        history.push(path));
+                        history(path));
                     localStorage.setItem('studentRoll',roll);
                         
                 }   

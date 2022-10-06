@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import {connect} from "react-redux";
 import { verify } from '../../actions/auth';
 import "./loginTEST.css"
@@ -15,7 +15,9 @@ const Activate = ({verify, match}) => {
     }
 
     if (verified){
-        return <Redirect to="/" />
+        // const nav = useNavigate();
+        // nav("/")
+        return <Navigate to="/" />
     }
     return (
         <div>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import {connect} from "react-redux";
 import { login } from '../../actions/auth';
 import "./loginTEST.css"
@@ -20,7 +20,9 @@ const Loginone = ({login, isAuthenticated}) => {
         login(email,password);
     }
     if (isAuthenticated){
-        return <Redirect to="/" />
+        // const nav = useNavigate();
+        // nav("/")
+        return <Navigate to="/" />
     }   
 
 

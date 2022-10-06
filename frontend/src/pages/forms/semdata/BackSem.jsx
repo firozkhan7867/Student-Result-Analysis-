@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import { GetBackData, backupload } from '../../../actions/auth';
 import React , {useState, Fragment} from 'react';
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const BackSem = (props) => {
 
@@ -26,7 +26,9 @@ const BackSem = (props) => {
         data.append('batch',batch);
         data.append('file',imagefile);
         props.backupload(data);
-        <Redirect to="/" />
+        <Navigate to="/" />
+        // const nav = useNavigate();
+        // nav("/");
     }
     
     const regdata = () =>{

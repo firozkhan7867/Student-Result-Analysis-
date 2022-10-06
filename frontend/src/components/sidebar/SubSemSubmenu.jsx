@@ -5,7 +5,7 @@ import { Link } from '@material-ui/core';
 import * as RiIcons from 'react-icons/ri';
 import { fetchSemData, fetchSubjData ,fetchSubjSectAnalysys} from '../../actions/visua';
 import { connect } from 'react-redux';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const SidebarLinksem = styled(Link)`
@@ -63,17 +63,25 @@ z-index:10000;
 const SubSemSubmenu = ({item, fetchSemData,fetchSubjData,fetchSubjSectAnalysys}) => {
 
   const [subnava1, setSubnava1] = useState(false);
-  let history = useHistory();
+  let history = useNavigate();
 
   const showSubnava1 = () => setSubnava1(!subnava1);
+
   
-    const get = (id) =>{
+    const get = async (id) =>{
       fetchSemData(id);
       fetchSubjData(id);
       fetchSubjSectAnalysys(id);
-      localStorage.setItem('semid', id);
-      let path = "/analysis";
-      history.push(path);
+      // await new Promise(resolve => setTimeout(resolve, 3000));
+      // await wait(2000);
+      // history('/analysis');
+      // console.log(window.location.pathname);
+      
+
+      if (window.location.pathname !== "/analysis"){
+        history("/analysis");
+      }
+      // if ()
     }
     
   

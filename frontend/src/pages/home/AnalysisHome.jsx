@@ -6,13 +6,13 @@ import { connect } from "react-redux";
 import {fetchSemData,fetchRegulationData} from "../../actions/visua"
 import Combo from '../../components/chart/Combo';
 // import { Link } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import ErrorBoundary from "../error/ErrorBoundary";
 
 
 
 const AnalysisHome = (props) => {
-    let history = useHistory();
+    let history = useNavigate();
 
     const cgpa = () =>{
         if (props.semVisData){
@@ -49,12 +49,16 @@ const AnalysisHome = (props) => {
                 </Fragment>
         }
         else{
-            history.push("/");
+            // history.push("/");
+            // <Navigate to="/"/>  
+            history("/");
 
             return <Fragment>
-                        <div className="container">
-                            Couldn't Fetch Data Some thing Went Wrong ... !!
-                        </div>
+                        <ErrorBoundary>
+                            <div className="container">
+                                Couldn't Fetch Data Some thing Went Wrong ... !!
+                            </div>
+                        </ErrorBoundary>
                     </Fragment>
         }
     }
