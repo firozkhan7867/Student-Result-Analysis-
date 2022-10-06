@@ -21,6 +21,8 @@ def get_pass_fail_count_of_each_subject_for_table(code,name,secs,sem,branch,batc
     k["code"] = code
     k["cc"] = name
     data = []
+
+    
     
 
     for sec in secs:
@@ -32,8 +34,13 @@ def get_pass_fail_count_of_each_subject_for_table(code,name,secs,sem,branch,batc
         failCount = Subjects.objects.filter(roll__in=(students),code=code).aggregate(total=Count(Case(When(result__icontains="F",then=1),output_field=IntegerField())))
         ana["passed_student"] = passCount["total"]
         ana["fail"] = failCount["total"]
-        ana["total_student"] = len(list(students))
-        ana["Pass_percentage"] = int(passCount["total"]/ana["total_student"]*100)
+        
+        si = Subjects.objects.filter(roll__in=(students),code=code)[0]
+        if si.subjtype == True:
+            ana["total_student"] = len(Subjects.objects.filter(roll__in=(students),code=code))
+        else:
+            ana["total_student"] = len(list(students))
+        ana["Pass_percentage"] = int((passCount["total"]-failCount["total"] )/ ana["total_student"] *100)
         p["analysis"] = ana
         data.append(p)
         # l.append(msg)

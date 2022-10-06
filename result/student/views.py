@@ -273,6 +273,7 @@ def get_sect_analysis(request, sem_id):
             #### ------- Warning ---------- Testing area -----------------###
 
             dsecs = get_sect_data(sem_id)
+            print(dsecs)
             secs = []
             for i in dsecs["data"]:
                 secs.append(i["name"])
@@ -303,6 +304,7 @@ def get_sect_analysis(request, sem_id):
             main["data"] = data
             main2 = {}
             main2["data"] = main
+            # print(main2)
             return JsonResponse(main2,safe=False)
     
     return HttpResponse("hi")
