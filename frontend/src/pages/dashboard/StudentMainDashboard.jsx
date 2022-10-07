@@ -24,7 +24,6 @@ const StudentMainDashboard = (props) => {
             <Topbar />
             <div className="container-1">
                 <Sidebar/>
-                {/* <Home/> */}
 
                 <StudentMainPage />
                 {props.children}

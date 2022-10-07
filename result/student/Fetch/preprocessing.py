@@ -1,3 +1,4 @@
+from student.back_log_handler import add_backlog
 from ..models import Batch, Branch
 from student.Fetch.main_code import get_formated_result
 from student.back_log_handler import add_student_performance
@@ -70,6 +71,9 @@ def check_subject_fetch(roll,subj_obj,sem):
         
         subj = Subjects.objects.create(roll=stud_obj,name=name,regulation=regulation,branch=branch,batch=batch,attendance=attendance,
         cgpa=cgpa,result=result,fail=fail,sem=sem,credit=credit,code=code,grade=grade,subjtype=type, type=subt)
+
+        if subj.result == "F":
+            add_backlog(subj,stud_obj)
 
 
         

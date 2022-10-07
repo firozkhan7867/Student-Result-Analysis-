@@ -499,6 +499,7 @@ def fetch_result(request,roll,branch,sem):
     student = Student.objects.get(roll=roll)
     print(f"Branch : {student.branch} Regultaion : {student.regulation} Batch: {student.batch} Section: {student.section}")
     result = result[str(sem)]
+    # supply = result[f"{sem}-Supply"]
     subj = get_subject_from_fetch_obj(result)
 
     sem = check_sem_exist(result,student.branch,student.batch,student.regulation,sem,subj)
