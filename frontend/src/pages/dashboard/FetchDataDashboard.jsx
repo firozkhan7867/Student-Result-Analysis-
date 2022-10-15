@@ -26,7 +26,11 @@ const FetchDataDashboard = (props) => {
             <div className="container-1">
                 <Sidebar/>
                 {/* <Home/> */}
-                <FetchMainPage regData={props.RegulationData} fetchRegulationData={props.fetchRegulationData} postRegulationData={props.postRegulationData} checkFetchSem={props.checkFetchSem} postFetchData={props.postFetchData} />
+                <FetchMainPage regData={props.RegulationData} fetchRegulationData={props.fetchRegulationData} 
+                                postRegulationData={props.postRegulationData} checkFetchSem={props.checkFetchSem}
+                                postFetchData={props.postFetchData} 
+                                />
+                                
                 {props.children}
                 
             </div>

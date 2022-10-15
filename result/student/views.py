@@ -1,5 +1,6 @@
 from cgi import test
 from distutils.command.install_egg_info import safe_name
+from json import JSONDecodeError
 from pprint import pformat
 from traceback import print_tb
 from urllib import response
@@ -837,4 +838,81 @@ def student_report(request,roll):
 
 
 
+
+
+
+
+
+
+
+# -------------------------- FILTER DATA PAGE FUNCTIONS -----------------------
+
+
+def fetchdata1(request):
+    data = {}
+    branchs = Branch.objects.all()
+    regs = Regulation.objects.all()
+
+
+    branch = []
+    for i in branchs:
+        d = {}
+        d["name"] = i.branches
+        d["id"] = i.id
+        branch.append(d)
+
+    reg = []
+
+    for i in regs:
+        d = {}
+        d["name"] = f"{i.regulation} for year {i.year}"
+        d["id"] = i.id
+        reg.append(d)
+
+    data["branch"] = branch
+    data["regulation"] = reg
+    data["status"] = True
+
+    print(data)
+
+    return JsonResponse(data,safe=True)
+
+
+
+
+
+
+
+# this function will return list of batch for particular regulation
+
+def fetchdata2(request,reg):
+    reg = int(reg)
+
+    if Regulation.objects.filter(id=reg).exists():
+        reg = Regulation.objects.get(id=reg)
+        batchs = Batch.objects.filter(reg=reg)
+
+        data = {}
+        data["batch"] = []
+
+        for i in batchs:
+            d = {}
+            d["name"] = f"batch {i.name}  for {i.reg.regulation}"
+            d["id"] = i.id
+            data["batch"].append(d)
+        
+        data["status"] = True
+
+        print(data)
+
+        return JsonResponse(data,safe=True)
+    else:
+        data = {}
+        data["batch"] = []
+
+        data["status"] = False
+        print(data)
+        print(Regulation.objects.filter(id=reg))
+
+        return JsonResponse(data,safe=True)
 

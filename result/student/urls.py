@@ -29,6 +29,8 @@ urlpatterns = [
     path('get_subj_section_data/<int:sem_id>',views.get_subj_section_data,name="get_subj_section_data"),
     path('get_sec_wise_topper_data/<int:batch>/<int:sem>/<str:branch>/<int:sec>',views.get_sec_wise_topper_data,name="get_sec_wise_topper_data"),
     path('get_individual_sem_analysis/<str:roll>',views.get_individual_sem_analysis,name="get_individual_sem_analysis"),
+    path('fetchdata1',views.fetchdata1,name="fetchdata1"),
+    path('fetchdata2/<int:reg>',views.fetchdata2,name="fetchdata2"),
 ]
 
 

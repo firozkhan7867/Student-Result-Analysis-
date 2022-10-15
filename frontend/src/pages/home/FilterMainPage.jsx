@@ -1,55 +1,66 @@
 import React ,{useState}from 'react';
-import { useNavigate } from "react-router-dom";
-// import "./home.css";
 import "./student.css";
-import { connect } from "react-redux";
-import {checkStudentDetails,getStudentDetails} from "../../actions/visua";
+import { batch, connect } from "react-redux";
+import {fetchdatafun2} from "../../actions/visua";
 
 
-const FilterMainPage = ({checkStudentDetails,getStudentDetails}) => {
+const FilterMainPage = ({fetchdata1, fetchdata2,fetchdatafun2}) => {
+
+    const branchData = fetchdata1["branch"];
+    const regData = fetchdata1["regulation"];
+    const batchData = fetchdata2["batch"];
     
 
     const [formData, setFormData] = useState({
-        roll:'',
+        branch:'',
+        reg:'',
     });
     
     const [alert, setAlert] = useState('');
-    let history = useNavigate();
     const {roll} = formData;
 
 
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
-        setAlert("");
+        // setAlert("");
+        // console.log(e.target.name);
+        // console.log(e.target.value);
+    }
+
+    const onChangeReg = e =>{
+        setFormData({ ...formData, [e.target.name]: e.target.value});
+        console.log(formData["reg"]);
+        // fetchdatafun2(formData["reg"]);
+
     }
 
 
     const onSubmit = () =>{
         let path= `/studentReport/${roll}`;
-        checkStudentDetails(roll).then(() => {
-            setAlert(<div className={`alert alert-${JSON.parse(localStorage.getItem("checkRoll")).code} alert-dismissible fade show d-flex justify-content-between`} role="alert">
-                            <div className="" >
-                                <strong>Alert ...!!</strong> {JSON.parse(localStorage.getItem("checkRoll")).msg}
-                             </div>
-                             <button type="button" onClick={() => {setAlert('')}} className="rounded p-2 bg-danger text-white close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                             </button>
-                         </div>)
-             if (JSON.parse(localStorage.getItem("checkRoll")).code === "success"){
-                    setAlert(<div className={`alert alert-success alert-dismissible fade show d-flex justify-content-between`} role="alert">
-                                <div className="" >
-                                    <strong>Success .. !! </strong> Fetching Student Details. You will be redirected in few second please wait....
-                                </div>
-                                <button type="button" onClick={() => {setAlert('')}} className="rounded p-2 bg-danger text-white close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>);
-                    getStudentDetails(roll).then(
-                        history(path));
-                    localStorage.setItem('studentRoll',roll);
+        // checkStudentDetails(roll).then(() => {
+        //     setAlert(<div className={`alert alert-${JSON.parse(localStorage.getItem("checkRoll")).code} alert-dismissible fade show d-flex justify-content-between`} role="alert">
+        //                     <div className="" >
+        //                         <strong>Alert ...!!</strong> {JSON.parse(localStorage.getItem("checkRoll")).msg}
+        //                      </div>
+        //                      <button type="button" onClick={() => {setAlert('')}} className="rounded p-2 bg-danger text-white close" data-dismiss="alert" aria-label="Close">
+        //                         <span aria-hidden="true">&times;</span>
+        //                      </button>
+        //                  </div>)
+        //      if (JSON.parse(localStorage.getItem("checkRoll")).code === "success"){
+        //             setAlert(<div className={`alert alert-success alert-dismissible fade show d-flex justify-content-between`} role="alert">
+        //                         <div className="" >
+        //                             <strong>Success .. !! </strong> Fetching Student Details. You will be redirected in few second please wait....
+        //                         </div>
+        //                         <button type="button" onClick={() => {setAlert('')}} className="rounded p-2 bg-danger text-white close" data-dismiss="alert" aria-label="Close">
+        //                             <span aria-hidden="true">&times;</span>
+        //                         </button>
+        //                     </div>);
+        //             getStudentDetails(roll).then(
+        //                 history(path));
+        //             localStorage.setItem('studentRoll',roll);
                         
-                }   
-        });
+        //         }   
+        // });
     }
 
 
@@ -69,41 +80,31 @@ const FilterMainPage = ({checkStudentDetails,getStudentDetails}) => {
                                     <div className="d-flex justify-content-around mx-4">
                                         <div className="d-flex align-items-center w-100 mx-4">
                                             <h5 >Branch: </h5>
-                                            <select name="branch" className="form-control mx-2">
-                                                <option value="-">Select</option>
-                                                <option value="all">All Branch</option>
-                                                <option value="CSE">CSE</option>
-                                                <option value="IT">IT</option>
-                                                <option value="ECE">ECE</option>
-                                                <option value="CIVIL">CIVIL</option>
-                                                <option value="MECH">MECH</option>
-                                                <option value="EEE">EEE</option>
-                                                <option value="CSED">CSE-D</option>
-                                                <option value="CSEAI">CSE-AL/ML</option>
+                                            <select name="branch" className="form-control mx-2"  onChange={e => onChange(e)}>
+                                                <option value="all">Select</option>
+                                                {branchData.map((value,index)=>{
+                                                    return <option value={value.id} key={index}>{value.name}</option>
+                                                })}
                                             </select>
                                         </div>
                                         <div className="d-flex align-items-center w-100 mx-4">
                                             <h5 >Regulation: </h5>
-                                            <select name="reg" className="form-control mx-2">
-                                                <option value="all">Select</option>
-                                                <option value="1">R-15</option>
-                                                <option value="2">R-19</option>
-                                                <option value="3">R-20</option>
+                                            <select name="reg" className="form-control mx-2" onChange={e => onChangeReg(e)}>
+                                                <option value="0">Select</option>
+                                                {regData.map((value,index)=>{
+                                                    return <option value={value.id} key={index}>{value.name}</option>
+                                                })}
                                             </select>
                                         </div>
                                         <div className="d-flex align-items-center w-100 mx-4">
                                             <h5 >Batch: </h5>
                                             <select name="batch" className="form-control mx-2">
-                                                <option value="-">Select</option>
-                                                <option value="all">All Branch</option>
-                                                <option value="CSE">CSE</option>
-                                                <option value="IT">IT</option>
-                                                <option value="ECE">ECE</option>
-                                                <option value="CIVIL">CIVIL</option>
-                                                <option value="MECH">MECH</option>
-                                                <option value="EEE">EEE</option>
-                                                <option value="CSED">CSE-D</option>
-                                                <option value="CSEAI">CSE-AL/ML</option>
+                                                <option value="all">Select</option>
+                                                {
+                                                    batchData.map((value,index)=>{
+                                                        return <option value={value.id} key={index}>{value.name}</option>
+                                                    })
+                                                }
                                             </select>
                                         </div>
                                     </div>
@@ -113,9 +114,6 @@ const FilterMainPage = ({checkStudentDetails,getStudentDetails}) => {
                                             <select name="branch" className="form-control mx-2">
                                                 <option value="all">ALL Sections</option>
                                                 <option value="1">Section - 1</option>
-                                                <option value="2">Section - 2</option>
-                                                <option value="3">Section - 3</option>
-                                                <option value="4">Section - 4</option>
                                             </select>
                                         </div>
                                         <div className="d-flex align-items-center w-100 mx-4">
@@ -149,13 +147,6 @@ const FilterMainPage = ({checkStudentDetails,getStudentDetails}) => {
                                             <select name="branch" className="form-control mx-2" multiple>
                                                 <option value="all">All Semesters</option>
                                                 <option value="1">I Sem</option>
-                                                <option value="2">II Sem</option>
-                                                <option value="3">III Sem</option>
-                                                <option value="4">IV Sem</option>
-                                                <option value="5">V Sem</option>
-                                                <option value="6">VI Sem</option>
-                                                <option value="7">VII Sem</option>
-                                                <option value="8">VIII Sem</option>
                                             </select>
                                         </div>
                                     </div>
@@ -173,11 +164,12 @@ const FilterMainPage = ({checkStudentDetails,getStudentDetails}) => {
 
 
 
-// const mapStateToProps = state => ({
-//     semVisData: state.auth.semVisData
-// });
+const mapStateToProps = state => ({
+    fetchdata1: state.auth.fetchdata1,
+    fetchdata2: state.auth.fetchdata2,
+});
 
-export default connect(null,{checkStudentDetails,getStudentDetails})(FilterMainPage);
+export default connect(mapStateToProps,{fetchdatafun2})(FilterMainPage);
 
 // export default StudentMainPage;
 

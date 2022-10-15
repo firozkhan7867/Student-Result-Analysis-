@@ -12,6 +12,8 @@ const StudentUp = (props) => {
         batch:'',
     });
 
+    
+
     const {reg,branch,batch} = formData
     
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});

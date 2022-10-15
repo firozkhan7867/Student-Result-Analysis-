@@ -32,7 +32,11 @@ import {
     CHECK_STUDENT_ROLL_SUCCESS,
     GET_STUDENT_DETAILS_SUCCESS,
     GET_STUDENT_DETAILS_FAIL,
-    SAVEID
+    SAVEID,
+    GET_FETCH_DATA_1_SUCCESS,
+    GET_FETCH_DATA_1_FAIL,
+    GET_FETCH_DATA_2_SUCCESS,
+    GET_FETCH_DATA_2_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -51,7 +55,10 @@ const initialState = {
     failPercentageSection: [0, 0, 0, 0],
     toppersData: { 1: [], 2: [], 3: [], 4: [], "allSection": [], "onlysections": [] },
     checkRoll: { "code": "warning", "msg": "something went Wrong .. couldn't  process the request" },
-    studentdetails: { "cgpas": [null, null, null, null, null, null, null, null],"roll": null,"details":{ "name":null, "email":null,"mobile":null, "dob":null,"father":null, "aadhar":null, "address":null, "roll":null, "section":null,"branch":null} },
+    studentdetails: { "cgpas": [null, null, null, null, null, null, null, null],"roll": null,
+                        "details":{ "name":null, "email":null,"mobile":null, "dob":null,"father":null, "aadhar":null, "address":null, "roll":null, "section":null,"branch":null} },
+    fetchdata1: {"branch":[],"regulation":[],"status":false},
+    fetchdata2: {"batch":[],"status":false},
 };
 
 export default function (state = initialState, action) {
@@ -171,7 +178,38 @@ export default function (state = initialState, action) {
                 semId: payload,
             }
 
+        // FETCH BRANCH AND REGULATIONS 
 
+        case GET_FETCH_DATA_1_SUCCESS:
+            localStorage.setItem("branchdata",JSON.stringify(payload));
+            // console.log(payload)
+            return {
+                ...state,
+                fetchdata1: payload,
+            }
+        
+        case GET_FETCH_DATA_1_FAIL:
+            localStorage.removeItem("branchdata");
+            return {
+                ...state,
+                fetchdata1: {"branch":[],"regulation":[],"status":false},
+            }
+
+
+        case GET_FETCH_DATA_2_SUCCESS:
+            localStorage.setItem("regFetchData",JSON.stringify(payload));
+            console.log(payload)
+            return {
+                ...state,
+                fetchdata2: payload,
+            }
+        
+        case GET_FETCH_DATA_2_FAIL:
+            localStorage.removeItem("regFetchData");
+            return {
+                ...state,
+                fetchdata2: {"batch":[],"status":false},
+            }   
 
         case SIGNUP_SUCCESS:
             return {

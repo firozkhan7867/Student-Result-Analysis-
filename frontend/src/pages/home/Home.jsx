@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import "./home.css";
 import { connect } from "react-redux";
-import {fetchSemData,fetchRegulationData} from "../../actions/visua"
+import {fetchSemData,fetchRegulationData,fetchdata1} from "../../actions/visua"
 import { Link } from 'react-router-dom';
 import ErrorBoundary from "../error/ErrorBoundary";
 const Home = (props) => {
@@ -25,7 +25,7 @@ const Home = (props) => {
                                         <Link className="btn btn-info btn-lg" to="/fetch" onClick={props.fetchRegulationData} role="button">Fetch New Data</Link>
                                     </p>
                                     <p className="lead mx-5">
-                                        <Link className="btn btn-secondary btn-lg" to="/filter" onClick={props.fetchRegulationData} role="button">Filter and Generate Data</Link>
+                                        <Link className="btn btn-secondary btn-lg" to="/filter" onClick={props.fetchdata1} role="button">Filter and Generate Data</Link>
                                     </p>
                                 </div>
                             </div>
@@ -60,5 +60,5 @@ const mapStateToProps = state => ({
     semVisData: state.auth.semVisData
 });
 
-export default connect(mapStateToProps, { fetchSemData,fetchRegulationData })(Home);
+export default connect(mapStateToProps, { fetchSemData,fetchRegulationData, fetchdata1 })(Home);
 

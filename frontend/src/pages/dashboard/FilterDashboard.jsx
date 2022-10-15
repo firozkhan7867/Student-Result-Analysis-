@@ -24,7 +24,7 @@ const FilterDashboard = (props) => {
 
             <Sidebar/>
             {/* <Home/> */}
-            <FilterMainPage/>
+            <FilterMainPage  />
             {props.children}
             
             </div>

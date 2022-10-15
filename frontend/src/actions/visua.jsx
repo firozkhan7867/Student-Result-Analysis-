@@ -15,7 +15,11 @@ import {
     CHECK_STUDENT_ROLL_FAIL,
     GET_STUDENT_DETAILS_SUCCESS,
     GET_STUDENT_DETAILS_FAIL,
-    SAVEID
+    SAVEID,
+    GET_FETCH_DATA_1_SUCCESS,
+    GET_FETCH_DATA_1_FAIL,
+    GET_FETCH_DATA_2_SUCCESS,
+    GET_FETCH_DATA_2_FAIL,
 } from "./types";
 import axios from "axios";
 
@@ -263,6 +267,85 @@ export const getStudentDetails = (roll) => async dispatch => {
    // return {"code":"warning","msg":"something went wrong and could not fetch...."}
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// ----------------------------- this is list of function for API for FILTER PAGE -------------------------------- 
+
+
+
+
+
+
+
+
+
+// this function will fetch only branch and regulation from server
+
+export const fetchdata1 = () => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    // console.log("inside vis");
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/fetchdata1`,config)
+        // console.log(res.data);
+        dispatch({
+            type: GET_FETCH_DATA_1_SUCCESS,
+            payload: res.data,
+        })
+        
+    }catch(err){
+        dispatch({
+            type: GET_FETCH_DATA_1_FAIL,
+        })
+    }
+}
+
+
+
+//  pass the data for branch and reg to fetch data of particular batch from that regulation
+
+export const fetchdatafun2 = (reg) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const regVal =  parseInt(reg);
+
+    // console.log("inside vis");
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/fetchdata2/${regVal}`,config)
+        // console.log(res.data);
+        dispatch({
+            type: GET_FETCH_DATA_2_SUCCESS,
+            payload: res.data,
+        })
+        
+    }catch(err){
+        dispatch({
+            type: GET_FETCH_DATA_2_FAIL,
+        })
+    }
+}
+
+
+
+
 
 
 
