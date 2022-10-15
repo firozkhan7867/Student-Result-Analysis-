@@ -24,6 +24,9 @@ const Home = (props) => {
                                     <p className="lead">
                                         <Link className="btn btn-info btn-lg" to="/fetch" onClick={props.fetchRegulationData} role="button">Fetch New Data</Link>
                                     </p>
+                                    <p className="lead mx-5">
+                                        <Link className="btn btn-secondary btn-lg" to="/filter" onClick={props.fetchRegulationData} role="button">Filter and Generate Data</Link>
+                                    </p>
                                 </div>
                             </div>
                         </div>

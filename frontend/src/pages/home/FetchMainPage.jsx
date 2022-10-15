@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import Selected, { Select } from '../../components/FetchSelectCompos/select';
-// import { useHistory } from "react-router-dom";
-
-// import { Redirect } from "react-router-dom";
-
-// import "./student.css";
-// styled components
-//
 
 
 

@@ -3,7 +3,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from "./pages/dashboard/Dashboard";
 // import Login from "./pages/auth/Login";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 // import NavBarExample from "./components/navbar/Navbar";
 import { Provider } from 'react-redux';
 import store from './store';
@@ -21,6 +20,7 @@ import StudentReportDashboard from "./pages/dashboard/StudentReportDashboard";
 import StudentMainDashboard from "./pages/dashboard/StudentMainDashboard";
 import FetchDataDashboard from "./pages/dashboard/FetchDataDashboard";
 import AnalysisDashboard from "./pages/dashboard/AnalysisDashboard";
+import FilterDashboard from "./pages/dashboard/FilterDashboard";
 function App() {
   return (
     <div className="App">
@@ -40,6 +40,7 @@ function App() {
                     <Route exact path='/studentReport' element={<StudentMainDashboard/>} />
                     <Route exact path='/studentReport/:roll' element={<StudentReportDashboard/>} />
                     <Route exact path='/fetch' element={<FetchDataDashboard/>} />
+                    <Route exact path='/filter' element={<FilterDashboard/>} />
                 </Routes>
         </Router>
     </Provider>
