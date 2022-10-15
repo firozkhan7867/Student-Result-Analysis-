@@ -37,6 +37,8 @@ import {
     GET_FETCH_DATA_1_FAIL,
     GET_FETCH_DATA_2_SUCCESS,
     GET_FETCH_DATA_2_FAIL,
+    GET_FETCH_DATA_3_FAIL,
+    GET_FETCH_DATA_3_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -59,6 +61,7 @@ const initialState = {
                         "details":{ "name":null, "email":null,"mobile":null, "dob":null,"father":null, "aadhar":null, "address":null, "roll":null, "section":null,"branch":null} },
     fetchdata1: {"branch":[],"regulation":[],"status":false},
     fetchdata2: {"batch":[],"status":false},
+    fetchdata3:{"section":[],"sems":[],"status":false},
 };
 
 export default function (state = initialState, action) {
@@ -198,7 +201,7 @@ export default function (state = initialState, action) {
 
         case GET_FETCH_DATA_2_SUCCESS:
             localStorage.setItem("regFetchData",JSON.stringify(payload));
-            console.log(payload)
+            // console.log(payload)
             return {
                 ...state,
                 fetchdata2: payload,
@@ -211,6 +214,21 @@ export default function (state = initialState, action) {
                 fetchdata2: {"batch":[],"status":false},
             }   
 
+        case GET_FETCH_DATA_3_SUCCESS:
+            localStorage.setItem("sectSemData",JSON.stringify(payload));
+            console.log(payload);
+            return {
+                ...state,
+                fetchdata3: payload,
+            }
+        
+        case GET_FETCH_DATA_3_FAIL:
+            localStorage.removeItem("sectSemData");
+            return {
+                ...state,
+                fetchdata3: {"section":[],"sems":[],"status":false},
+            }   
+    
         case SIGNUP_SUCCESS:
             return {
                 ...state,

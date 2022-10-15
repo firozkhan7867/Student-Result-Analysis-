@@ -20,6 +20,8 @@ import {
     GET_FETCH_DATA_1_FAIL,
     GET_FETCH_DATA_2_SUCCESS,
     GET_FETCH_DATA_2_FAIL,
+    GET_FETCH_DATA_3_FAIL,
+    GET_FETCH_DATA_3_SUCCESS,
 } from "./types";
 import axios from "axios";
 
@@ -339,6 +341,44 @@ export const fetchdatafun2 = (reg) => async dispatch => {
     }catch(err){
         dispatch({
             type: GET_FETCH_DATA_2_FAIL,
+        })
+    }
+}
+
+
+
+
+
+
+
+// pass the data for reg and fetch the section and sems data
+
+
+export const fetchdatafun3 = (branch,reg,batch) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const regVal =  parseInt(reg);
+
+    const branchVal =  parseInt(branch);
+
+    const batchVal =  parseInt(batch);
+
+    // console.log("inside vis");
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/fetchdata3/${regVal}/${branchVal}/${batchVal}`,config)
+        // console.log(res.data);
+        dispatch({
+            type: GET_FETCH_DATA_3_SUCCESS,
+            payload: res.data,
+        })
+        
+    }catch(err){
+        dispatch({
+            type: GET_FETCH_DATA_3_FAIL,
         })
     }
 }

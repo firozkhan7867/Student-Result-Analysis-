@@ -854,14 +854,14 @@ def fetchdata1(request):
     regs = Regulation.objects.all()
 
 
-    branch = []
+    branch = [{"id":"all", "name":"Select All"}]
     for i in branchs:
         d = {}
         d["name"] = i.branches
         d["id"] = i.id
         branch.append(d)
 
-    reg = []
+    reg = [{"id":"all", "name":"Select All"}]
 
     for i in regs:
         d = {}
@@ -893,7 +893,7 @@ def fetchdata2(request,reg):
         batchs = Batch.objects.filter(reg=reg)
 
         data = {}
-        data["batch"] = []
+        data["batch"] = [{"id":"all", "name":"Select All"}]
 
         for i in batchs:
             d = {}
@@ -915,4 +915,87 @@ def fetchdata2(request,reg):
         print(Regulation.objects.filter(id=reg))
 
         return JsonResponse(data,safe=True)
+
+
+
+
+
+
+
+
+
+
+
+
+# this function will return section details and sems details 
+
+def fetchdata3(request,reg,branch,batch):
+
+    if batch == "all":
+        regData = Regulation.objects.get(id=reg)
+        branchData = Branch.objects.get(id=branch)
+
+        students = Student.objects.all().filter(regulation=regData,branch=branchData)
+        sect = get_section_list(students)
+        data = {}
+        data["section"] = ["all"]
+        data["section"].extend(list(sect.keys()))
+
+        sems = Semester.objects.all().filter(regulation=regData, branch=branchData)
+
+        data["sems"] = []
+
+        for i in sems:
+            d = {}
+            d["name"] = i.name
+            d["id"] = i.id
+            data["sems"].append(d)
+        
+        data["status"] = True
+
+        return JsonResponse(data,safe=True)
+        
+
+    elif Regulation.objects.filter(id=reg).exists() and Branch.objects.filter(id=branch).exists() and Batch.objects.filter(id=batch).exists():
+        regData = Regulation.objects.get(id=reg)
+        branchData = Branch.objects.get(id=branch)
+        batchData = Batch.objects.get(id=batch)
+
+        students = Student.objects.all().filter(regulation=regData, batch=batchData,branch=branchData)
+        sect = get_section_list(students)
+        data = {}
+        data["section"] = ["all"]
+        data["section"].extend(list(sect.keys()))
+
+        sems = Semester.objects.all().filter(regulation=regData, batch=batchData,branch=branchData).order_by("name")
+        data["sems"] = [{"id":"all", "name":"Select All"}]
+
+        for i in sems:
+            d = {}
+            d["name"] = i.name
+            d["id"] = i.id
+            data["sems"].append(d)
+        
+        data["status"] = True
+
+        return JsonResponse(data,safe=True)
+    else:
+        data = {}
+        data["section"] = []
+        data["sems"] = []
+        data["status"] = False
+
+        return JsonResponse(data,safe=True)
+
+
+
+
+
+
+
+
+
+
+
+
 

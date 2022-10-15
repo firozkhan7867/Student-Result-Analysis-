@@ -31,6 +31,7 @@ urlpatterns = [
     path('get_individual_sem_analysis/<str:roll>',views.get_individual_sem_analysis,name="get_individual_sem_analysis"),
     path('fetchdata1',views.fetchdata1,name="fetchdata1"),
     path('fetchdata2/<int:reg>',views.fetchdata2,name="fetchdata2"),
+    path('fetchdata3/<int:reg>/<int:branch>/<int:batch>',views.fetchdata3,name="fetchdata3"),
 ]
 
 
