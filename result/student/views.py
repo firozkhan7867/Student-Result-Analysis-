@@ -8,6 +8,8 @@ from django.http import request
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render
 from datetime import datetime
+from student.filter.filterPreprocessing import tableDetails
+from student.filter.filterPreprocessing import filteredStudents
 from student.Fetch.main_code import fetchDetails
 from rest_framework import status
 from rest_framework.response import Response
@@ -51,7 +53,11 @@ import asyncio
 
 
 
-######################## ---------------REST API ------------------
+
+
+
+######################## --------------- REST API ------------------
+
 
 
 # class SemesterViewSet(viewsets.ModelViewSet):
@@ -69,6 +75,7 @@ import asyncio
 #         sem = Semester.objects.create(name=name,regulation=reg,branch=branch, file=file, batch=batch)
 #         split_data(data,sem.id)
 #         return HttpResponse({"message": "Book Created"}, status=status.HTTP_200_OK)
+
 
 
 
@@ -604,6 +611,7 @@ async def cancel(request):
 
 
 
+
 # Toppers Data API for single semester
 
 
@@ -631,6 +639,8 @@ async def cancel(request):
 #         k+=1
 #     print(*data)
 #     return JsonResponse({"data":data},safe=False)
+
+
 
 
 
@@ -762,6 +772,13 @@ def get_subj_section_data(request,sem_id):
     
     temp = {"subjSectionData":data,"sectionList":dsecs,"semtopData":top_data,"failPercentageSection":fails,"onlysections":secs,"eachSectionTopData":sectionTopData}
     return JsonResponse({"data":temp},safe=False)
+
+
+
+
+
+
+
 
 def get_roll_details(roll):
     rolld = Student.objects.get(roll=roll)
@@ -903,7 +920,7 @@ def fetchdata2(request,reg):
         
         data["status"] = True
 
-        print(data)
+        # print(data)
 
         return JsonResponse(data,safe=True)
     else:
@@ -911,8 +928,8 @@ def fetchdata2(request,reg):
         data["batch"] = []
 
         data["status"] = False
-        print(data)
-        print(Regulation.objects.filter(id=reg))
+        # print(data)
+        # print(Regulation.objects.filter(id=reg))
 
         return JsonResponse(data,safe=True)
 
@@ -988,6 +1005,73 @@ def fetchdata3(request,reg,branch,batch):
         return JsonResponse(data,safe=True)
 
 
+
+
+
+# this function will response to POST request and return filtered Data
+   
+@csrf_exempt
+def filter(request):
+    if request.method == "POST":
+
+        # branch,reg,batch,sems,cgpa,backlog,sect
+        reg = request.POST.get("reg")
+        branch = request.POST.get("branch")
+        batch = request.POST.get("batch")
+        sems = request.POST.get("sems")
+        cgpa = request.POST.get("cgpa")
+        backlog = request.POST.get("backlog")
+        sect = request.POST.get("sect")
+
+
+        reg = Regulation.objects.get(id=reg)
+        branch = Branch.objects.get(id=branch)
+        batch = Batch.objects.get(id=batch)
+        # sems = Semester.objects.get(id=sems)
+
+        # all  1 = cgpa > 9, 2 =  cgpa > 8 , 3 =  cgpa > 7 , 4 =  cgpa > 6 , 5 =  cgpa > 5 , 6  =  cgpa < 5
+
+        # clear   1 , 2 , 3 , 4 , 5 = backlog > 4
+        # gpa = {"all":"all",1:9,2:8,3:7,4:6,5:5,6:4}
+
+        
+        data = {"data":[branch,reg,batch,sems,cgpa,backlog,sect]}
+        print(data)
+        
+        sm = []
+        if "all" not in sems:
+            for i in sems.split(","):
+                sm.append(Semester.objects.get(id=int(i)))
+        else:
+            for i in Semester.objects.all().filter(regulation=reg,branch=branch,batch=batch):
+                sm.append(i)
+            # sm.append(Semester.objects.filter(regulation=reg,branch=branch,batch=batch))
+        # print(sm)
+
+
+        perform = [filteredStudents(branch,reg,batch,sem,sect,backlog,cgpa) for sem in sm]
+        
+
+
+        # for sem in sm:
+        #     student = filteredStudents(branch,reg,batch,sem,sect,backlog,cgpa)
+        #     students.append(student)
+
+        # print(perform)
+
+        
+
+        detail = tableDetails(perform)
+        data = {}
+        data["data"] = detail
+
+
+
+
+        # print(branch,reg,batch,sems,cgpa,backlog,sect)
+        return JsonResponse(data,safe=True)
+    else:
+        return JsonResponse({"data":False})
 
 
 

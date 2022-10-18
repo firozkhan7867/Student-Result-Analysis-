@@ -97,15 +97,15 @@ def add_performance_sem(data,roll,sem):
         no_of_backlog = registered_data[i] - no_of_pass_data[i]
         
         if no_of_backlog < 1:
-            pass_or_fail = True
+            passed = True
             had_backlog = False
         else:
-            pass_or_fail = False
+            passed = False
             had_backlog = True
             
         perform = Performance(roll=student_roll, regulation=sem.regulation,sem=sem,
                               registered=registered_data[i], no_of_pass=no_of_pass_data[i], 
-                              no_of_backlog=no_of_backlog, pass_or_fail=pass_or_fail,
+                              no_of_backlog=no_of_backlog, passed=passed,
                               TCR=TCR, TCP=TCP, SCGPA=SCGPA, batch=batch,had_backlog=had_backlog)
         perform.save()  
         get_perform = Performance.objects.get(id=perform.id)

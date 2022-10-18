@@ -215,7 +215,7 @@ class Performance(models.Model):
     TCP = models.FloatField(blank=True)
     SCGPA = models.FloatField(blank=True)
     no_of_backlog = models.IntegerField()
-    pass_or_fail = models.BooleanField(default=True)
+    passed = models.BooleanField(default=True)
     had_backlog = models.BooleanField(default=False)
     
     

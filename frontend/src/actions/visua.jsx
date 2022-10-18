@@ -22,6 +22,8 @@ import {
     GET_FETCH_DATA_2_FAIL,
     GET_FETCH_DATA_3_FAIL,
     GET_FETCH_DATA_3_SUCCESS,
+    POST_FILTER_DATA_FAIL,
+    POST_FILTER_DATA_SUCCESS,
 } from "./types";
 import axios from "axios";
 
@@ -384,6 +386,32 @@ export const fetchdatafun3 = (branch,reg,batch) => async dispatch => {
 }
 
 
+
+
+
+export const postFilterData = (data) => async dispatch => {
+    // const config = {
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     }
+    // };
+
+    // const body = JSON.stringify({ branch,reg,batch,sems,cgpa,backlog,sect });
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/filter`, data);
+        // console.log(res);
+        dispatch({
+            type:  POST_FILTER_DATA_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: POST_FILTER_DATA_FAIL
+        })
+    }
+};
 
 
 

@@ -32,6 +32,7 @@ urlpatterns = [
     path('fetchdata1',views.fetchdata1,name="fetchdata1"),
     path('fetchdata2/<int:reg>',views.fetchdata2,name="fetchdata2"),
     path('fetchdata3/<int:reg>/<int:branch>/<int:batch>',views.fetchdata3,name="fetchdata3"),
+    path('filter',views.filter,name="filter"),
 ]
 
 

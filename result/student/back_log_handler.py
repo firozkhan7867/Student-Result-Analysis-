@@ -62,7 +62,7 @@ def update_performance(subj):
     perf.SCGPA = data[2]
     
     if perf.no_of_backlog == 0:
-        perf.pass_or_fail = True
+        perf.passed = True
     perf.save()
 
 def update_subject(attmpt):

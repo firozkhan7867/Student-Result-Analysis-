@@ -58,7 +58,6 @@ class Bargraph extends Component {
                   },
                 ],
               }}
-              labels="months"
             />
           </CCardBody>
         </CCard>

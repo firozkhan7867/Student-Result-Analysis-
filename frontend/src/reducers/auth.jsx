@@ -39,6 +39,8 @@ import {
     GET_FETCH_DATA_2_FAIL,
     GET_FETCH_DATA_3_FAIL,
     GET_FETCH_DATA_3_SUCCESS,
+    POST_FILTER_DATA_SUCCESS,
+    POST_FILTER_DATA_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -62,6 +64,7 @@ const initialState = {
     fetchdata1: {"branch":[],"regulation":[],"status":false},
     fetchdata2: {"batch":[],"status":false},
     fetchdata3:{"section":[],"sems":[],"status":false},
+    filteredData:{},
 };
 
 export default function (state = initialState, action) {
@@ -181,7 +184,7 @@ export default function (state = initialState, action) {
                 semId: payload,
             }
 
-        // FETCH BRANCH AND REGULATIONS 
+        //   -------------------------     FETCH BRANCH AND REGULATIONS    ---------------------------
 
         case GET_FETCH_DATA_1_SUCCESS:
             localStorage.setItem("branchdata",JSON.stringify(payload));
@@ -216,7 +219,7 @@ export default function (state = initialState, action) {
 
         case GET_FETCH_DATA_3_SUCCESS:
             localStorage.setItem("sectSemData",JSON.stringify(payload));
-            console.log(payload);
+            // console.log(payload);
             return {
                 ...state,
                 fetchdata3: payload,
@@ -227,7 +230,21 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 fetchdata3: {"section":[],"sems":[],"status":false},
-            }   
+            }  
+        case POST_FILTER_DATA_SUCCESS:
+            localStorage.setItem("filteredData",JSON.stringify(payload));
+            console.log(payload);
+            return{
+                ...state,
+                filteredData:payload
+            } 
+        case POST_FILTER_DATA_FAIL:
+            localStorage.removeItem("filteredData");
+            // console.log(payload);
+            return{
+                ...state,
+                filteredData:{}
+            } 
     
         case SIGNUP_SUCCESS:
             return {

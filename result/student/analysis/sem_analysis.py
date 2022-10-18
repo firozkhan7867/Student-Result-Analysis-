@@ -59,7 +59,7 @@ def get_sem_performance_analysis(sem):
         no_of_back = []
         
         for per in pers:
-            if per.pass_or_fail == False:
+            if per.passed == False:
                 fail_count +=1
                 if per.no_of_backlog > 0:
                     no_of_back.append(per.no_of_backlog)
