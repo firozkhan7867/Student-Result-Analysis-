@@ -526,7 +526,7 @@ def reduced_fetch_semester_result(batch,sem,branch):
 
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
-    students = Student.objects.filter(batch=batch,branch=branch_obj)[82:]
+    students = Student.objects.filter(batch=batch,branch=branch_obj)
     # print(students)
 
     print("-------------------------------------------------------------------------------------------------")
@@ -567,12 +567,17 @@ async def fetch_semester_result(request,batch,sem,branch):
 
 
 def check_sem_data_exists(request,batch,sem,branch):
-    flag = fetch_check_result(batch,sem,branch)
-    if flag == 0:
-        return JsonResponse({"code":"danger","msg":"Semester Result not found in the server .... !!!"}, safe=False)
-    elif flag == 1:
-        return JsonResponse({"code":"success","msg":"Semester Result has started fetching data from server, wait for while"},safe=False)
+
+    try:
+        flag = fetch_check_result(batch,sem,branch) 
+        if flag == 0:
+            return JsonResponse({"code":"danger","msg":"Semester Result not found in the server .... !!!"}, safe=False)
+        elif flag == 1:
+            return JsonResponse({"code":"success","msg":"Semester Result has started fetching data from server, wait for while"},safe=False)
     
+    except Exception as e: 
+        print(e)
+        return JsonResponse({"code":"danger","msg":"IMS Server Not Responding .... !!!"}, safe=False)
 
 
 def test5(num):

@@ -53,7 +53,7 @@ class FetchMainPage extends Component {
             this.setState({
                 ["alert"]:<div className={`alert alert-${JSON.parse(localStorage.getItem("checkFetchSem")).code} alert-dismissible fade show d-flex justify-content-between`} role="alert">
                             <div className="">
-                                <strong>{JSON.parse(localStorage.getItem("checkFetchSem")).code} ..!!!</strong> {JSON.parse(localStorage.getItem("checkFetchSem")).msg}
+                                <strong>{JSON.parse(localStorage.getItem("checkFetchSem")).code === "danger"? "Error " : JSON.parse(localStorage.getItem("checkFetchSem")).code } ..!!!</strong> {JSON.parse(localStorage.getItem("checkFetchSem")).msg}
                              </div>
                              <NavLink to={"/"} type="button" className="rounded p-2 bg-danger text-white close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -235,7 +235,7 @@ class FetchMainPage extends Component {
                                                 <option value="1">I - Semester</option>
                                                 <option value="2">II - Semester</option>
                                                 <option value="3">III - Semester</option>
-                                                <option value="4">VI - Semester</option>
+                                                <option value="4">IV - Semester</option>
                                                 <option value="5">V - Semester</option>
                                                 <option value="6">VI - Semester</option>
                                                 <option value="7">VII - Semester</option>
