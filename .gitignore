@@ -31,3 +31,6 @@ frontend/package.json
 frontend/.env
 frontend/.env
 result/result/settings.py
+result/accounts/migrations/0002_auto_20221019_2315.py
+result/student/migrations/0008_auto_20221019_2315.py
+result/static/
