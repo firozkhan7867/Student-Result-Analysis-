@@ -527,7 +527,6 @@ def reduced_fetch_semester_result(batch,sem,branch):
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
     students = Student.objects.filter(batch=batch,branch=branch_obj)
-    # print(students)
 
     print("-------------------------------------------------------------------------------------------------")
 
@@ -535,8 +534,10 @@ def reduced_fetch_semester_result(batch,sem,branch):
     for i in students:
         time.sleep(10)
         try:
+            print(i)
             fetch_and_add_student_sem(i.roll.upper(),sem,branch)
         except Exception as e: 
+            print("---")
             print(e)
             return
 
