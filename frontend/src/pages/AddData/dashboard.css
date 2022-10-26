@@ -5,3 +5,16 @@
 
 
 
+.grade1{
+    
+    margin-right: 0.5rem;
+    border-radius: 10%;
+}
+
+.grades{
+    align-items: center;
+    text-align: center;
+    align-content: center;
+    margin-left: 30%;
+
+}
