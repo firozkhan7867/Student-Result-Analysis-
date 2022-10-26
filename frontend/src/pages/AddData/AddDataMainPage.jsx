@@ -12,29 +12,29 @@ import AddBatch from './AddBatch';
 
 const AddDataMainPage = ({fetchdatafun2}) => {
 
-    const [showTable, setshowTable] = useState(false);
+    // const [showTable, setshowTable] = useState(false);
 
-    const [formData, setFormData] = useState({
-        branch:'',
-        reg:'',
-        batch:'',
-        sems:'',
-        cgpa:'',
-        backlog:'',
-        sect:'',
-    });
+    // const [formData, setFormData] = useState({
+    //     branch:'',
+    //     reg:'',
+    //     batch:'',
+    //     sems:'',
+    //     cgpa:'',
+    //     backlog:'',
+    //     sect:'',
+    // });
     
-    const [alert, setAlert] = useState('');
-    const {branch,reg,batch,sems,cgpa,backlog,sect} = formData;
+    // const [alert, setAlert] = useState('');
+    // const {branch,reg,batch,sems,cgpa,backlog,sect} = formData;
 
 
-    const onChange = e => {
-        setFormData({ ...formData, [e.target.name]: e.target.value});
-    }
+    // const onChange = e => {
+    //     setFormData({ ...formData, [e.target.name]: e.target.value});
+    // }
 
-    const onSubmit = (event) =>{
-        event.preventDefault();        
-    }
+    // const onSubmit = (event) =>{
+    //     event.preventDefault();        
+    // }
 
     const tabs = () =>{
         return <>
@@ -80,7 +80,6 @@ const AddDataMainPage = ({fetchdatafun2}) => {
                                     </div>
                                 </form>
                             </div>
-
 
                             {tabs()}
                             
