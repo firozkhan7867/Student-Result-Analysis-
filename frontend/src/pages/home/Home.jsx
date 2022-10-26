@@ -37,9 +37,14 @@ const Home = (props) => {
                                 <hr className="my-4" />
                                 <p>Please Enter the roll Number of the Student
                                     Select Branch then  select  Regulation then Batch then Semester</p>
-                                <p className="lead">
-                                    <Link className="btn text-center bb btn-lg"  to="/studentReport"  onClick={props.fetchRegulationData} role="button">Student Report Analysis</Link>
-                                </p>
+                                <div className="d-flex">
+                                    <p className="lead">
+                                        <Link className="btn text-center bb btn-lg"  to="/studentReport"  onClick={props.fetchRegulationData} role="button">Student Report Analysis</Link>
+                                    </p>
+                                    <p className="lead mx-4">
+                                        <Link className="btn btn-danger  btn-lg"  to="/addData" role="button">Add Data</Link>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                 </Fragment>

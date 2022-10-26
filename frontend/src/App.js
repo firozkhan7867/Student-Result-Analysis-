@@ -21,6 +21,7 @@ import StudentMainDashboard from "./pages/dashboard/StudentMainDashboard";
 import FetchDataDashboard from "./pages/dashboard/FetchDataDashboard";
 import AnalysisDashboard from "./pages/dashboard/AnalysisDashboard";
 import FilterDashboard from "./pages/dashboard/FilterDashboard";
+import AddDataDashboard from "./pages/AddData/AddDataDashboard";
 function App() {
   return (
     <div className="App">
@@ -41,6 +42,7 @@ function App() {
                     <Route exact path='/studentReport/:roll' element={<StudentReportDashboard/>} />
                     <Route exact path='/fetch' element={<FetchDataDashboard/>} />
                     <Route exact path='/filter' element={<FilterDashboard/>} />
+                    <Route exact path='/addData' element={<AddDataDashboard/>} />
                 </Routes>
         </Router>
     </Provider>

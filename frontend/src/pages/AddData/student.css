@@ -1,0 +1,45 @@
+.card{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    /* margin-top: 10%!important; */
+}
+.btn{
+    color: green;
+    border-color: green;
+    background-color: transparent;
+}
+.btn:hover{
+    color:white;
+    background-color: green;
+}
+.my-4{
+    border-color: gray;
+}
+
+.my-4::marker{
+    border-color: gray;
+}
+input{
+    border-color: gray!important;
+
+}
+
+.card-subtitle{
+    color: rgb(87, 86, 86);
+}
+hr{
+    width: 80%;
+    margin:auto;
+    color:rgb(45, 43, 43);
+    
+
+}
+
+.cardd{
+    width:80%;
+    margin: auto;
+}
+.home{
+    background-image: url('');
+}
