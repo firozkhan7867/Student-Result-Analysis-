@@ -24,6 +24,9 @@ import {
     GET_FETCH_DATA_3_SUCCESS,
     POST_FILTER_DATA_FAIL,
     POST_FILTER_DATA_SUCCESS,
+    POST_ADD_REG_SUCCESS,
+    POST_ADD_REG_FAIL,
+    
 } from "./types";
 import axios from "axios";
 
@@ -415,5 +418,22 @@ export const postFilterData = (data) => async dispatch => {
 
 
 
+// ADD DATA API - post api for adding new regulation
 
+export const postAddReg = (data) => async dispatch => {
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/addreg`, data);
+        // console.log(res);
+        dispatch({
+            type:  POST_ADD_REG_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: POST_ADD_REG_FAIL
+        })
+    }
+};
 

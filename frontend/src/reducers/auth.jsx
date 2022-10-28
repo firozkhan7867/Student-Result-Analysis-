@@ -41,6 +41,8 @@ import {
     GET_FETCH_DATA_3_SUCCESS,
     POST_FILTER_DATA_SUCCESS,
     POST_FILTER_DATA_FAIL,
+    POST_ADD_REG_SUCCESS,
+    POST_ADD_REG_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -244,6 +246,12 @@ export default function (state = initialState, action) {
             return{
                 ...state,
                 filteredData:{}
+            } 
+        case POST_ADD_REG_SUCCESS:
+            return{
+            } 
+        case POST_ADD_REG_FAIL:
+            return{
             } 
     
         case SIGNUP_SUCCESS:

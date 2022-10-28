@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./dashboard.css"
  
 function App() {
-  const [inputList, setInputList] = useState([{ firstName: "", lastName: "" }]);
+  const [inputList, setInputList] = useState([{ firstName: "mm", lastName: "mmm" }]);
  
   // handle input change
   const handleInputChange = (e, index) => {
@@ -21,7 +21,7 @@ function App() {
  
   // handle click event of the Add button
   const handleAddClick = () => {
-    setInputList([...inputList, { firstName: "", lastName: "" }]);
+    setInputList([...inputList, { firstName: "aa", lastName: "bb" }]);
   };
  
 
