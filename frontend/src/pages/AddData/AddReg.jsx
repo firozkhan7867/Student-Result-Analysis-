@@ -39,7 +39,7 @@ const App = ({ }) => {
 		console.log(reg,year);
 		// console.log(b)
 	}
-
+  
 
 	return (
 		<div className='h-100'>
