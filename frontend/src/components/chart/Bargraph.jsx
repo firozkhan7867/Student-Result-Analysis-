@@ -27,6 +27,8 @@ class Bargraph extends Component {
     }
     }
 
+
+    // https://stackoverflow.com/questions/68911251/coreui-chart-type-bar-clickable-bars-to-link-to-another-page
     render() {
         return (
         <CCard className="h">
@@ -37,7 +39,7 @@ class Bargraph extends Component {
                 labels: this.arr_key(),
                 datasets: [
                   {
-                    data: this.arry_val(),
+                    // data: this.arry_val(),
                     backgroundColor: [
                       '#FF6384',
                       '#36A2EB',
@@ -55,6 +57,7 @@ class Bargraph extends Component {
                       '#00D8FF',
                     ],
                     data: this.arry_val(),
+                    label: 'Backlog Counts',
                   },
                 ],
               }}
