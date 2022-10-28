@@ -54,6 +54,7 @@ class Branch(models.Model):
 class Regulation(models.Model):
     regulation = models.CharField(max_length=50,unique=True)
     year = models.CharField(max_length=50)
+    grades = models.JSONField(blank=True)
     # grades = models.ForeignKey(GradingSystem, on_delete=models.CASCADE)
     
     def __str__(self):

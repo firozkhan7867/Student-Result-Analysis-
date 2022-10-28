@@ -190,3 +190,4 @@ result/student/migrations/0005_subjects_type.py
 result/student/migrations/0006_subjects_subjtype.py
 result/student/migrations/0007_rename_pass_or_fail_performance_passed.py
 result/student/migrations/0005_rename_pass_or_fail_performance_passed_and_more.py
+result/student/migrations/0005_auto_20221028_1903.py
