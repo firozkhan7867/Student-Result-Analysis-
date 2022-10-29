@@ -1,4 +1,5 @@
 import pandas as pd
+from student.models import Regulation
 from student.models import Attempt, BacklogSubject, Batch, Semester, Student, Subjects, Performance
 from student.preprocesssing import get_subj_list #, get_transformed_data
 
@@ -11,6 +12,9 @@ def add_student_performance(roll,sem):
     if Student.objects.filter(roll=roll).exists():
         student = Student.objects.get(roll=roll)
         subj = Subjects.objects.all().filter(roll=student,sem=sem)
+        # print(student.regulation)
+        # print()
+        reg = Regulation.objects.get(regulation=student.regulation.regulation)
         credit = [sub.credit for sub in subj]
         grade_val = [sub.grade for sub in subj]
         # print(student,credit,grade_val)
@@ -19,7 +23,9 @@ def add_student_performance(roll,sem):
         for i in range(len(credit)):
             # print(grade[grade_val[i]], credit[i])
             # print(credit[i]*grade[grade_val[i]])
-            CP.append(credit[i]*grade[grade_val[i]])
+            # print(reg.grades)
+            # print(grade_val[i])
+            CP.append(credit[i]*reg.grades[grade_val[i]]) 
         TCR = sum(credit)
         # for i in grade_val:
         #     TCR += grade[i]

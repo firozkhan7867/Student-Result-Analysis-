@@ -26,7 +26,8 @@ import {
     POST_FILTER_DATA_SUCCESS,
     POST_ADD_REG_SUCCESS,
     POST_ADD_REG_FAIL,
-    
+    POST_ADD_BRANCH_FAIL,
+    POST_ADD_BRANCH_SUCCESS,
 } from "./types";
 import axios from "axios";
 
@@ -433,6 +434,26 @@ export const postAddReg = (data) => async dispatch => {
     } catch (err) {
         dispatch({
             type: POST_ADD_REG_FAIL
+        })
+    }
+};
+
+
+// ADD DATA API - post api for adding new Branch
+
+export const postAddBranch = (data) => async dispatch => {
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/addbranch`, data);
+        // console.log(res);
+        dispatch({
+            type:  POST_ADD_BRANCH_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: POST_ADD_BRANCH_FAIL
         })
     }
 };

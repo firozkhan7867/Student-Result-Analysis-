@@ -1,6 +1,7 @@
 from cgi import test
 from distutils.command.install_egg_info import safe_name
 from json import JSONDecodeError
+import json
 from pprint import pformat
 from traceback import print_tb
 from urllib import response
@@ -526,7 +527,7 @@ def reduced_fetch_semester_result(batch,sem,branch):
 
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
-    students = Student.objects.filter(batch=batch,branch=branch_obj)
+    students = Student.objects.filter(batch=batch,branch=branch_obj)[179:]
 
     print("-------------------------------------------------------------------------------------------------")
 
@@ -1081,6 +1082,65 @@ def filter(request):
 
 
 
+
+@csrf_exempt
+def addreg(request):
+    if request.method == "POST":
+        reg = request.POST.get("reg")
+        year = request.POST.get("year")
+        grades = request.POST.get("grades")
+
+        if Regulation.objects.filter(regulation=reg).exists() or Regulation.objects.filter(year=year).exists():
+            grade = {}
+            grade["data"] = json.loads(grades)
+            print("-========-=-=-==-=-=-=-==-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+            print(grade)
+            print(type(grade))
+            gg = {}
+            for i in grade["data"]:
+                gg[i["grade"]]=  int(i["value"])
+            print(gg)
+
+            return JsonResponse({"msg":"Error","code":"danger","message":"Same Regulation or Same year exists"})
+        else:
+            grade = {}
+            grade["data"] = json.loads(grades)
+            # print("-========-=-=-==-=-=-=-==-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+            # print(grade)
+            # print(type(grade))
+            gg = {}
+            for i in grade["data"]:
+                gg[i["grade"].upper()]=  int(i["value"])
+            # print(gg)
+            regl = Regulation(regulation=reg,year=year,grades=gg)
+            regl.save()
+            # print("-========-=-=-==-=-=-=-==-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+            # print(reg,year,grades)
+            # print(json.loads(grades))
+            return JsonResponse({"msg":"Added Successfully","code":"success","message":"Regulation has been added successfully","dd":grade},safe=True)
+    else:
+        return JsonResponse({"msg":"Error","code":"danger","message":"Some thing went wrong....!!!!!!!"})
+
+
+
+
+
+
+
+@csrf_exempt
+def addbranch(request):
+    if request.method == "POST":
+        branch = request.POST.get("branch")
+
+        if Branch.objects.filter(branches=branch).exists():
+            return JsonResponse({"msg":"Error","code":"danger","message":"Same Branch already exists"})
+        else:
+            bran = Branch(branches=branch)
+            bran.save()
+            return JsonResponse({"msg":"Added Successfully","code":"success","message":"Branch has been added successfully"},safe=True)
+    else:
+        return JsonResponse({"msg":"Error","code":"danger","message":"Some thing went wrong....!!!!!!!"})
+ 
 
 
 

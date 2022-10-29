@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import "./dashboard.css"
+import "./dashboard.css";
+import {  connect } from "react-redux";
+import {postAddReg} from "../../actions/visua";
 
-const App = ({ }) => {
+const AddReg = ({ postAddReg }) => {
 	const [inputList, setInputList] = useState([{ grade: "asdds", value: "ksdn" }]);
 	const [formdata,setFormData] = useState({
 		reg:"",
 		year:""
 	});
-
 	
     const onChange = e => setFormData({ ...formdata, [e.target.name]: e.target.value});
 
@@ -37,6 +38,17 @@ const App = ({ }) => {
 		e.preventDefault();
 		console.log(inputList);
 		console.log(reg,year);
+		const data  = new FormData();
+		// let gg = {data:inputList};
+		// console.log(gg);
+        data.append('reg', reg);
+        data.append('year',year);
+		data.append('grades',JSON.stringify(inputList));
+		postAddReg(data).then((res) =>{
+			
+			console.log(reg,year,inputList, res)
+		}
+		);
 		// console.log(b)
 	}
   
@@ -93,11 +105,10 @@ const App = ({ }) => {
 					</div>
 				</form>
 			</div>
-
-
-
 		</div>
 	);
 }
 
-export default App;
+
+
+export default connect(null,{postAddReg})(AddReg);

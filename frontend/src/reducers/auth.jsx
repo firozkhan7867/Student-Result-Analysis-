@@ -43,6 +43,8 @@ import {
     POST_FILTER_DATA_FAIL,
     POST_ADD_REG_SUCCESS,
     POST_ADD_REG_FAIL,
+    POST_ADD_BRANCH_SUCCESS,
+    POST_ADD_BRANCH_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -253,6 +255,14 @@ export default function (state = initialState, action) {
         case POST_ADD_REG_FAIL:
             return{
             } 
+        case POST_ADD_BRANCH_SUCCESS:
+            return{
+
+            }
+        case POST_ADD_BRANCH_FAIL:
+            return{
+                
+            }
     
         case SIGNUP_SUCCESS:
             return {
