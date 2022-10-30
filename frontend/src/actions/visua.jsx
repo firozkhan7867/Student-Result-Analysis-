@@ -28,6 +28,8 @@ import {
     POST_ADD_REG_FAIL,
     POST_ADD_BRANCH_FAIL,
     POST_ADD_BRANCH_SUCCESS,
+    POST_ADD_BATCH_FAIL,
+    POST_ADD_BATCH_SUCCESS,
 } from "./types";
 import axios from "axios";
 
@@ -437,7 +439,23 @@ export const postAddReg = (data) => async dispatch => {
         })
     }
 };
+//ADD batch API - post api for adding new batch
+export const postAddBatch = (data) => async dispatch => {
 
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/addbatch`, data);
+        // console.log(res);
+        dispatch({
+            type:  POST_ADD_BATCH_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: POST_ADD_BATCH_FAIL
+        })
+    }
+};
 
 // ADD DATA API - post api for adding new Branch
 
@@ -457,4 +475,5 @@ export const postAddBranch = (data) => async dispatch => {
         })
     }
 };
+
 
