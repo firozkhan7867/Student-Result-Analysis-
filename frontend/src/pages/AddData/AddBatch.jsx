@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { postAddBatch } from '../../actions/visua';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddBatch = ({postAddBatch}) => {
 
@@ -22,6 +24,7 @@ const AddBatch = ({postAddBatch}) => {
         data.append('reg', reg);
 		postAddBatch(data);
 		// console.log(b)
+        toast("Wow so easy!");
 	}
 
 
