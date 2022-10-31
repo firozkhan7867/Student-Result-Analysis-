@@ -46,6 +46,7 @@ const AddBatch = ({postAddBatch}) => {
                     <button type='submit' className='btn btn-secondary mt-4'>Submit</button>
                 </form>
             </div>
+            <ToastContainer/>
         </div>
     )
 
