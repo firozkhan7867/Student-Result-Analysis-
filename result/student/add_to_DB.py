@@ -1,4 +1,5 @@
 from re import S
+from traceback import print_tb
 
 from scipy.fftpack import tilbert
 from .back_log_handler import add_backlog, add_student_performance
@@ -203,6 +204,11 @@ def add_or_update_student_details(data,branch,reg,batch):
                 else:
                     pass
             else:
+                st = Student.objects.filter(regulation=reg, branch=branch, batch=batch,roll=rolls[i])
+                sp = Student.objects.get(roll="20131A0516")
+                # print(sp,sp.regulation,sp.batch,sp.branch)
+                # print(st)
+                # print(reg,branch,batch)
                 name = names[i]
                 roll = rolls[i]
                 sec = secs[i]

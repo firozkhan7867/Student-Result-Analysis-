@@ -336,6 +336,8 @@ def student_detail(request):
         if "file" in request.FILES:
             data = request.FILES['file']
             split_data_student(data, bra,reg,batch)
+        
+        return JsonResponse({"ok":"ok"})
             
             
         
