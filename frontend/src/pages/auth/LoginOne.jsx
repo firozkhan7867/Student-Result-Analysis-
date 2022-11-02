@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import {connect} from "react-redux";
 import { login } from '../../actions/auth';
-import "./loginTEST.css"
+import "./loginTEST.css";
+import Alert from "../../components/alert/Alert";
 
-const Loginone = ({login, isAuthenticated}) => {
+const Loginone = ({login, isAuthenticated,logfail}) => {
     const [formData, setFormData] = useState({
         email:'',
         password:''
     });
+
+    const [alert,setAlert] = useState('');
 
 
 
@@ -17,7 +20,15 @@ const Loginone = ({login, isAuthenticated}) => {
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
     const onSubmit = e => {
         e.preventDefault();
-        login(email,password);
+        login(email,password).then((res)=>{
+            if(JSON.parse(localStorage.getItem("logfail")) === true){
+                setAlert(<Alert type="error" msg="Invalid Credentials" bb="danger" onclick={setAlert} />)
+            }
+        }).catch( (err) =>{
+            
+            console.log(err);
+        }
+        );
     }
     if (isAuthenticated){
         // const nav = useNavigate();
@@ -36,6 +47,7 @@ const Loginone = ({login, isAuthenticated}) => {
                         <div className="card-body mx-auto">
                         <h4 className="card-title mt-3 text-center">Sign in</h4>
                         <br /><br />
+                        {alert}
                         <form onSubmit={e => onSubmit(e)}>
                             <div className="form-group input-group mb-4">
                                 <label htmlFor=""></label>
@@ -84,7 +96,8 @@ const Loginone = ({login, isAuthenticated}) => {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    logfail: state.auth.logfail,
 });
 
 

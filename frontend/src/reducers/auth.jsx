@@ -69,6 +69,7 @@ const initialState = {
     fetchdata2: {"batch":[],"status":false},
     fetchdata3:{"section":[],"sems":[],"status":false},
     filteredData:{},
+    logfail:false,
 };
 
 export default function (state = initialState, action) {
@@ -84,11 +85,13 @@ export default function (state = initialState, action) {
         case LOGIN_SUCCESS:
             localStorage.setItem('access', payload.access);
             localStorage.setItem('refresh', payload.refresh);
+            localStorage.setItem("logfail",JSON.stringify(false));
             return {
                 ...state,
                 isAuthenticated: true,
                 access: payload.access,
-                refresh: payload.refresh
+                refresh: payload.refresh,
+                logfail:false,
             }
         case GET_UP_DATA_SUCCESS:
             // console.log(state.updata)
@@ -307,6 +310,11 @@ export default function (state = initialState, action) {
                 user: null
             }
         case LOGIN_FAIL:
+            localStorage.setItem("logfail",JSON.stringify(true));
+            return{
+                ...state,
+                logfail:true,
+            }
         case SIGNUP_FAIL:
         case LOGOUT:
             localStorage.removeItem('access');

@@ -57,6 +57,8 @@ import asyncio
 
 
 
+
+
 ######################## --------------- REST API ------------------
 
 
@@ -196,6 +198,8 @@ def backlogdata(request):
 
 
 # UPLOAD EXCEL FILE API HANDLER
+
+
 @csrf_exempt
 def data(request):
     if request.method == "POST":
@@ -206,8 +210,10 @@ def data(request):
         bra = Branch.objects.get(id=branch)
         reg = Regulation.objects.get(id=reg)
         batch = Batch.objects.get(id=batch)
+        semName = {"1":"I","II":"III","3":"III","4":"IV","5":"V","6":"VI","7":"VII","8":"VIII"}
+        name = semName[name]
         if Semester.objects.filter(branch=bra,batch=batch,regulation=reg,name=name).exists():
-            pass
+            return JsonResponse({"Uploaded":"Failed, Please Check that you are not uploading the Same Semester multiple times","type":"error", "msg":"Failed, Please Check that you are not uploading the Same Semester multiple times", "bb":"danger"},status=status.HTTP_400_BAD_REQUEST)
         else:
             
             # sem = Semester(name=name,branch=bra,regulation=reg,batch=batch)
@@ -220,19 +226,20 @@ def data(request):
                 sem.save()
                 if split_data(data,sem.id):
                     print("SEM DATA UPLOADED SUCCESSFUL")
-                    return JsonResponse({"Uploaded":"Success"}, status=status.HTTP_201_CREATED) 
+                    return JsonResponse({"Uploaded":"Success","type":"Success", "msg":"Semester Has been started uploading in server", "bb":"success"}, status=status.HTTP_201_CREATED)
+                    # return JsonResponse({"Uploaded":"Success"}, status=status.HTTP_201_CREATED) 
                 else:
                     sem.delete()
-                    return JsonResponse({"Uploaded":"Failed, Please Check that you are not uploading the Same Semester multiple times"},status=status.HTTP_400_BAD_REQUEST)
+                    return JsonResponse({"Uploaded":"Failed, Please Check that you are not uploading the Same Semester multiple times","type":"error", "msg":"Failed, Please Check that you are not uploading the Same Semester multiple times", "bb":"danger"},status=status.HTTP_400_BAD_REQUEST)
             else:
-                return JsonResponse({"Uploaded":"Failed, Please Upload the Excel File"},status=status.HTTP_400_BAD_REQUEST)
+                return JsonResponse({"Uploaded":"Failed, Please Upload the Excel File","type":"error", "msg":"Failed, Please Upload the Excel File", "bb":"danger"},status=status.HTTP_400_BAD_REQUEST)
             
             
             
             return JsonResponse({"Uploaded":"Success"}, status=status.HTTP_201_CREATED) 
         return JsonResponse({"Uploaded":"Failed"}, status=status.HTTP_400_BAD_REQUEST) 
     
-    return Response({"Uploaded":"Failed"}, status=status.HTTP_400_BAD_REQUEST)  
+    return Response({"Uploaded":"Failed","type":"error", "msg":"Failed, Please Upload the Excel File", "bb":"danger"}, status=status.HTTP_400_BAD_REQUEST)  
 
 
 
@@ -1045,7 +1052,7 @@ def filter(request):
 
         
         data = {"data":[branch,reg,batch,sems,cgpa,backlog,sect]}
-        print(data)
+        # print(data)
         
         sm = []
         if "all" not in sems:
@@ -1073,6 +1080,7 @@ def filter(request):
         detail = tableDetails(perform)
         data = {}
         data["data"] = detail
+        # print(data)
 
 
 

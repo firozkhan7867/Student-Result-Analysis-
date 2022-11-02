@@ -1,8 +1,8 @@
 import React from 'react';
 
-const  Alert = ({type,msg,onclick}) => {
+const  Alert = ({type,msg,onclick,bb}) => {
   return (
-        <div className={`alert alert-${type} alert-dismissible fade show d-flex justify-content-between`} role="alert">
+        <div className={`alert alert-${bb} alert-dismissible fade show d-flex justify-content-between`} role="alert">
             <div className="" >
                 <strong>{type} ...!!</strong> {msg}
             </div>

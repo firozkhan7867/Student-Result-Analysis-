@@ -1,7 +1,10 @@
 import {connect} from "react-redux";
 import { GetUploadData, semupload } from '../../../actions/auth';
+import { fetchdatafun2 } from '../../../actions/visua';
 import React , {useState, Fragment} from 'react';
 import { Navigate } from "react-router-dom";
+
+
 
 const Sem = (props) => {
 
@@ -13,9 +16,28 @@ const Sem = (props) => {
         batch:'',
     });
 
+
+
     const {name,reg,branch,batch} = formData
     
-    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
+    // const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
+
+    const onChange = e => {
+        setFormData({ ...formData, [e.target.name]: e.target.value});
+    }
+
+    const onChangeReg = e =>{
+        setFormData({ ...formData, [e.target.name]: e.target.value});
+        props.fetchdatafun2(e.target.value);
+    }
+
+    const onChangeBatch = e =>{
+        setFormData({ ...formData, [e.target.name]: e.target.value});
+        // console.log(branch,reg,batch);
+        // console.log(e.target.value,e.target.name);
+        // fetchdatafun3(branch,reg,e.target.value);
+        // console.log(branchData,regData,batchData);
+    }
 
     const onSubmit = e => {
         e.preventDefault();
@@ -35,6 +57,9 @@ const Sem = (props) => {
         batch="";
 
     }
+
+    
+    const batchData = props.fetchdata2["batch"];
     
     const regdata = () =>{
         if (props.updata){
@@ -103,17 +128,35 @@ const Sem = (props) => {
                         <form  className='text-start' onSubmit={e => onSubmit(e)}>
                             <div className="form-group  mb-4">
                                 <label htmlFor="name">Semester Name</label>
-                                <input type="text" 
+                                {/* <input type="text" 
                                     className='form-control' id='name' onChange={e => onChange(e)} placeholder='Enter Semester Name' name='name'
                                     required
-                                />
+                                /> */}
+
+                                <select name="name" id='name' onChange={e => onChange(e)} className="form-control" required>
+                                    <option value="1">I Semester</option>
+                                    <option value="2">II Semester</option>
+                                    <option value="3">III Semester</option>
+                                    <option value="4">IV Semester</option>
+                                    <option value="5">V Semester</option>
+                                    <option value="6">VI Semester</option>
+                                    <option value="7">VII Semester</option>
+                                    <option value="8">VIII Semester</option>
+                                </select>
                                 
                             </div>
                             <div className="form-group mb-4">
                                 <label htmlFor="reg">Select Regulation</label>
-                                <select name="reg" id='reg' onChange={e => onChange(e)} className="form-control">
+                                <select name="reg" id='reg' onChange={e => onChangeReg(e)} className="form-control">
                                     <option value=""> ---    ----</option>
                                     {regdata()}
+                                    {/* { regData ?
+                                        regData.map((value,index)=>{
+                                            return <option value={value.id} key={index}>{value.name}</option>
+                                        })
+                                        :
+                                        <option value="-">No Data Available</option>
+                                    } */}
                                 </select>
                             </div>
                             <div className="form-group mb-4">
@@ -125,9 +168,16 @@ const Sem = (props) => {
                             </div>
                             <div className="form-group mb-4">
                                 <label htmlFor="batch">Select Batch</label>
-                                <select name="batch" id='batch' onChange={e => onChange(e)} className="form-control">
+                                <select name="batch" id='batch' onChange={e => onChangeBatch(e)} className="form-control">
                                         <option value="">----    ----</option>
-                                        {batchdata()}
+                                        {/* {batchdata()} */}
+                                        { batchData ?
+                                            batchData.map((value,index)=>{
+                                                return <option value={value.id} key={index}>{value.name}</option>
+                                            })
+                                            :
+                                            <option value="-">No Data Available</option>
+                                        }
                                 </select>
                             </div>
                             <div className="form-group mb-4">
@@ -150,10 +200,12 @@ const Sem = (props) => {
 
 
 const mapStateToProps = state => ({
-    updata: state.auth.updata
+    updata: state.auth.updata,
+    // fetchdata1: state.auth.fetchdata1,
+    fetchdata2: state.auth.fetchdata2,
 });
 
 
 
-export default connect(mapStateToProps, { GetUploadData, semupload })(Sem);
+export default connect(mapStateToProps, { GetUploadData, semupload, fetchdatafun2 })(Sem);
 
