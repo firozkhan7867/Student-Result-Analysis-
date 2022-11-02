@@ -253,18 +253,28 @@ export default function (state = initialState, action) {
                 filteredData:{}
             } 
         case POST_ADD_REG_SUCCESS:
+            localStorage.setItem("addreg",JSON.stringify(payload));
             return{
-            } 
+                ...state,
+                addreg:payload
+            }
         case POST_ADD_REG_FAIL:
+            localStorage.setItem("addreg",JSON.stringify(payload));
             return{
-            } 
+                ...state,
+                addreg:payload
+            }
         case POST_ADD_BRANCH_SUCCESS:
+            localStorage.setItem("addbranch",JSON.stringify(payload));
             return{
-
+                ...state,
+                addbranch:payload
             }
         case POST_ADD_BRANCH_FAIL:
+            localStorage.setItem("addbranch",JSON.stringify(payload));
             return{
-                
+                ...state,
+                addbranch:payload
             }
     
         case SIGNUP_SUCCESS:
