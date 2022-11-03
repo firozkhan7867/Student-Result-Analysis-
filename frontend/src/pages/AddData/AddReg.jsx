@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./dashboard.css";
 import {  connect } from "react-redux";
 import {postAddReg} from "../../actions/visua";
+import Alert from "../../components/alert/Alert";
 
 const AddReg = ({ postAddReg }) => {
 	const [inputList, setInputList] = useState([{ grade: "asdds", value: "ksdn" }]);
@@ -9,7 +10,7 @@ const AddReg = ({ postAddReg }) => {
 		reg:"",
 		year:""
 	});
-	
+	const [alert,setAlert] = useState('');
     const onChange = e => setFormData({ ...formdata, [e.target.name]: e.target.value});
 
 	const {reg,year} = formdata;
@@ -33,7 +34,7 @@ const AddReg = ({ postAddReg }) => {
 	const handleAddClick = () => {
 		setInputList([...inputList, { grade: "", value: "" }]);
 	};
-
+	var payload={};
 	const onSubmit = (e) =>{
 		e.preventDefault();
 		console.log(inputList);
@@ -43,12 +44,21 @@ const AddReg = ({ postAddReg }) => {
 		// console.log(gg);
         data.append('reg', reg);
         data.append('year',year);
-		data.append('grades',JSON.stringify(inputList));
-		postAddReg(data).then((res) =>{
-			
-			console.log(reg,year,inputList, res)
-		}
-		);
+		data.append('grade',JSON.stringify(inputList));
+
+		postAddReg(data).then((res)=>{
+            console.log("[AddReg]"+JSON.stringify(JSON.parse(localStorage.getItem("addreg"))));
+            console.log("[AddReg]"+JSON.parse(localStorage.getItem("addreg")).code);
+            payload=JSON.parse(localStorage.getItem("addreg"));
+            
+            // if(JSON.parse(localStorage.getItem("addbrach")).msg === "Error"){
+            setAlert(<Alert type={payload.msg.toLowerCase()} msg={payload.message.toLowerCase()} bb={payload.code} onclick={setAlert} />)
+            
+        }).catch( (err) =>{
+            
+            console.log(err);
+        }
+        );
 		// console.log(b)
 	}
   
@@ -60,6 +70,8 @@ const AddReg = ({ postAddReg }) => {
 					<div className="w-100 d-flex justify-content-center">
 						<div className="">
 							<p className='fw-bolder fs-2 my-2'>ADD New Regulation</p>
+							<br />
+							{alert}
 							<br />
 							<input type="text" name="reg" required placeholder='Regulation Name' onChange={(e) => onChange(e)} className='form-control my-3' />
 							<input type="text" name="year" required placeholder='year' onChange={(e) => onChange(e)} className='form-control mb-4' />
