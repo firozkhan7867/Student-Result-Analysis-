@@ -536,7 +536,7 @@ def reduced_fetch_semester_result(batch,sem,branch):
 
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
-    students = Student.objects.filter(batch=batch,branch=branch_obj)[179:]
+    students = Student.objects.filter(batch=batch,branch=branch_obj)
 
     print("-------------------------------------------------------------------------------------------------")
 
