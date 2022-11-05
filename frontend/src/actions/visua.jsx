@@ -365,11 +365,12 @@ export const semWiseBacklogData = (roll) => async dispatch => {
         }
     };
 
-    const rollVal =  parseInt(roll);
+    // const rollVal =  parseInt(roll);
+    console.log(roll)
 
     // console.log("inside vis");
     try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/semWiseBacklogData/${rollVal}`,config)
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/semWiseBacklogData/${roll}`,config)
         // console.log(res.data);
         dispatch({
             type: GET_SEM_WISE_BACKLOG_ANALYSIS_SUCCESS,

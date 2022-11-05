@@ -1158,4 +1158,6 @@ def addbranch(request):
 
 
 
+def semWiseBacklogData(request,roll):
+    return JsonResponse({"success":"ok","allBacklogs":[0,2,3,1,5,0,3,0],"clearedBacklogs":[0,2,2,1,1,0,1,0]})
 

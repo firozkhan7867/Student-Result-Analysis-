@@ -10,11 +10,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 // import { useHistory } from 'react-router-dom';
-import {getStudentDetails} from "../../actions/visua";
+import {getStudentDetails, semWiseBacklogData} from "../../actions/visua";
 import { Link } from 'react-router-dom';
 
 // import Student from '../forms/Student';
-const StudentHome = ({studentdetails,getStudentDetails,tog,sidebar}) => {
+const StudentHome = ({studentdetails,getStudentDetails,tog,sidebar,semWiseBacklogData}) => {
 
     const [details, setdetails] = useState(studentdetails.details);
     const tt = ()=>{
@@ -25,6 +25,7 @@ const StudentHome = ({studentdetails,getStudentDetails,tog,sidebar}) => {
       getStudentDetails(localStorage.getItem("studentRoll")).then(() => {
         if (JSON.parse(localStorage.getItem("studentdetails")).roll !== null || studentdetails.roll === null){
             setdetails(JSON.parse(localStorage.getItem("studentdetails")).details)
+            semWiseBacklogData(localStorage.getItem("studentRoll"))
         }
         })
     }, [])
@@ -185,7 +186,7 @@ const mapStateToProps = state => ({
     studentdetails: state.auth.studentdetails
 });
 
-export default connect(mapStateToProps,{getStudentDetails})(StudentHome);
+export default connect(mapStateToProps,{getStudentDetails,semWiseBacklogData})(StudentHome);
 
 // export default StudentHome;
 

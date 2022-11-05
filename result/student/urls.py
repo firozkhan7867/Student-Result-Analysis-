@@ -35,6 +35,7 @@ urlpatterns = [
     path('filter',views.filter,name="filter"),
     path('addreg',views.addreg,name="addreg"),
     path('addbranch',views.addbranch,name="addbranch"),
+    path('semWiseBacklogData/<str:roll>',views.semWiseBacklogData,name="addbranch"),
 ]
 
 
