@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import FeaturedInfo from '../../components/featuredinfo/FeaturedInfo';
 import "./home.css";
 import SecWisePerfamanceChart from '../../components/SecWisePerfamanceChart/SecWisePerfamanceChart';
@@ -6,13 +6,22 @@ import { connect } from "react-redux";
 import {fetchSemData,fetchRegulationData} from "../../actions/visua"
 import Combo from '../../components/chart/Combo';
 // import { Link } from 'react-router-dom';
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import ErrorBoundary from "../error/ErrorBoundary";
+
 
 
 
 const AnalysisHome = (props) => {
     let history = useNavigate();
+
+    const tt = ()=>{
+        props.tog(!props.sidebar);
+        setfirst(!first);
+    }
+
+
+    const [first, setfirst] = useState(true);
 
     const cgpa = () =>{
         if (props.semVisData){
@@ -63,9 +72,32 @@ const AnalysisHome = (props) => {
         }
     }
 
+    const bread = () =>{
+        if (props.semDetails){
+            return <Fragment>
+                        <li class="breadcrumb-item">{props.semDetails.branch}</li>
+                        <li class="breadcrumb-item">{props.semDetails.reg}</li>
+                        <li class="breadcrumb-item">{props.semDetails.batch}</li>
+                        <li class="breadcrumb-item active" aria-current="page">{props.semDetails.name} Semester Analysis</li>
+                    </Fragment>
+        }
+    }
 
     return ( 
-        <div className='home'>
+        <div className={first ? 'home' : 'home2'}>
+            <div className="mx-3 my-3 d-flex justify-content-between">
+                <div className="" >
+                    <button onClick={tt} class="navbar-toggler navbar-light bg-light px-2 py-1 rounded" type="button">
+                        <span class="navbar-toggler-icon"></span>
+                    </button> <span className='fw-light text-secondary mx-2'>Toggle Side bar</span>
+                </div>
+                <div className="mx-3 ">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><Link to={"/"}>Home</Link></li>
+                        {bread()}
+                    </ol>
+                </div>
+            </div>
             {/* <FeaturedInfo data={props.semVisData}/>
             <Combo cgpa_data={cgpa()} back_data={back()} /> */}
             {/* <Combo */}
@@ -88,7 +120,8 @@ const AnalysisHome = (props) => {
 }
 
 const mapStateToProps = state => ({
-    semVisData: state.auth.semVisData
+    semVisData: state.auth.semVisData,
+    semDetails:state.auth.semDetails
 });
 
 export default connect(mapStateToProps, { fetchSemData,fetchRegulationData })(AnalysisHome);

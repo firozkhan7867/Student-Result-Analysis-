@@ -1,5 +1,5 @@
 
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Home from "../home/Home";
@@ -16,15 +16,18 @@ const AddDataDashboard = ({checkAuthenticated,load_user}) => {
     useEffect(() => {
         checkAuthenticated();
         load_user();
+        // props.fetchSemData();
     }, []);
+    const [sidebar, setsidebar] = useState(true);
+
 
     return (
         <div>
             <Topbar />
             <div className="container-1">
-                <Sidebar/>
+                <Sidebar tog={sidebar}/>
                 {/* <Home/> */}
-                <AddDataMainPage  />
+                <AddDataMainPage   tog={setsidebar} sidebar={sidebar} />
                                 
                 
             </div>

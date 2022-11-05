@@ -57,6 +57,7 @@ const initialState = {
     semVisData: null,
     subjVisData: null,
     subjSectAnalysis: null,
+    semDetails:{"name":"error","reg":"error","branch":"error","batch":"error"},
     semId: null,
     RegulationData: { regData: [], batchData: [], branchData: [] },
     checkFetchSem: { "code": "not", "msg": "none" },
@@ -283,15 +284,18 @@ export default function (state = initialState, action) {
                 isAuthenticated: false
             }
         case FETCH_VIS_DATA_SUCCESS:
+            // console.log(payload);
             return {
                 ...state,
-                semVisData: payload.sem_performance
+                semVisData: payload.sem_performance,
+                semDetails:payload.details,
 
             }
         case FETCH_VIS_DATA_FAIL:
             return {
                 ...state,
-                semVisData: null
+                semVisData: null,
+                semDetails:{"name":"error","reg":"error","branch":"error","batch":"error"},
             }
         case FETCH_SUBJ_DATA_SUCCESS:
             return {

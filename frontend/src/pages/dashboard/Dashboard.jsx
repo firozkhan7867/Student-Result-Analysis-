@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Home from "../home/Home";
@@ -10,6 +10,11 @@ import {fetchSemData,fetchSubjSectAnalysys} from "../../actions/visua";
 // import DashboardNav from '../../components/navbar/DashboardNav';
 const Dashboard = (props) => {
 
+    const [sidebar, setsidebar] = useState(true);
+    console.log(window.location.href);
+    console.log(window.location.pathname);
+
+
     useEffect(() => {
         props.checkAuthenticated();
         props.load_user();
@@ -20,9 +25,9 @@ const Dashboard = (props) => {
             <Topbar />
             <div className="container-1">
 
-            <Sidebar/>
-            <Home/>
-            {props.children}
+            <Sidebar tog={sidebar}/>
+            <Home tog={setsidebar} sidebar={sidebar} />
+            {/* {props.children} */}
             
             </div>
         </div>

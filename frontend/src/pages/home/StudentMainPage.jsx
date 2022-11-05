@@ -1,12 +1,16 @@
 import React ,{useState}from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import "./home.css";
 import "./student.css";
 import { connect } from "react-redux";
 import {checkStudentDetails,getStudentDetails} from "../../actions/visua";
 
 
-const StudentMainPage = ({checkStudentDetails,getStudentDetails}) => {
+const StudentMainPage = ({checkStudentDetails,getStudentDetails,tog,sidebar}) => {
+
+    const tt = ()=>{
+        tog(!sidebar); 
+    }
 
     const [formData, setFormData] = useState({
         roll:'',
@@ -54,7 +58,20 @@ const StudentMainPage = ({checkStudentDetails,getStudentDetails}) => {
 
 
   return (
-            <div className='home'>
+            <div className='home main-container'>
+                <div className="mx-3 my-3 d-flex justify-content-between">
+                <div className="" onClick={tt}>
+                    <button   class="navbar-toggler navbar-light bg-light px-2 py-1 rounded" type="button">
+                        <span class="navbar-toggler-icon"></span>
+                    </button> <span className='fw-light text-secondary mx-2'>Toggle Side bar</span>
+                </div>
+                <div className="mx-3 ">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><Link to={"/"}>Home</Link></li>
+                        <li class="breadcrumb-item active" aria-current="page">Student Analysis</li>
+                    </ol>
+                </div>
+            </div>
                 <div className="ss h-100">
                     <div className="d-flex justify-content-center cardd">
                         <div className="card w-75 bg-white p-4 my-5">

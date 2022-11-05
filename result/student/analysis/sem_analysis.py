@@ -114,6 +114,7 @@ def get_subject_analysis_data(sem):
         sem_data["Subjects"] = data
         per = get_sem_performance_analysis(sem)
         sem_data["sem_performance"] = per
+        sem_data["details"] = {"name":sem.name,"reg":sem.regulation.regulation,"branch":sem.branch.branches,"batch":sem.batch.name}
     return sem_data
 
 

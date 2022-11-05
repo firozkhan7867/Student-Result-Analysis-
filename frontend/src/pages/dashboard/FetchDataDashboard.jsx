@@ -1,5 +1,5 @@
 
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Home from "../home/Home";
@@ -11,6 +11,9 @@ import FetchMainPage from '../home/FetchMainPage';
 // import Navbar from '../../components/navbar/Navbar';
 // import DashboardNav from '../../components/navbar/DashboardNav';
 const FetchDataDashboard = (props) => {
+
+    
+    const [sidebar, setsidebar] = useState(true); 
 
     useEffect(() => {
         props.checkAuthenticated();
@@ -24,9 +27,9 @@ const FetchDataDashboard = (props) => {
         <div>
             <Topbar />
             <div className="container-1">
-                <Sidebar/>
+                <Sidebar tog={sidebar}/>
                 {/* <Home/> */}
-                <FetchMainPage regData={props.RegulationData} fetchRegulationData={props.fetchRegulationData} 
+                <FetchMainPage tog={setsidebar} sidebar={sidebar} regData={props.RegulationData} fetchRegulationData={props.fetchRegulationData} 
                                 postRegulationData={props.postRegulationData} checkFetchSem={props.checkFetchSem}
                                 postFetchData={props.postFetchData} 
                                 />

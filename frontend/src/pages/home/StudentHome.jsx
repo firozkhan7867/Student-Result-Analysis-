@@ -11,11 +11,15 @@ import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
 // import { useHistory } from 'react-router-dom';
 import {getStudentDetails} from "../../actions/visua";
+import { Link } from 'react-router-dom';
 
 // import Student from '../forms/Student';
-const StudentHome = ({studentdetails,getStudentDetails}) => {
+const StudentHome = ({studentdetails,getStudentDetails,tog,sidebar}) => {
 
     const [details, setdetails] = useState(studentdetails.details);
+    const tt = ()=>{
+        tog(!sidebar); 
+    }
 
     useEffect(() => {
       getStudentDetails(localStorage.getItem("studentRoll")).then(() => {
@@ -30,7 +34,20 @@ const StudentHome = ({studentdetails,getStudentDetails}) => {
     const sutdentProfile= `http://123.108.200.174/img/photos/${studentdetails.roll}.JPG`;
 
     return (
-        <div className='home'>
+        <div className='home  main-container'>
+            <div className="mx-3 my-3 d-flex justify-content-between">
+                <div className="" onClick={tt}>
+                    <button   class="navbar-toggler navbar-light bg-light px-2 py-1 rounded" type="button">
+                        <span class="navbar-toggler-icon"></span>
+                    </button> <span className='fw-light text-secondary mx-2'>Toggle Side bar</span>
+                </div>
+                <div className="mx-3 ">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><Link to={"/"}>Home</Link></li>
+                        <li class="breadcrumb-item active" aria-current="page">Student Analysis</li>
+                    </ol>
+                </div>
+            </div>
             <Fragment>
                 <div className="ss h-100">
 

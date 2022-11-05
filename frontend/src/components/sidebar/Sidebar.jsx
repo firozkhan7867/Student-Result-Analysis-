@@ -267,7 +267,7 @@ class Sidebar extends Component{
     
     render(){
         return (
-            <div className='sidebar'> 
+            <div className={this.props.tog ? 'sidebar' : "sidebar d-none" }> 
                 <div className="sidebarWrapper">
                     <div className="sidebarMenu">
                             

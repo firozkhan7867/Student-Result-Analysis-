@@ -2,9 +2,10 @@ import React ,{useState}from 'react';
 import "./student.css";
 import {  connect } from "react-redux";
 import {fetchdatafun2,fetchdatafun3,postFilterData} from "../../actions/visua";
+import { Link } from 'react-router-dom';
 
 
-const FilterMainPage = ({fetchdata1, fetchdata2,fetchdata3,filteredData,fetchdatafun2,fetchdatafun3,postFilterData}) => {
+const FilterMainPage = ({fetchdata1, fetchdata2,fetchdata3,filteredData,fetchdatafun2,fetchdatafun3,postFilterData,tog,sidebar}) => {
 
     const branchData = fetchdata1["branch"];
     const regData = fetchdata1["regulation"];
@@ -12,6 +13,10 @@ const FilterMainPage = ({fetchdata1, fetchdata2,fetchdata3,filteredData,fetchdat
     const sectData = fetchdata3["section"];
     const semData = fetchdata3["sems"];
     
+    const tt = ()=>{
+        tog(!sidebar); 
+    }
+
     const [showTable, setshowTable] = useState(false);
 
     const table = () =>{
@@ -167,7 +172,20 @@ const FilterMainPage = ({fetchdata1, fetchdata2,fetchdata3,filteredData,fetchdat
 
 
   return (
-            <div className='home'>
+            <div className='home  main-container'>
+                <div className="mx-3 my-3 d-flex justify-content-between">
+                    <div className="" onClick={tt}>
+                        <button   class="navbar-toggler navbar-light bg-light px-2 py-1 rounded" type="button">
+                            <span class="navbar-toggler-icon"></span>
+                        </button> <span className='fw-light text-secondary mx-2'>Toggle Side bar</span>
+                    </div>
+                    <div className="mx-3 ">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><Link to={"/"}>Home</Link></li>
+                            <li class="breadcrumb-item active" aria-current="page">Filter Students</li>
+                        </ol>
+                    </div>
+                </div>
                 <div className="ss h-100">
                     <div className="d-flex justify-content-center">
                         <div className="card w-100 bg-white p-4 my-2">

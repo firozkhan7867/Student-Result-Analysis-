@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { connect } from "react-redux";
@@ -8,7 +8,11 @@ import {fetchSemData,fetchSubjSectAnalysys} from "../../actions/visua";
 import AnalysisHome from '../home/AnalysisHome';
 const AnalysisDashboard = (props) => {
     
-    
+    const [sidebar, setsidebar] = useState(true);
+    console.log(window.location.href);
+    console.log(window.location.pathname);
+
+
     useEffect(() => {
         props.checkAuthenticated();
         props.load_user();
@@ -19,8 +23,8 @@ const AnalysisDashboard = (props) => {
             <Topbar />
             <div className="container-1">
 
-            <Sidebar/>
-            <AnalysisHome/>
+            <Sidebar tog={sidebar}/>
+            <AnalysisHome tog={setsidebar} sidebar={sidebar}/>
             {props.children}
             
             </div>

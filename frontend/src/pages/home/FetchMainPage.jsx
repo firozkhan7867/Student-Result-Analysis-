@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Selected, { Select } from '../../components/FetchSelectCompos/select';
 
 
@@ -167,12 +167,29 @@ class FetchMainPage extends Component {
         console.log(this.state.sourceMap);
     }
 
+    tt = ()=>{
+        this.props.tog(!this.props.sidebar);
+    }
+
   
     render() {
         const { reg, batch, sem,alert } = this.state;
         // console.log(this.props.regData);
         return (
-            <div className='home'>
+            <div className='home  main-container'>
+                <div className="mx-3 my-3 d-flex justify-content-between">
+                    <div className="" onClick={() => this.tt()}>
+                        <button   class="navbar-toggler navbar-light bg-light px-2 py-1 rounded" type="button">
+                            <span class="navbar-toggler-icon"></span>
+                        </button> <span className='fw-light text-secondary mx-2'>Toggle Side bar</span>
+                    </div>
+                    <div className="mx-3 ">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><Link to={"/"}>Home</Link></li>
+                            <li class="breadcrumb-item active" aria-current="page">Fetch Semester Result</li>
+                        </ol>
+                    </div>
+                </div>
                 <div className="ss h-100">
                     <div className="d-flex justify-content-center cardd">
                         <div className="card w-100 bg-white p-4">

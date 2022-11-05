@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Home from "../home/Home";
@@ -11,6 +11,9 @@ import FilterMainPage from '../home/FilterMainPage';
 // import DashboardNav from '../../components/navbar/DashboardNav';
 const FilterDashboard = (props) => {
 
+    
+    const [sidebar, setsidebar] = useState(true);
+
     useEffect(() => {
         props.checkAuthenticated();
         props.load_user();
@@ -22,9 +25,9 @@ const FilterDashboard = (props) => {
             <Topbar />
             <div className="container-1">
 
-            <Sidebar/>
+            <Sidebar tog={sidebar}/>
             {/* <Home/> */}
-            <FilterMainPage  />
+            <FilterMainPage  tog={setsidebar} sidebar={sidebar}/>
             {props.children}
             
             </div>

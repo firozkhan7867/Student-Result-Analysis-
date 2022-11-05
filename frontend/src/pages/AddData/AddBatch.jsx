@@ -33,7 +33,7 @@ const AddBatch = ({postAddBatch}) => {
         <div className='h-100'>
             <div className="d-flex justify-content-center">
                 <form className='text-center my-5' onSubmit={(e) => onSubmit(e)} >
-                    <p className='fw-bolder fs-2 my-2'>ADD BATCH</p>
+                    <p className='fw-bolder fs-2 my-2'>ADD BATCH Details</p>
                     <br />
                     <br />
                     <select className='form-control' name='reg' onChange={(e) => onChange(e)}>
@@ -46,7 +46,7 @@ const AddBatch = ({postAddBatch}) => {
                     <button type='submit' className='btn btn-secondary mt-4'>Submit</button>
                 </form>
             </div>
-            <ToastContainer/>
+            {/* <ToastContainer/> */}
         </div>
     )
 

@@ -2,10 +2,18 @@
     flex: 4;
 }
 
+
+
+
+.main-container{
+    background: #f2edf3;
+}
+
 .homeWidgets{
     display: flex;
     margin: 20px;
 }
+
 
 
 .ff{
@@ -36,7 +44,7 @@
 
     /* background-color: #ebeff2; */
     background-color: #eee;
-    padding: 20px 15px;
+    padding: 10px 10px;
     width: 100% !important;
     /* background-color: aliceblue; */
 }

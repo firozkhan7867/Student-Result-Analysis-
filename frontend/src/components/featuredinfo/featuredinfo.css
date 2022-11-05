@@ -39,13 +39,9 @@
 .featuredIcon{
     font-size: 14px;
     margin-left: 5px;
-    color: green;
+    /* color: green; */
 }
 
-
-.featuredIcon.negative{
-    color: red;
-}
 
 
 .featuredSb{

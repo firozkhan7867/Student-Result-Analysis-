@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Home from "../home/Home";
@@ -12,6 +12,9 @@ import StudentMainPage from '../home/StudentMainPage';
 // import DashboardNav from '../../components/navbar/DashboardNav';
 const StudentMainDashboard = (props) => {
 
+    
+    const [sidebar, setsidebar] = useState(true);
+
     useEffect(() => {
         props.checkAuthenticated();
         props.load_user();
@@ -23,9 +26,9 @@ const StudentMainDashboard = (props) => {
         <div>
             <Topbar />
             <div className="container-1">
-                <Sidebar/>
+                <Sidebar tog={sidebar}/>
 
-                <StudentMainPage />
+                <StudentMainPage tog={setsidebar} sidebar={sidebar} />
                 {props.children}
                 
             </div>
