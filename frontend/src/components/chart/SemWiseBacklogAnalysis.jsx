@@ -11,7 +11,7 @@ class SemWiseBacklogAnalysis extends React.Component {
       
         series: [{
           name: 'Total backlogs in each sem',
-          data: [10,5,8,2,9,11,9,9]
+          data: [1,2,3,4,5,6,7,8]
         }, {
           name: 'Number of backlogs cleared',
           data: [2,3,4,1,4,1,4,4]

@@ -9,6 +9,8 @@ import {
     FETCH_REGULATION_DATA_FAIL,
     POST_REGULATION_DATA_FAIL,
     POST_REGULATION_DATA_SUCCESS,
+    GET_SEM_WISE_BACKLOG_ANALYSIS_SUCCESS,
+    GET_SEM_WISE_BACKLOG_ANALYSIS_FAIL,
     CHECK_FETCH_DATA_SUCCESS,
     CHECK_FETCH_DATA_FAIL,
     CHECK_STUDENT_ROLL_SUCCESS,
@@ -355,7 +357,31 @@ export const fetchdatafun2 = (reg) => async dispatch => {
 
 
 
+//Api for Sem Wise Back log Data for individual student (Fetch Student Details Page)
+export const semWiseBacklogData = (roll) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
 
+    const rollVal =  parseInt(roll);
+
+    // console.log("inside vis");
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/semWiseBacklogData/${rollVal}`,config)
+        // console.log(res.data);
+        dispatch({
+            type: GET_SEM_WISE_BACKLOG_ANALYSIS_SUCCESS,
+            payload: res.data,
+        })
+        
+    }catch(err){
+        dispatch({
+            type: GET_SEM_WISE_BACKLOG_ANALYSIS_FAIL,
+        })
+    }
+}
 
 
 

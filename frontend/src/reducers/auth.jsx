@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
@@ -45,6 +46,8 @@ import {
     POST_ADD_REG_FAIL,
     POST_ADD_BRANCH_SUCCESS,
     POST_ADD_BRANCH_FAIL,
+    GET_SEM_WISE_BACKLOG_ANALYSIS_SUCCESS,
+    GET_SEM_WISE_BACKLOG_ANALYSIS_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -71,6 +74,7 @@ const initialState = {
     fetchdata3:{"section":[],"sems":[],"status":false},
     filteredData:{},
     logfail:false,
+    semWiseBacklogData:{"allBacklogs":[0,0,0,0,0,0,0,0],"clearedBacklogs":[0,0,0,0,0,0,0,0]},
 };
 
 export default function (state = initialState, action) {
@@ -208,6 +212,22 @@ export default function (state = initialState, action) {
                 ...state,
                 fetchdata1: {"branch":[],"regulation":[],"status":false},
             }
+
+
+            case GET_SEM_WISE_BACKLOG_ANALYSIS_SUCCESS:
+            localStorage.setItem("semWiseBacklogData",JSON.stringify(payload));
+            // console.log(payload)
+            return {
+                ...state,
+                semWiseBacklogData: payload,
+            }
+        
+            case GET_SEM_WISE_BACKLOG_ANALYSIS_FAIL:
+                localStorage.removeItem("semWiseBacklogData");
+                return {
+                    ...state,
+                    semWiseBacklogData: {"allBacklogs":[0,0,0,0,0,0,0,0],"clearedBacklogs":[0,0,0,0,0,0,0,0]},
+                }
 
 
         case GET_FETCH_DATA_2_SUCCESS:
