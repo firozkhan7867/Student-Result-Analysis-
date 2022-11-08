@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { checkAuthenticated, load_user } from '../../actions/auth';
+import { getAllAdminData } from '../../actions/visua';
 import Sidebar from '../../components/sidebar/Sidebar';
 import StudentSideBar from '../../components/sidebar/StudentSideBar';
 import Topbar from '../../components/topbar/Topbar';
@@ -12,12 +13,13 @@ import EditBatch from '../AddData/EditBatch';
 import EditBranch from '../AddData/EditBranch';
 import EditReg from '../AddData/EditReg';
 
-const AdminDashboard = ({isAuthenticated,checkAuthenticated,load_user}) => {
-
+const AdminDashboard = ({isAuthenticated,checkAuthenticated,load_user,getAllAdminData}) => {
+ 
 
     useEffect(() => {
         checkAuthenticated();
         load_user();
+        getAllAdminData();
     }, []);
 
     const [page,setPage] = useState("addBranch");
@@ -46,4 +48,4 @@ const mapsStateToProps = state => ({
 })
 
 
-export default connect(mapsStateToProps,{checkAuthenticated,load_user})(AdminDashboard);
+export default connect(mapsStateToProps,{checkAuthenticated,load_user,getAllAdminData})(AdminDashboard);

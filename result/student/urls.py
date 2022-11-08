@@ -36,6 +36,8 @@ urlpatterns = [
     path('addreg',views.addreg,name="addreg"),
     path('addbranch',views.addbranch,name="addbranch"),
     path('semWiseBacklogData/<str:roll>',views.semWiseBacklogData,name="addbranch"),
+    path('getAllAdminData',views.getAllAdminData,name="getAllAdminData"),
+    path('dltBranch',views.dltBranch,name="dltBranch"),
 ]
 
 

@@ -1153,10 +1153,61 @@ def addbranch(request):
  
 
 
+@csrf_exempt
+def getAllAdminData(request):
+    branchs = Branch.objects.all()
+    regs = Regulation.objects.all()
+    batchs = Batch.objects.all()
+
+    branch = []
+    reg = []
+    batch = []
+    data = {}
+
+    for i in batchs:
+        k = {}
+        k["id"] = i.id
+        k["name"] = i.name
+        k["reg"] = i.reg.regulation
+        batch.append(k)
+
+    for i in regs:
+        k = {}
+        k["id"] = i.id
+        k["name"]= i.regulation
+        k["year"] = i.year
+        k["grades"] = i.grades
+        reg.append(k)
+
+    for i in branchs:
+        k = {}
+        k["id"] = i.id
+        k["name"] = i.branches
+        branch.append(k)
+    data["branch"] = branch 
+    data["reg"] = reg
+    data["batch"] = batch
+
+    # print(data)
+    
+    return JsonResponse({"msg":"Success","data":data},safe=True)
 
 
-
-
+@csrf_exempt
+def dltBranch(request):
+    if request.method == "POST":
+        branch = request.POST.get("branch")
+        print(branch)
+        branch = int(branch)
+        if Branch.objects.filter(id=branch).exists():
+            brn = Branch.objects.get(id=branch)
+            try:
+                brn.delete()
+                return JsonResponse({"del":"success","msg":"Successfully deleted all the branch and all its objects"})
+            except Exception as e:
+                return JsonResponse({"del":"error","msg":f"{e}"})
+        else:
+            return JsonResponse({"del":"error","msg":f"This{branch} Branch Does not exists in DataBase"})
 
 def semWiseBacklogData(request,roll):
     return JsonResponse({"success":"ok","allBacklogs":[0,2,3,1,5,0,3,0],"clearedBacklogs":[0,2,2,1,1,0,1,0]})

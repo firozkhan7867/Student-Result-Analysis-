@@ -48,6 +48,14 @@ import {
     POST_ADD_BRANCH_FAIL,
     GET_SEM_WISE_BACKLOG_ANALYSIS_SUCCESS,
     GET_SEM_WISE_BACKLOG_ANALYSIS_FAIL,
+    GET_ALL_ADMIN_DATA_FAIL,
+    GET_ALL_ADMIN_DATA_SUCCESS,
+    POST_DELETE_BRANCH_FAIL,
+    POST_DELETE_BRANCH_SUCCESS,
+    POST_DELETE_REG_SUCCESS,
+    POST_DELETE_REG_FAIL,
+    POST_DELETE_BATCH_SUCCESS,
+    POST_DELETE_BATCH_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -75,6 +83,8 @@ const initialState = {
     filteredData:{},
     logfail:false,
     semWiseBacklogData:{"allBacklogs":[0,0,0,0,0,0,0,0],"clearedBacklogs":[0,0,0,0,0,0,0,0]},
+    adminData: {"msg":"","data":{"branch":[],"reg":[],"batch":[]}},
+    adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
 };
 
 export default function (state = initialState, action) {
@@ -297,7 +307,53 @@ export default function (state = initialState, action) {
                 ...state,
                 addbranch:payload
             }
-    
+
+        case GET_ALL_ADMIN_DATA_SUCCESS:
+            localStorage.setItem("adminData",JSON.stringify(payload));
+            return{
+                ...state,
+                adminData: payload,
+            }
+        case GET_ALL_ADMIN_DATA_FAIL:
+            localStorage.setItem("adminData",JSON.stringify(payload));
+            return{
+                ...state,
+                adminData: {"msg":"fail","data":{"branch":[],"reg":[],"batch":[]}},
+            }
+        case POST_DELETE_BRANCH_SUCCESS:
+            return{
+                ...state,
+                adminDltResponse:{"branch":payload,"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+
+            }
+        case POST_DELETE_BRANCH_FAIL:
+            return{
+                ...state,
+                adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+            }
+        case POST_DELETE_REG_SUCCESS:
+            return{
+                ...state,
+                adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":payload},
+
+            }
+        case POST_DELETE_REG_FAIL:
+            return{
+                ...state,
+                adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+            }
+        case POST_DELETE_BATCH_SUCCESS:
+            return{
+                ...state,
+                adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":payload,"reg":{"del":"success","msg":"success"}},
+
+            }
+        case POST_DELETE_BATCH_FAIL:
+            return{
+                ...state,
+                adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+            }
+                
         case SIGNUP_SUCCESS:
             return {
                 ...state,

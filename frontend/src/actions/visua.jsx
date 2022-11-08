@@ -32,6 +32,10 @@ import {
     POST_ADD_BRANCH_SUCCESS,
     POST_ADD_BATCH_FAIL,
     POST_ADD_BATCH_SUCCESS,
+    GET_ALL_ADMIN_DATA_FAIL,
+    GET_ALL_ADMIN_DATA_SUCCESS,
+    POST_DELETE_BRANCH_FAIL,
+    POST_DELETE_BRANCH_SUCCESS,
 } from "./types";
 import axios from "axios";
 
@@ -503,4 +507,52 @@ export const postAddBranch = (data) => async dispatch => {
     }
 };
 
+
+
+
+// This API will Fetch all the data related to Admin Page, Branches, Regulation, Batches
+
+
+export const getAllAdminData = () => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    // console.log("inside vis");
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/getAllAdminData`,config)
+        // console.log(res.data);
+        dispatch({
+            type: GET_ALL_ADMIN_DATA_SUCCESS,
+            payload: res.data,
+        })
+        
+    }catch(err){
+        dispatch({
+            type: GET_ALL_ADMIN_DATA_FAIL,
+        })
+    }
+}
+
+
+
+
+export const deleteBranch = (id) => async dispatch => {
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/dltBranch`, id);
+        // console.log(res);
+        dispatch({
+            type:  POST_DELETE_BRANCH_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: POST_DELETE_BRANCH_FAIL
+        })
+    }
+};
 

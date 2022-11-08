@@ -1,8 +1,12 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
 
-const EditBatch = () => {
-  return (
-    <div className="d-flex justify-content-center">
+
+const EditBatch = ({ adminData }) => {
+    const branchs = adminData.batch;
+
+    return (
+        <div className="d-flex justify-content-center">
             <div className='text-center my-5 w-100' >
                 <p className='fw-bolder fs-2 my-2'>Edit  Batch Details</p>
                 <br />
@@ -80,7 +84,11 @@ const EditBatch = () => {
                 </div>
             </div>
         </div>
-  )
+    )
 }
 
-export default EditBatch
+const mapStateToProps = state => ({
+    adminData: state.auth.adminData,
+});
+
+export default  connect(mapStateToProps,{})(EditBatch);
