@@ -7,8 +7,6 @@ import {
     FETCH_SUBJ_SECT_DATA_SUCCESS,
     FETCH_REGULATION_DATA_SUCCESS,
     FETCH_REGULATION_DATA_FAIL,
-    POST_REGULATION_DATA_FAIL,
-    POST_REGULATION_DATA_SUCCESS,
     GET_SEM_WISE_BACKLOG_ANALYSIS_SUCCESS,
     GET_SEM_WISE_BACKLOG_ANALYSIS_FAIL,
     CHECK_FETCH_DATA_SUCCESS,
@@ -36,6 +34,8 @@ import {
     GET_ALL_ADMIN_DATA_SUCCESS,
     POST_DELETE_BRANCH_FAIL,
     POST_DELETE_BRANCH_SUCCESS,
+    POST_EDIT_BRANCH_FAIL,
+    POST_EDIT_BRANCH_SUCCESS,
 } from "./types";
 import axios from "axios";
 
@@ -186,6 +186,7 @@ export const postFetchData = (branch,batch,sem) => async dispatch => {
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/fetch_semester_result/${batchs}/${sems}/${branch}`,config)
         // console.log(res.data);
+        console.log(res);
         
 
     }catch(err){
@@ -535,6 +536,26 @@ export const getAllAdminData = () => async dispatch => {
         })
     }
 }
+
+
+
+
+export const editBranch = (id) => async dispatch => {
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/editBranch`, id);
+        // console.log(res);
+        dispatch({
+            type:  POST_EDIT_BRANCH_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: POST_EDIT_BRANCH_FAIL
+        })
+    }
+};
 
 
 

@@ -5,7 +5,7 @@ import {postAddReg} from "../../actions/visua";
 import Alert from "../../components/alert/Alert";
 
 const AddReg = ({ postAddReg }) => {
-	const [inputList, setInputList] = useState([{ grade: "asdds", value: "ksdn" }]);
+	const [inputList, setInputList] = useState([{ grade: "", value: "" }]);
 	const [formdata,setFormData] = useState({
 		reg:"",
 		year:""

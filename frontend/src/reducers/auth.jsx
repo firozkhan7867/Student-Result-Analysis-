@@ -56,6 +56,8 @@ import {
     POST_DELETE_REG_FAIL,
     POST_DELETE_BATCH_SUCCESS,
     POST_DELETE_BATCH_FAIL,
+    POST_EDIT_BRANCH_SUCCESS,
+    POST_EDIT_BRANCH_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -85,6 +87,8 @@ const initialState = {
     semWiseBacklogData:{"allBacklogs":[0,0,0,0,0,0,0,0],"clearedBacklogs":[0,0,0,0,0,0,0,0]},
     adminData: {"msg":"","data":{"branch":[],"reg":[],"batch":[]}},
     adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+    adminEditResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+
 };
 
 export default function (state = initialState, action) {
@@ -354,6 +358,16 @@ export default function (state = initialState, action) {
                 adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
             }
                 
+        case POST_EDIT_BRANCH_SUCCESS:
+            return{
+                ...state,
+                adminEditResponse:{"branch":payload,"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+            }
+        case POST_EDIT_BRANCH_FAIL:
+            return{
+                ...state,
+                adminEditResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+            }
         case SIGNUP_SUCCESS:
             return {
                 ...state,

@@ -1098,7 +1098,7 @@ def addreg(request):
     if request.method == "POST":
         reg = request.POST.get("reg")
         year = request.POST.get("year")
-        grades = request.POST.get("grades")
+        grades = request.POST.get("grade")
 
         if Regulation.objects.filter(regulation=reg).exists() or Regulation.objects.filter(year=year).exists():
             grade = {}
@@ -1208,6 +1208,27 @@ def dltBranch(request):
                 return JsonResponse({"del":"error","msg":f"{e}"})
         else:
             return JsonResponse({"del":"error","msg":f"This{branch} Branch Does not exists in DataBase"})
+
+
+
+@csrf_exempt
+def editBranch(request):
+    if request.method == "POST":
+        id = request.POST.get("id")
+        name = request.POST.get("name")
+        if Branch.objects.filter(id=id).exists():
+            brn = Branch.objects.get(id=id)
+            try:
+                brn.branches = name
+                brn.save()
+                return JsonResponse({"del":"success","msg":f"Successfully Updated the branch name to {name}"})
+            except Exception as e:
+                return JsonResponse({"del":"error","msg":f"{e}"})
+        else:
+            return JsonResponse({"del":"error","msg":f"This{name} Branch Does not exists in DataBase"})
+
+
+
 
 def semWiseBacklogData(request,roll):
     return JsonResponse({"success":"ok","allBacklogs":[0,2,3,1,5,0,3,0],"clearedBacklogs":[0,2,2,1,1,0,1,0]})

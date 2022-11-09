@@ -21,10 +21,8 @@ const AddDataMainPage = ({fetchdatafun2,pagestoShow,tog,sidebar,pp}) => {
     const {key} = formData;
 
     const onSubmit = (event) =>{
-        event.preventDefault();     
-        console.log(key);   
+        event.preventDefault();  
         if (key === "onlyadmins"){
-            console.log("inside");
             setver(true);
         }else{
             setver(false);
@@ -58,7 +56,6 @@ const AddDataMainPage = ({fetchdatafun2,pagestoShow,tog,sidebar,pp}) => {
 
     
     const tt = ()=>{
-        console.log("hi")
         tog(!sidebar);
     }
 

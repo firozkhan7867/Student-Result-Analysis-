@@ -1,27 +1,34 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteBranch } from "../../actions/visua";
+import { deleteBranch ,editBranch} from "../../actions/visua";
 
 
-const EditBranch = ({ adminData, deleteBranch, adminDltResponse }) => {
+const EditBranch = ({ adminData, deleteBranch, adminDltResponse,editBranch ,adminEditResponse}) => {
 
     const branchs = adminData.data.branch;
     const [delData, setdelData] = useState({
         id: "",
         name: "",
     });
+    
+    const [formdata,setFormData] = useState({
+        name:"",
+    })
+    const {name} = formdata;
+    const onChange = e => setFormData({ ...formdata, [e.target.name]: e.target.value});
 
     const [err, seterr] = useState({
         del: false,
         msg: ""
     });
-    
+
     let history = useNavigate();
 
 
     const edit = (value) => {
-        console.log(value);
+        setdelData(value);
+        setFormData({name:value.name});
     }
 
     const delte = () => {
@@ -32,15 +39,30 @@ const EditBranch = ({ adminData, deleteBranch, adminDltResponse }) => {
                 if (adminDltResponse.branch.del === "error") {
                     seterr(adminDltResponse.branch);
                 }
-                else if(adminDltResponse.branch.del === "success"){
+                else if (adminDltResponse.branch.del === "success") {
                     history("/");
                 }
             }
         );
     }
 
+    const editConfirm = () =>{
+        const data = new FormData();
+        data.append('id',delData.id);
+        data.append('name',name);
+        editBranch(data).then(
+            () =>{
+                if(adminEditResponse === "error"){
+                    seterr(adminEditResponse.branch);
+                }else if(adminEditResponse === "success"){
+                    history("/");
+                }
+            }
+        )
+        // console.log(name);
+    }
+
     const delfun = (value) => {
-        console.log(value);
         setdelData(value);
     }
 
@@ -49,13 +71,13 @@ const EditBranch = ({ adminData, deleteBranch, adminDltResponse }) => {
             <div className='text-center my-5 w-100' >
                 <p className='fw-bolder fs-2 mt-2 '>Edit  Batch Details</p>
                 <div className=" d-flex justify-content-center w-100 text-center mb-4">
-                    {err.del ? 
-                    <div class="alert alert-warning alert-dismissible d-flex align-items-center fade w-75 show" role="alert">
-                    <strong>Alert  ..!</strong> 
-                        {err.msg}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                  
+                    {err.del ?
+                        <div class="alert alert-warning alert-dismissible d-flex align-items-center fade w-75 show" role="alert">
+                            <strong>Alert  ..!</strong>
+                            {err.msg}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
                         :
                         <div class="alert alert-danger d-flex align-items-center w-75" role="alert">
                             <div>
@@ -77,6 +99,9 @@ const EditBranch = ({ adminData, deleteBranch, adminDltResponse }) => {
                         <div className=""></div>
                     </div> */}
 
+
+                {/* DELETE MODAL */}
+
                 <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered ">
                         <div class="modal-content">
@@ -95,6 +120,35 @@ const EditBranch = ({ adminData, deleteBranch, adminDltResponse }) => {
                         </div>
                     </div>
                 </div>
+                {/* DELETE MODAL */}
+
+
+
+                {/* EDIT MODAL */}
+                <div class="modal fade" id="editModel" aria-labelledby="editModelLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered ">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModelLabel">Edit Branch</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    
+                                <label for="recipient-name" class="col-form-label">Branch:</label>
+                                    <div class="mb-3 d-flex justify-content-center">
+                                        <input type="text" class="form-control w-50" onChange={(e) => onChange(e)} name='name' id="recipient-name" value={name} />
+                                    </div>
+                                </form>
+
+                                <button type="button" class="btn btn-primary mx-2" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick={() => editConfirm()}>Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* EDIT MODAL */}
                 <div className="d-flex justify-content-center">
                     <table className="table table-hover" style={{ width: "85%" }}>
                         <thead>
@@ -112,20 +166,12 @@ const EditBranch = ({ adminData, deleteBranch, adminDltResponse }) => {
                                         <th scope="row">{index + 1}</th>
                                         <td>{value.name}</td>
                                         <td className='d-flex justify-content-center'>
-                                            <button type='button' className='btn btn-success mx-2' onClick={() => edit(value)}>EDIT</button>
+                                            <button type='button' className='btn btn-success mx-2' onClick={() => edit(value)} data-bs-toggle="modal" data-bs-target="#editModel">EDIT</button>
                                             <button type='button' className='btn btn-danger' onClick={() => delfun(value)} data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
                                         </td>
                                     </tr>
                                 )
                             })}
-                            <tr>
-                                <th scope="row">11</th>
-                                <td>Dummy</td>
-                                <td className='d-flex justify-content-center'>
-                                    <button type='button' className='btn btn-success mx-2' onClick={() => edit(123232)}>Edit</button>
-                                    <button type='button' className='btn btn-danger' onClick={() => delfun({ id: "122132", name: "dummy" })} data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -138,8 +184,9 @@ const EditBranch = ({ adminData, deleteBranch, adminDltResponse }) => {
 const mapStateToProps = state => ({
     adminData: state.auth.adminData,
     adminDltResponse: state.auth.adminDltResponse,
+    adminEditResponse: state.auth.adminEditResponse,
 });
 
 
 
-export default connect(mapStateToProps, { deleteBranch })(EditBranch);
+export default connect(mapStateToProps, { deleteBranch,editBranch })(EditBranch);
