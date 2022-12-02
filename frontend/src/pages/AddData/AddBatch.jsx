@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { postAddBatch } from '../../actions/visua';
 import 'react-toastify/dist/ReactToastify.css';
 
-const AddBatch = ({postAddBatch}) => {
+const AddBatch = ({adminData,postAddBatch}) => {
+
+    
+    const regs = adminData.data.reg;
 
     const [formdata,setFormData] = useState({
 		batch:"",
@@ -35,9 +38,11 @@ const AddBatch = ({postAddBatch}) => {
                     <br />
                     <br />
                     <select className='form-control' name='reg' onChange={(e) => onChange(e)}>
-                    <option value = "null">Select</option>
-                        <option value = "r19">R19</option>
-                        <option value = "r20">R20</option>
+                        {regs.map((value,index) =>{
+                            return (
+                                <option value={value.id}>{value.name} - {value.year}</option>
+                            )
+                        })}
                     </select>
                     <br/>
                     <input type="text" name="batch" placeholder='Enter Batch Name' onChange={(e) => onChange(e)} className='form-control'  />
@@ -50,7 +55,10 @@ const AddBatch = ({postAddBatch}) => {
 
 }
 
+const mapStateToProps = state => ({
+    adminData: state.auth.adminData,
+});
 
 
 
-export default connect(null,{postAddBatch})(AddBatch);
+export default connect(mapStateToProps,{postAddBatch})(AddBatch);

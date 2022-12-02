@@ -36,6 +36,10 @@ import {
     POST_DELETE_BRANCH_SUCCESS,
     POST_EDIT_BRANCH_FAIL,
     POST_EDIT_BRANCH_SUCCESS,
+    POST_EDIT_REG_SUCCESS,
+    POST_EDIT_REG_FAIL,
+    POST_DELETE_REG_SUCCESS,
+    POST_DELETE_REG_FAIL,
 } from "./types";
 import axios from "axios";
 
@@ -557,6 +561,23 @@ export const editBranch = (id) => async dispatch => {
     }
 };
 
+export const editRegulation = (id) => async dispatch => {
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/editRegulation`, id);
+        // console.log(res);
+        dispatch({
+            type:  POST_EDIT_REG_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: POST_EDIT_REG_FAIL
+        })
+    }
+};
+
 
 
 
@@ -573,6 +594,24 @@ export const deleteBranch = (id) => async dispatch => {
     } catch (err) {
         dispatch({
             type: POST_DELETE_BRANCH_FAIL
+        })
+    }
+};
+
+
+export const deleteRegulation = (id) => async dispatch => {
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/dltRegulation`, id);
+        // console.log(res);
+        dispatch({
+            type:  POST_DELETE_REG_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: POST_DELETE_REG_FAIL
         })
     }
 };

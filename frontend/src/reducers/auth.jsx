@@ -58,6 +58,8 @@ import {
     POST_DELETE_BATCH_FAIL,
     POST_EDIT_BRANCH_SUCCESS,
     POST_EDIT_BRANCH_FAIL,
+    POST_EDIT_REG_SUCCESS,
+    POST_EDIT_REG_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -70,24 +72,26 @@ const initialState = {
     semVisData: null,
     subjVisData: null,
     subjSectAnalysis: null,
-    semDetails:{"name":"error","reg":"error","branch":"error","batch":"error"},
+    semDetails: { "name": "error", "reg": "error", "branch": "error", "batch": "error" },
     semId: null,
     RegulationData: { regData: [], batchData: [], branchData: [] },
     checkFetchSem: { "code": "not", "msg": "none" },
     failPercentageSection: [0, 0, 0, 0],
     toppersData: { 1: [], 2: [], 3: [], 4: [], "allSection": [], "onlysections": [] },
     checkRoll: { "code": "warning", "msg": "something went Wrong .. couldn't  process the request" },
-    studentdetails: { "cgpas": [null, null, null, null, null, null, null, null],"roll": null,
-                        "details":{ "name":null, "email":null,"mobile":null, "dob":null,"father":null, "aadhar":null, "address":null, "roll":null, "section":null,"branch":null} },
-    fetchdata1: {"branch":[],"regulation":[],"status":false},
-    fetchdata2: {"batch":[],"status":false},
-    fetchdata3:{"section":[],"sems":[],"status":false},
-    filteredData:{},
-    logfail:false,
-    semWiseBacklogData:{"allBacklogs":[0,0,0,0,0,0,0,0],"clearedBacklogs":[0,0,0,0,0,0,0,0]},
-    adminData: {"msg":"","data":{"branch":[],"reg":[],"batch":[]}},
-    adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
-    adminEditResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+    studentdetails: {
+        "cgpas": [null, null, null, null, null, null, null, null], "roll": null,
+        "details": { "name": null, "email": null, "mobile": null, "dob": null, "father": null, "aadhar": null, "address": null, "roll": null, "section": null, "branch": null }
+    },
+    fetchdata1: { "branch": [], "regulation": [], "status": false },
+    fetchdata2: { "batch": [], "status": false },
+    fetchdata3: { "section": [], "sems": [], "status": false },
+    filteredData: {},
+    logfail: false,
+    semWiseBacklogData: { "allBacklogs": [0, 0, 0, 0, 0, 0, 0, 0], "clearedBacklogs": [0, 0, 0, 0, 0, 0, 0, 0] },
+    adminData: { "msg": "", "data": { "branch": [], "reg": [], "batch": [] } },
+    adminDltResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
+    adminEditResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
 
 };
 
@@ -104,13 +108,13 @@ export default function (state = initialState, action) {
         case LOGIN_SUCCESS:
             localStorage.setItem('access', payload.access);
             localStorage.setItem('refresh', payload.refresh);
-            localStorage.setItem("logfail",JSON.stringify(false));
+            localStorage.setItem("logfail", JSON.stringify(false));
             return {
                 ...state,
                 isAuthenticated: true,
                 access: payload.access,
                 refresh: payload.refresh,
-                logfail:false,
+                logfail: false,
             }
         case GET_UP_DATA_SUCCESS:
             // console.log(state.updata)
@@ -196,16 +200,16 @@ export default function (state = initialState, action) {
                 studentdetails: payload,
             }
         case GET_STUDENT_DETAILS_FAIL:
-            localStorage.setItem("studentdetails", JSON.stringify({ "cgpas": [null, null, null, null, null, null, null, null],"roll": null,"details":{ "name":null, "email":null,"mobile":null, "dob":null,"father":null, "aadhar":null, "address":null, "roll":null, "section":null,"branch":null} }));
+            localStorage.setItem("studentdetails", JSON.stringify({ "cgpas": [null, null, null, null, null, null, null, null], "roll": null, "details": { "name": null, "email": null, "mobile": null, "dob": null, "father": null, "aadhar": null, "address": null, "roll": null, "section": null, "branch": null } }));
             return {
                 ...state,
-                studentdetails: { "cgpas": [null, null, null, null, null, null, null, null],"roll": null,"details":{ "name":null, "email":null,"mobile":null, "dob":null,"father":null, "aadhar":null, "address":null, "roll":null, "section":null,"branch":null} },
+                studentdetails: { "cgpas": [null, null, null, null, null, null, null, null], "roll": null, "details": { "name": null, "email": null, "mobile": null, "dob": null, "father": null, "aadhar": null, "address": null, "roll": null, "section": null, "branch": null } },
             }
 
 
         case SAVEID:
             localStorage.setItem('semId', payload);
-            return{
+            return {
                 ...state,
                 semId: payload,
             }
@@ -213,161 +217,178 @@ export default function (state = initialState, action) {
         //   -------------------------     FETCH BRANCH AND REGULATIONS    ---------------------------
 
         case GET_FETCH_DATA_1_SUCCESS:
-            localStorage.setItem("branchdata",JSON.stringify(payload));
+            localStorage.setItem("branchdata", JSON.stringify(payload));
             // console.log(payload)
             return {
                 ...state,
                 fetchdata1: payload,
             }
-        
+
         case GET_FETCH_DATA_1_FAIL:
             localStorage.removeItem("branchdata");
             return {
                 ...state,
-                fetchdata1: {"branch":[],"regulation":[],"status":false},
+                fetchdata1: { "branch": [], "regulation": [], "status": false },
             }
 
 
-            case GET_SEM_WISE_BACKLOG_ANALYSIS_SUCCESS:
-            localStorage.setItem("semWiseBacklogData",JSON.stringify(payload));
+        case GET_SEM_WISE_BACKLOG_ANALYSIS_SUCCESS:
+            localStorage.setItem("semWiseBacklogData", JSON.stringify(payload));
             // console.log(payload)
             return {
                 ...state,
                 semWiseBacklogData: payload,
             }
-        
-            case GET_SEM_WISE_BACKLOG_ANALYSIS_FAIL:
-                localStorage.removeItem("semWiseBacklogData");
-                return {
-                    ...state,
-                    semWiseBacklogData: {"allBacklogs":[0,0,0,0,0,0,0,0],"clearedBacklogs":[0,0,0,0,0,0,0,0]},
-                }
+
+        case GET_SEM_WISE_BACKLOG_ANALYSIS_FAIL:
+            localStorage.removeItem("semWiseBacklogData");
+            return {
+                ...state,
+                semWiseBacklogData: { "allBacklogs": [0, 0, 0, 0, 0, 0, 0, 0], "clearedBacklogs": [0, 0, 0, 0, 0, 0, 0, 0] },
+            }
 
 
         case GET_FETCH_DATA_2_SUCCESS:
-            localStorage.setItem("regFetchData",JSON.stringify(payload));
+            localStorage.setItem("regFetchData", JSON.stringify(payload));
             // console.log(payload)
             return {
                 ...state,
                 fetchdata2: payload,
             }
-        
+
         case GET_FETCH_DATA_2_FAIL:
             localStorage.removeItem("regFetchData");
             return {
                 ...state,
-                fetchdata2: {"batch":[],"status":false},
-            }   
+                fetchdata2: { "batch": [], "status": false },
+            }
 
         case GET_FETCH_DATA_3_SUCCESS:
-            localStorage.setItem("sectSemData",JSON.stringify(payload));
+            localStorage.setItem("sectSemData", JSON.stringify(payload));
             // console.log(payload);
             return {
                 ...state,
                 fetchdata3: payload,
             }
-        
+
         case GET_FETCH_DATA_3_FAIL:
             localStorage.removeItem("sectSemData");
             return {
                 ...state,
-                fetchdata3: {"section":[],"sems":[],"status":false},
-            }  
+                fetchdata3: { "section": [], "sems": [], "status": false },
+            }
         case POST_FILTER_DATA_SUCCESS:
-            localStorage.setItem("filteredData",JSON.stringify(payload));
+            localStorage.setItem("filteredData", JSON.stringify(payload));
             console.log(payload);
-            return{
+            return {
                 ...state,
-                filteredData:payload
-            } 
+                filteredData: payload
+            }
         case POST_FILTER_DATA_FAIL:
             localStorage.removeItem("filteredData");
             // console.log(payload);
-            return{
+            return {
                 ...state,
-                filteredData:{}
-            } 
+                filteredData: {}
+            }
         case POST_ADD_REG_SUCCESS:
-            localStorage.setItem("addreg",JSON.stringify(payload));
-            return{
+            localStorage.setItem("addreg", JSON.stringify(payload));
+            return {
                 ...state,
-                addreg:payload
+                addreg: payload
             }
         case POST_ADD_REG_FAIL:
-            localStorage.setItem("addreg",JSON.stringify(payload));
-            return{
+            localStorage.setItem("addreg", JSON.stringify(payload));
+            return {
                 ...state,
-                addreg:payload
+                addreg: payload
             }
         case POST_ADD_BRANCH_SUCCESS:
-            localStorage.setItem("addbranch",JSON.stringify(payload));
-            return{
+            localStorage.setItem("addbranch", JSON.stringify(payload));
+            return {
                 ...state,
-                addbranch:payload
+                addbranch: payload
             }
         case POST_ADD_BRANCH_FAIL:
-            localStorage.setItem("addbranch",JSON.stringify(payload));
-            return{
+            localStorage.setItem("addbranch", JSON.stringify(payload));
+            return {
                 ...state,
-                addbranch:payload
+                addbranch: payload
             }
 
+
+        //  The below code belongs to ADMIN DASHBOARD
         case GET_ALL_ADMIN_DATA_SUCCESS:
-            localStorage.setItem("adminData",JSON.stringify(payload));
-            return{
+            localStorage.setItem("adminData", JSON.stringify(payload));
+            return {
                 ...state,
                 adminData: payload,
             }
         case GET_ALL_ADMIN_DATA_FAIL:
-            localStorage.setItem("adminData",JSON.stringify(payload));
-            return{
+            localStorage.setItem("adminData", JSON.stringify(payload));
+            return {
                 ...state,
-                adminData: {"msg":"fail","data":{"branch":[],"reg":[],"batch":[]}},
+                adminData: { "msg": "fail", "data": { "branch": [], "reg": [], "batch": [] } },
             }
         case POST_DELETE_BRANCH_SUCCESS:
-            return{
+            return {
                 ...state,
-                adminDltResponse:{"branch":payload,"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+                adminDltResponse: { "branch": payload, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
 
             }
         case POST_DELETE_BRANCH_FAIL:
-            return{
+            return {
                 ...state,
-                adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+                adminDltResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
             }
         case POST_DELETE_REG_SUCCESS:
-            return{
+            return {
                 ...state,
-                adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":payload},
+                adminDltResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": payload },
 
             }
         case POST_DELETE_REG_FAIL:
-            return{
+            return {
                 ...state,
-                adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+                adminDltResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
             }
         case POST_DELETE_BATCH_SUCCESS:
-            return{
+            return {
                 ...state,
-                adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":payload,"reg":{"del":"success","msg":"success"}},
+                adminDltResponse: { "branch": { "del": "success", "msg": "success" }, "batch": payload, "reg": { "del": "success", "msg": "success" } },
 
             }
         case POST_DELETE_BATCH_FAIL:
-            return{
+            return {
                 ...state,
-                adminDltResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+                adminDltResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
             }
-                
+
         case POST_EDIT_BRANCH_SUCCESS:
-            return{
+            return {
                 ...state,
-                adminEditResponse:{"branch":payload,"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+                adminEditResponse: { "branch": payload, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
             }
         case POST_EDIT_BRANCH_FAIL:
-            return{
+            return {
                 ...state,
-                adminEditResponse:{"branch":{"del":"success","msg":"success"},"batch":{"del":"success","msg":"success"},"reg":{"del":"success","msg":"success"}},
+                adminEditResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
             }
+        case POST_EDIT_REG_SUCCESS:
+            return {
+                ...state,
+                adminEditResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": payload },
+            }
+        case POST_EDIT_REG_FAIL:
+            return {
+                ...state,
+                adminEditResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
+            }
+
+        //  The above cases are for ADMIN DASHBOARD
+
+        
+
         case SIGNUP_SUCCESS:
             return {
                 ...state,
@@ -378,14 +399,14 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 semVisData: payload.sem_performance,
-                semDetails:payload.details,
+                semDetails: payload.details,
 
             }
         case FETCH_VIS_DATA_FAIL:
             return {
                 ...state,
                 semVisData: null,
-                semDetails:{"name":"error","reg":"error","branch":"error","batch":"error"},
+                semDetails: { "name": "error", "reg": "error", "branch": "error", "batch": "error" },
             }
         case FETCH_SUBJ_DATA_SUCCESS:
             return {
@@ -414,10 +435,10 @@ export default function (state = initialState, action) {
                 user: null
             }
         case LOGIN_FAIL:
-            localStorage.setItem("logfail",JSON.stringify(true));
-            return{
+            localStorage.setItem("logfail", JSON.stringify(true));
+            return {
                 ...state,
-                logfail:true,
+                logfail: true,
             }
         case SIGNUP_FAIL:
         case LOGOUT:

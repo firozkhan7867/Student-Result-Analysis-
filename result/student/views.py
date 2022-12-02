@@ -25,7 +25,7 @@ from student.Fetch.preprocessing import add_subject,check_sem_exist,get_subject_
 from student.multi_sem_analysis.Sem_backlog_data_analysis import get_sem_wise_backlog_analysis
 from student.multi_sem_analysis.Student_CGPA_analysis import all_sems_analysis
 from student.preprocesssing import get_all_batch_for_reg,get_all_reg_for_branch
-from student.preprocesssing import  get_section_list
+from student.preprocesssing import  get_section_list,regGrades
 from student.add_to_DB import split_data
 from .add_to_DB import check_repeated_subj, split_data_student
 from student.back_log_handler import split_data_backlog
@@ -536,10 +536,10 @@ def reduced_fetch_semester_result(batch,sem,branch):
 
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
-    students = Student.objects.filter(batch=batch,branch=branch_obj)
+    students = Student.objects.filter(batch=batch,branch=branch_obj)[190:]
 
     print("-------------------------------------------------------------------------------------------------")
-
+ 
 
     for i in students:
         time.sleep(10)
@@ -757,8 +757,17 @@ def get_sec_wise_topper_data(sem_id,secs):
 
 def get_subj_section_data(request,sem_id):
     top_data = get_topper_data(sem_id)
+    # sem = Semester.objects.get(id=sem_id)
+    # # sem = convert_num_to_sem(sem)
+    # batch  = Batch.objects.get(id=sem.batch.id)
+    # branch_obj = Branch.objects.get(id=sem.branch.id)
+    # students = Student.objects.filter(batch=batch,branch=branch_obj)
+    # for i in students:
+    #     i.section = 1
+    #     i.save()
     dsecs = get_sect_data(sem_id)
-    # print(dsecs)
+    print("hi")
+    print(dsecs)
     sem = Semester.objects.get(id=sem_id)
     # sem = convert_num_to_sem(sem)
     batch  = Batch.objects.get(id=sem.batch.id)
@@ -1152,6 +1161,24 @@ def addbranch(request):
         return JsonResponse({"msg":"Error","code":"danger","message":"Some thing went wrong....!!!!!!!"})
  
 
+@csrf_exempt
+def addbatch(request):
+    if request.method == "POST":
+        batch = request.POST.get("batch")
+        reg = int(request.POST.get("reg"))
+        print(reg)
+
+        if Batch.objects.filter(name=batch).exists() or  not Regulation.objects.filter(id=reg).exists():
+            return JsonResponse({"msg":"Error","code":"danger","message":"Same Batch already Exists or Regulation Doesn't Exists"})
+        else:
+            reg = Regulation.objects.get(id=reg)
+            bran = Batch(name=batch,reg=reg)
+            bran.save()
+            return JsonResponse({"msg":"Added Successfully","code":"success","message":"Batch has been added successfully"},safe=True)
+    else:
+        return JsonResponse({"msg":"Error","code":"danger","message":"Some thing went wrong....!!!!!!!"})
+ 
+
 
 @csrf_exempt
 def getAllAdminData(request):
@@ -1176,7 +1203,7 @@ def getAllAdminData(request):
         k["id"] = i.id
         k["name"]= i.regulation
         k["year"] = i.year
-        k["grades"] = i.grades
+        k["grades"] = regGrades(i)
         reg.append(k)
 
     for i in branchs:
@@ -1209,6 +1236,21 @@ def dltBranch(request):
         else:
             return JsonResponse({"del":"error","msg":f"This{branch} Branch Does not exists in DataBase"})
 
+@csrf_exempt
+def dltRegulation(request):
+    if request.method == "POST":
+        reg = request.POST.get("reg")
+        print(reg)
+        reg = int(reg)
+        if Regulation.objects.filter(id=reg).exists():
+            brn = Regulation.objects.get(id=reg)
+            try:
+                brn.delete()
+                return JsonResponse({"del":"success","msg":"Successfully deleted all the Regulation and all its objects"})
+            except Exception as e:
+                return JsonResponse({"del":"error","msg":f"{e}"})
+        else:
+            return JsonResponse({"del":"error","msg":f"This{reg} Regulation Does not exists in DataBase"})
 
 
 @csrf_exempt
@@ -1226,6 +1268,38 @@ def editBranch(request):
                 return JsonResponse({"del":"error","msg":f"{e}"})
         else:
             return JsonResponse({"del":"error","msg":f"This{name} Branch Does not exists in DataBase"})
+
+
+@csrf_exempt
+def editRegulation(request):
+    if request.method == "POST":
+        id = request.POST.get("id")
+        name = request.POST.get("name")
+        year = request.POST.get("year")
+        grades = request.POST.get("grade")
+        
+        if Regulation.objects.filter(regulation=name).exists() or Regulation.objects.filter(year=year).exists() or Regulation.objects.filter(id=id).exists():
+            grade = {}
+            grade["data"] = json.loads(grades)
+            gg = {}
+            for i in grade["data"]:
+                gg[i["grade"].upper()]=  int(i["value"])
+            try:
+                reg = Regulation.objects.get(id=id)
+                reg.regulation = name
+                reg.year = year
+                reg.grades = gg
+                reg.save()
+                return JsonResponse({"del":"success","msg":f"Successfully Updated the Regulation details"})
+            except Exception as e:
+                return JsonResponse({"del":"error","msg":f"{e}"})
+        else:
+            return JsonResponse({"del":"error","msg":f"This{name} Regulation Does not exists in DataBase"})
+
+    else:
+        return JsonResponse({"msg":"Error","code":"danger","message":"Some thing went wrong....!!!!!!!"})
+
+
 
 
 

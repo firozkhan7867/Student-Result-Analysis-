@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteBranch ,editBranch} from "../../actions/visua";
+import { deleteBranch, editBranch } from "../../actions/visua";
 
 
-const EditBranch = ({ adminData, deleteBranch, adminDltResponse,editBranch ,adminEditResponse}) => {
+const EditBranch = ({ adminData, deleteBranch, adminDltResponse, editBranch, adminEditResponse }) => {
 
     const branchs = adminData.data.branch;
     const [delData, setdelData] = useState({
         id: "",
         name: "",
     });
-    
-    const [formdata,setFormData] = useState({
-        name:"",
+
+    const [formdata, setFormData] = useState({
+        name: "",
     })
-    const {name} = formdata;
-    const onChange = e => setFormData({ ...formdata, [e.target.name]: e.target.value});
+    const { name } = formdata;
+    const onChange = e => setFormData({ ...formdata, [e.target.name]: e.target.value });
 
     const [err, seterr] = useState({
         del: false,
@@ -28,7 +28,7 @@ const EditBranch = ({ adminData, deleteBranch, adminDltResponse,editBranch ,admi
 
     const edit = (value) => {
         setdelData(value);
-        setFormData({name:value.name});
+        setFormData({ name: value.name });
     }
 
     const delte = () => {
@@ -46,19 +46,21 @@ const EditBranch = ({ adminData, deleteBranch, adminDltResponse,editBranch ,admi
         );
     }
 
-    const editConfirm = () =>{
+    const editConfirm = () => {
         const data = new FormData();
-        data.append('id',delData.id);
-        data.append('name',name);
+        data.append('id', delData.id);
+        data.append('name', name);
         editBranch(data).then(
-            () =>{
-                if(adminEditResponse === "error"){
+            () => {
+                if (adminEditResponse.branch.del === "error") {
                     seterr(adminEditResponse.branch);
-                }else if(adminEditResponse === "success"){
+                } else if (adminEditResponse === "success") {
                     history("/");
                 }
             }
         )
+
+        console.log(err);
         // console.log(name);
     }
 
@@ -71,29 +73,31 @@ const EditBranch = ({ adminData, deleteBranch, adminDltResponse,editBranch ,admi
             <div className='text-center my-5 w-100' >
                 <p className='fw-bolder fs-2 mt-2 '>Edit  Batch Details</p>
                 <div className=" d-flex justify-content-center w-100 text-center mb-4">
-                    {err.del ?
+
+                    {err.del === "error" ?
                         <div class="alert alert-warning alert-dismissible d-flex align-items-center fade w-75 show" role="alert">
                             <strong>Alert  ..!</strong>
                             {err.msg}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-
-                        :
-                        <div class="alert alert-danger d-flex align-items-center w-75" role="alert">
-                            <div>
-                                <h4 class="alert-heading">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
-                                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                    </svg>Warning!</h4>
-                                <p>Deleting any of these important data will cause permanent loss of all the data,
-                                    Once deleted cannot be undone so please be carefull and think before Deleting any of the Branches from the list.
-                                    All the Branch related data will get deleted.</p>
-                                <hr />
-                                <p class="mb-0">Deleted Data cannot be recovered....!!. Please confirm before deleting</p>
-                            </div>
-
-                        </div>
+                        : ""
                     }
+
+
+                    <div class="alert alert-danger d-flex align-items-center w-75" role="alert">
+                        <div>
+                            <h4 class="alert-heading">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                </svg>Warning!</h4>
+                            <p>Deleting any of these important data will cause permanent loss of all the data,
+                                Once deleted cannot be undone so please be carefull and think before Deleting any of the Branches from the list.
+                                All the Branch related data will get deleted.</p>
+                            <hr />
+                            <p class="mb-0">Deleted Data cannot be recovered....!!. Please confirm before deleting</p>
+                        </div>
+
+                    </div>
                 </div>
                 {/* <div className="d-flex justify-content-around">
                         <div className=""></div>
@@ -134,8 +138,8 @@ const EditBranch = ({ adminData, deleteBranch, adminDltResponse,editBranch ,admi
                             </div>
                             <div class="modal-body">
                                 <form>
-                                    
-                                <label for="recipient-name" class="col-form-label">Branch:</label>
+
+                                    <label for="recipient-name" class="col-form-label">Branch:</label>
                                     <div class="mb-3 d-flex justify-content-center">
                                         <input type="text" class="form-control w-50" onChange={(e) => onChange(e)} name='name' id="recipient-name" value={name} />
                                     </div>
@@ -189,4 +193,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps, { deleteBranch,editBranch })(EditBranch);
+export default connect(mapStateToProps, { deleteBranch, editBranch })(EditBranch);

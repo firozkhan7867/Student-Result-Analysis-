@@ -90,8 +90,8 @@ const AddReg = ({ postAddReg }) => {
 									<div className="my-2 w-100 px-2 d-flex justify-content-center ">
 										<div className="d-flex justify-content-center w-75">
 											<div className="d-flex w-60 grades pl-4">
-												<input type="text" required placeholder={x.grade?x.firstName : "Grade"} className='rounded-start grade1' name="grade"  onChange={e => handleInputChange(e, i)} />
-												<input type="text" required placeholder={x.value? x.lastName : "value"} name="value" className=' rounded-end grade1'  onChange={e => handleInputChange(e, i)} />
+												<input type="text" required placeholder={x.grade?x.grade : "Grade"} className='rounded-start grade1' name="grade"  onChange={e => handleInputChange(e, i)} />
+												<input type="text" required placeholder={x.value? x.value : "value"} name="value" className=' rounded-end grade1'  onChange={e => handleInputChange(e, i)} />
 											</div>
 
 											<div className="mx-2">

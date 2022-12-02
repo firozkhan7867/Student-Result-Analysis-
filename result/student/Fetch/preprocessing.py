@@ -56,10 +56,10 @@ def check_subject_fetch(roll,subj_obj,sem):
         if grade == "F" or grade == "AB":
             result = "F"
             fail = True
-        if attendance.lower() == "d":
-            fail = True
-            result = "F"
-            credit = 0
+        # if attendance.lower() == "d":
+        #     fail = True
+        #     result = "F"
+        #     credit = 0
         
         if credit == "--" or grade == "--" or cgpa == "--":
             result = "F"

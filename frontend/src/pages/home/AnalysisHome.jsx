@@ -8,6 +8,7 @@ import Combo from '../../components/chart/Combo';
 // import { Link } from 'react-router-dom';
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import ErrorBoundary from "../error/ErrorBoundary";
+import { FcDownload } from 'react-icons/fc';
 
 
 
@@ -83,14 +84,21 @@ const AnalysisHome = (props) => {
         }
     }
 
+    const print = ()=>{
+        window.print()
+    }
+
     return ( 
         <div className={first ? 'home' : 'home2'}>
             <div className="mx-3 my-3 d-flex justify-content-between">
-                <div className="" >
+                <div className="">
                     <button onClick={tt} class="navbar-toggler navbar-light bg-light px-2 py-1 rounded" type="button">
                         <span class="navbar-toggler-icon"></span>
                     </button> <span className='fw-light text-secondary mx-2'>Toggle Side bar</span>
                 </div>
+                {/* <p onClick={print} className="px-2 py-2  border" >download </p> */}
+
+                <p onClick={print} class="btn btn-outline-dark" data-bs-toggle="tooltip" data-bs-placement="top" title="Select Layout as LandScape"><FcDownload/> Download </p>
                 <div className="mx-3 ">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><Link to={"/"}>Home</Link></li>

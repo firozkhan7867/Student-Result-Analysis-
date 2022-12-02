@@ -5,6 +5,20 @@ from student.models import Student, Subjects
 pd.options.mode.chained_assignment = None
 
 
+def regGrades(reg):
+    grades = reg.grades
+    result = []
+    # print(grades)
+    for grade,value in grades.items():
+        k = {}
+        k["grade"] = grade
+        k["value"] = value
+        result.append(k)
+    return result
+    
+
+
+
 
 def convert_num_to_sem(num):
     sems = {1:"I",2:"II",3:"III",4:"IV",5:"V",6:"VI",7:"VII",8:"VIII"}

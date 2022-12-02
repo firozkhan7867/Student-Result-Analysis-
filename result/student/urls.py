@@ -35,10 +35,13 @@ urlpatterns = [
     path('filter',views.filter,name="filter"),
     path('addreg',views.addreg,name="addreg"),
     path('addbranch',views.addbranch,name="addbranch"),
+    path('addbatch',views.addbatch,name="addbatch"),
     path('semWiseBacklogData/<str:roll>',views.semWiseBacklogData,name="addbranch"),
     path('getAllAdminData',views.getAllAdminData,name="getAllAdminData"),
     path('dltBranch',views.dltBranch,name="dltBranch"),
     path('editBranch',views.editBranch,name="editBranch"),
+    path('dltRegulation',views.dltRegulation,name="dltRegulation"),
+    path('editRegulation',views.editRegulation,name="editRegulation"),
 ]
 
 
