@@ -60,6 +60,8 @@ import {
     POST_EDIT_BRANCH_FAIL,
     POST_EDIT_REG_SUCCESS,
     POST_EDIT_REG_FAIL,
+    POST_EDIT_BATCH_SUCCESS,
+    POST_EDIT_BATCH_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -380,6 +382,16 @@ export default function (state = initialState, action) {
                 adminEditResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": payload },
             }
         case POST_EDIT_REG_FAIL:
+            return {
+                ...state,
+                adminEditResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
+            }
+        case POST_EDIT_BATCH_SUCCESS:
+            return {
+                ...state,
+                adminEditResponse: { "branch": { "del": "success", "msg": "success" }, "batch": payload, "reg": { "del": "success", "msg": "success" } },
+            }
+        case POST_EDIT_BATCH_FAIL:
             return {
                 ...state,
                 adminEditResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },

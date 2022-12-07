@@ -1166,7 +1166,6 @@ def addbatch(request):
     if request.method == "POST":
         batch = request.POST.get("batch")
         reg = int(request.POST.get("reg"))
-        print(reg)
 
         if Batch.objects.filter(name=batch).exists() or  not Regulation.objects.filter(id=reg).exists():
             return JsonResponse({"msg":"Error","code":"danger","message":"Same Batch already Exists or Regulation Doesn't Exists"})
@@ -1184,7 +1183,7 @@ def addbatch(request):
 def getAllAdminData(request):
     branchs = Branch.objects.all()
     regs = Regulation.objects.all()
-    batchs = Batch.objects.all()
+    batchs = Batch.objects.all().order_by('reg')
 
     branch = []
     reg = []
@@ -1253,6 +1252,23 @@ def dltRegulation(request):
             return JsonResponse({"del":"error","msg":f"This{reg} Regulation Does not exists in DataBase"})
 
 
+
+@csrf_exempt
+def dltBatch(request):
+    if request.method == "POST":
+        batch = request.POST.get("batch")
+        batch = int(batch)
+        if Batch.objects.filter(id=batch).exists():
+            brn = Batch.objects.get(id=batch)
+            try:
+                brn.delete()
+                return JsonResponse({"del":"success","msg":"Successfully deleted all the Batch and all its objects"})
+            except Exception as e:
+                return JsonResponse({"del":"error","msg":f"{e}"})
+        else:
+            return JsonResponse({"del":"error","msg":f"This{batch} Batch Does not exists in DataBase"})
+
+
 @csrf_exempt
 def editBranch(request):
     if request.method == "POST":
@@ -1268,6 +1284,28 @@ def editBranch(request):
                 return JsonResponse({"del":"error","msg":f"{e}"})
         else:
             return JsonResponse({"del":"error","msg":f"This{name} Branch Does not exists in DataBase"})
+
+
+
+@csrf_exempt
+def editBatch(request):
+    if request.method == "POST":
+        id = request.POST.get("id")
+        name = request.POST.get("name")
+        reg = request.POST.get("reg")
+        print(id,name,reg)
+        if Batch.objects.filter(id=id).exists() and Regulation.objects.filter(id=reg).exists():
+            brn = Batch.objects.get(id=id)
+            reg = Regulation.objects.get(id=reg)
+            try:
+                brn.name = name
+                brn.reg = reg
+                brn.save()
+                return JsonResponse({"del":"success","msg":f"Successfully Updated the Batch name to {name}"})
+            except Exception as e:
+                return JsonResponse({"del":"error","msg":f"{e}"})
+        else:
+            return JsonResponse({"del":"error","msg":f"This{name} Batch Does not exists in DataBase or {reg} Regulation does not existsi in DB"})
 
 
 @csrf_exempt

@@ -42,6 +42,9 @@ urlpatterns = [
     path('editBranch',views.editBranch,name="editBranch"),
     path('dltRegulation',views.dltRegulation,name="dltRegulation"),
     path('editRegulation',views.editRegulation,name="editRegulation"),
+    path('dltBatch',views.dltBatch,name="dltBatch"),
+    path('editBatch',views.editBatch,name="editBatch"),
+    
 ]
 
 

@@ -40,6 +40,10 @@ import {
     POST_EDIT_REG_FAIL,
     POST_DELETE_REG_SUCCESS,
     POST_DELETE_REG_FAIL,
+    POST_DELETE_BATCH_SUCCESS,
+    POST_DELETE_BATCH_FAIL,
+    POST_EDIT_BATCH_SUCCESS,
+    POST_EDIT_BATCH_FAIL,
 } from "./types";
 import axios from "axios";
 
@@ -580,6 +584,25 @@ export const editRegulation = (id) => async dispatch => {
 
 
 
+export const editBatch = (id) => async dispatch => {
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/editBatch`, id);
+        // console.log(res);
+        dispatch({
+            type:  POST_EDIT_BATCH_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: POST_EDIT_BATCH_FAIL
+        })
+    }
+};
+
+
+
 
 export const deleteBranch = (id) => async dispatch => {
 
@@ -612,6 +635,25 @@ export const deleteRegulation = (id) => async dispatch => {
     } catch (err) {
         dispatch({
             type: POST_DELETE_REG_FAIL
+        })
+    }
+};
+
+
+
+export const deleteBatch = (id) => async dispatch => {
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/dltBatch`, id);
+        // console.log(res);
+        dispatch({
+            type:  POST_DELETE_BATCH_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: POST_DELETE_BATCH_FAIL
         })
     }
 };
