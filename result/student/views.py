@@ -1200,7 +1200,8 @@ def getAllAdminData(request):
     for i in regs:
         k = {}
         k["id"] = i.id
-        k["name"]= i.regulation
+        k["name"]= i.regulation 
+        # d["name"] = f"{i.regulation} for year {i.year}"
         k["year"] = i.year
         k["grades"] = regGrades(i)
         reg.append(k)

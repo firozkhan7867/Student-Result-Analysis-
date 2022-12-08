@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "./StudentSideBar.css"; 
 
 
-const StudentSideBar = ({selected,tog}) =>{
+const StudentSideBar = ({selected,tog,fetchdata1}) =>{
     const [first, setfirst] = useState({batch:[]});
 
 
@@ -28,6 +28,9 @@ const StudentSideBar = ({selected,tog}) =>{
                         </div>
                         <div className="nav-item nn"  onClick={() => selected("editBatch")}>
                             Edit Batch 
+                        </div>
+                        <div className="nav-item nn"  onClick={() => { fetchdata1();selected("editSem");}} >
+                            Edit Semesters
                         </div>
                     </div>
                 </div>

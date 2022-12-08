@@ -323,7 +323,7 @@ export const fetchdata1 = () => async dispatch => {
         }
     };
 
-    // console.log("inside vis");
+    console.log("inside vis");
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/fetchdata1`,config)
         // console.log(res.data);
