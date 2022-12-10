@@ -62,6 +62,8 @@ import {
     POST_EDIT_REG_FAIL,
     POST_EDIT_BATCH_SUCCESS,
     POST_EDIT_BATCH_FAIL,
+    POST_VIEW_SEMESTER_SUCCESS,
+    POST_VIEW_SEMESTER_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -94,6 +96,7 @@ const initialState = {
     adminData: { "msg": "", "data": { "branch": [], "reg": [], "batch": [] } },
     adminDltResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
     adminEditResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
+    viewSemDetail:{"data":{"msg":"Error","code":"danger","message":"Some thing went wrong....!!!!!!!"}},
 
 };
 
@@ -398,6 +401,23 @@ export default function (state = initialState, action) {
             }
 
         //  The above cases are for ADMIN DASHBOARD
+
+
+
+
+        //  VIEW SEMESTER DETAILS
+
+        case POST_VIEW_SEMESTER_SUCCESS:
+            console.log(payload);
+            return{
+                ...state,
+                viewSemDetail:{"data":payload},
+            }
+        case POST_VIEW_SEMESTER_FAIL:
+            return{
+                ...state,
+                viewSemDetail:{"data":{"msg":"error","message":"Some thing went wrong....!!!!!!!"}},
+            }
 
         
 

@@ -9,6 +9,7 @@ from student.models import Regulation
 from student.models import Semester
 from django.db.models import Count,Value,Case,When,F,DecimalField,Q,IntegerField
 
+from student.analysis.sem_analysis import title_and_code,subj_analysis_one_more
 
 
 def check_subject_fetch(roll,subj_obj,sem):
@@ -291,3 +292,45 @@ def fetch_check_result(batch,sem,branch):
         return 1
     else:
         return 0
+
+
+
+
+
+
+def getSubjectDetails(students,sem,batch,reg,branch,code,name):
+    k= []
+    subs = Subjects.objects.all().filter(roll__in=(students),sem=sem,batch=batch,regulation=reg,branch=branch,code=code,name=name).order_by('roll')
+    for sub in subs:
+        data ={}
+        data["id"] = sub.id
+        data["roll"] = sub.roll.roll
+        data["name"] = sub.roll.name
+        data["credit"] = sub.credit
+        data["attendance"] = sub.attendance
+        data["grade"] = sub.grade
+        data["cgpa"] = sub.cgpa
+        data["result"] = sub.fail
+        k.append(data)
+    return k
+
+
+def getSemData(sem):
+    reg = Regulation.objects.get(id=sem.regulation.id)
+    branch = Branch.objects.get(id=sem.branch.id)
+    batch = Batch.objects.get(id=sem.batch.id)
+    students = Student.objects.filter(batch=batch,branch=branch,regulation=reg)
+    # print(sem.subject)
+    subj_list = sem.subject.split(',')
+    title_code = title_and_code(subj_list)
+    code = title_code[0]
+    title = title_code[1]
+    data = []
+    for i in range(len(code)):
+        k = {}
+        d = getSubjectDetails(students,sem,batch,reg,branch,code[i],title[i])
+        k["name"] = title[i]
+        k["code"] = code[i]
+        k["data"] = d
+        data.append(k)
+    return data

@@ -44,6 +44,7 @@ urlpatterns = [
     path('editRegulation',views.editRegulation,name="editRegulation"),
     path('dltBatch',views.dltBatch,name="dltBatch"),
     path('editBatch',views.editBatch,name="editBatch"),
+    path('viewSemDetails',views.viewSemDetails,name="viewSemDetails"),
     
 ]
 

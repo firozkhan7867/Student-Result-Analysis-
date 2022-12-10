@@ -44,6 +44,8 @@ import {
     POST_DELETE_BATCH_FAIL,
     POST_EDIT_BATCH_SUCCESS,
     POST_EDIT_BATCH_FAIL,
+    POST_VIEW_SEMESTER_SUCCESS,
+    POST_VIEW_SEMESTER_FAIL,
 } from "./types";
 import axios from "axios";
 
@@ -654,6 +656,28 @@ export const deleteBatch = (id) => async dispatch => {
     } catch (err) {
         dispatch({
             type: POST_DELETE_BATCH_FAIL
+        })
+    }
+};
+
+
+
+
+
+
+export const viewSemDetails = (id) => async dispatch => {
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/viewSemDetails`, id);
+        // console.log(res);
+        dispatch({
+            type:  POST_VIEW_SEMESTER_SUCCESS,
+            payload: res.data
+        });
+
+    } catch (err) {
+        dispatch({
+            type: POST_VIEW_SEMESTER_FAIL
         })
     }
 };

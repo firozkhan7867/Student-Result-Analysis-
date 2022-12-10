@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { fetchdatafun2, fetchdatafun3, postFilterData } from "../../actions/visua";
+import { fetchdatafun2, fetchdatafun3, postFilterData, viewSemDetails } from "../../actions/visua";
 import 'react-toastify/dist/ReactToastify.css';
 
-const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, fetchdatafun2, fetchdatafun3, postFilterData }) => {
+const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, fetchdatafun2, fetchdatafun3, postFilterData, viewSemDetails, viewSemDetail }) => {
 
-
-    console.log(fetchdata1);
 
     const branchData = adminData.data.branch;
     const regData = adminData.data.reg;
@@ -95,9 +93,6 @@ const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, 
     const [delData, setdelData] = useState({
         id: "",
         name: "",
-        reg: "",
-        branch: "",
-        batch: "",
     });
 
     const [view, setView] = useState({
@@ -111,12 +106,36 @@ const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, 
         msg: ""
     });
 
+    const [table, settable] = useState({
+        isdata: false,
+        data: {}
+    });
+
+
     // let history = useNavigate();
 
 
     const edit = (value) => {
         setdelData(value);
-        setFormData({ name: value.name, reg: value.reg });
+        // setFormData({ name: value.name, reg: value.reg });
+        console.log(value);
+
+        const data = new FormData();
+        data.append('id', value.id);
+        viewSemDetails(data).then(
+            () => {
+                console.log(viewSemDetail.data);
+                if (viewSemDetail.data.msg === "success") {
+                    // console.log(viewSemDetail.data.data);
+                    settable({
+                        isdata: true,
+                        data: viewSemDetail.data.data
+                    })
+                }
+            }
+        ).catch(e => {
+            console.log(e);
+        });
     }
 
     const delte = () => {
@@ -173,7 +192,7 @@ const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, 
                                 </div>
                                 <div class="modal-body text-muted">
                                     <span className='fs-5 fw-bold'> {delData.name}</span> Semester will get permamnently deleted and all the data related to this {delData.name}  Semester
-                                     will get deleted. Are you Sure?
+                                    will get deleted. Are you Sure?
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
@@ -193,15 +212,59 @@ const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, 
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
 
-                                        <label for="recipient-name" class="col-form-label">Semester Details :</label>
-                                        <div class="mb-3 d-flex justify-content-center">
-                                            <div className="">
-                                                hi
-                                            </div>
-                                        </div>
-                                    </form>
+                                    <p class=" my-4 fw-bold fs-3">Semester Details :</p>
+                                    {
+                                        table.isdata ?
+                                            table.data.map((sub, index) => {
+                                                return (
+                                                    <div class="mb-3 mx-4" key={index}>
+                                                        <div className="">
+                                                            <div className="fw-normal fs-4 text-start">
+                                                                Subject Name : {sub.name}   <br />
+                                                                Code : {sub.code}
+                                                            </div>
+                                                            <table className="table table-hover" style={{ width: "95%" }}>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">#</th>
+                                                                        <th scope="col">Roll</th>
+                                                                        <th scope="col">Student Name</th>
+                                                                        <th scope="col">Attendance</th>
+                                                                        <th scope="col">Credit</th>
+                                                                        <th scope="col">Grade</th>
+                                                                        <th scope="col">CGPA</th>
+                                                                        <th scope="col">Result</th>
+                                                                        <th scope="col">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {sub.data.map((value, index2) => {
+                                                                        return (
+                                                                            <tr>
+                                                                                <th scope="row">{index2+1}</th>
+                                                                                <td>{value.roll}</td>
+                                                                                <td>{value.name}</td>
+                                                                                <td>{value.attendance}</td>
+                                                                                <td>{value.credit}</td>
+                                                                                <td>{value.grade}</td>
+                                                                                <td>{value.cgpa}</td>
+                                                                                <td>{value.result?"FAIL":"PASS"}</td>
+                                                                                <td className='d-flex justify-content-center'>
+                                                                                    <button type='button' className='btn btn-primary mx-2' >View</button>
+                                                                                    <button type='button' className='btn btn-danger'>Delete</button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        )
+                                                                    })}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                            : "No Data Found"
+                                    }
 
                                     <button type="button" class="btn btn-primary mx-2" data-bs-dismiss="modal">Cancel</button>
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick={() => editConfirm()}>Confirm</button>
@@ -318,8 +381,9 @@ const mapStateToProps = state => ({
     fetchdata2: state.auth.fetchdata2,
     fetchdata3: state.auth.fetchdata3,
     filteredData: state.auth.filteredData,
+    viewSemDetail: state.auth.viewSemDetail,
 });
 
 
 
-export default connect(mapStateToProps, { fetchdatafun2, fetchdatafun3, postFilterData })(EditSem);
+export default connect(mapStateToProps, { fetchdatafun2, fetchdatafun3, postFilterData, viewSemDetails })(EditSem);

@@ -19,7 +19,7 @@ from .Fetch.preprocessing import fetch_check_result, get_section_fail_perc, get_
 
 from .analysis.section_subj_analysis import get_pass_fail_count_of_each_subject, get_pass_fail_count_of_each_subject_for_table
 from .preprocesssing import convert_num_to_sem, lst_of_sect_of_sem
-from student.Fetch.preprocessing import fetch_and_add_student_sem
+from student.Fetch.preprocessing import fetch_and_add_student_sem,getSemData
 from student.Fetch.preprocessing import add_preformance_table
 from student.Fetch.preprocessing import add_subject,check_sem_exist,get_subject_from_fetch_obj
 from student.multi_sem_analysis.Sem_backlog_data_analysis import get_sem_wise_backlog_analysis
@@ -1336,10 +1336,24 @@ def editRegulation(request):
             return JsonResponse({"del":"error","msg":f"This{name} Regulation Does not exists in DataBase"})
 
     else:
-        return JsonResponse({"msg":"Error","code":"danger","message":"Some thing went wrong....!!!!!!!"})
+        return JsonResponse({"msg":"error","code":"danger","message":"Some thing went wrong....!!!!!!!"})
 
 
 
+
+@csrf_exempt
+def viewSemDetails(request):
+    if request.method == "POST":
+        id = request.POST.get("id")
+        id = int(id)
+        if Semester.objects.filter(id=id).exists():
+            sem = Semester.objects.get(id=id)
+            data = getSemData(sem)
+            # print(data)
+            # print(sem)
+            return JsonResponse({"msg":"success","message":"Some thing went wrong....!!!!!!!","data":data},safe=True)
+        else:
+            return JsonResponse({"msg":"error","message":"Some thing went wrong....!!!!!!!"})
 
 
 
