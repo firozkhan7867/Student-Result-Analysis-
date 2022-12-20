@@ -15,13 +15,15 @@ const EditBatch = ({ adminData, deleteBatch, adminDltResponse, editBatch, adminE
         id: "",
         name: "",
         reg: "",
+        regid:"",
     });
 
     const [formdata, setFormData] = useState({
         name: "",
         reg: "",
+        regid:"",
     })
-    const { name, reg } = formdata;
+    const { name, reg,regid } = formdata;
     const onChange = e => setFormData({ ...formdata, [e.target.name]: e.target.value });
 
     const [err, seterr] = useState({
@@ -34,7 +36,7 @@ const EditBatch = ({ adminData, deleteBatch, adminDltResponse, editBatch, adminE
 
     const edit = (value) => {
         setdelData(value);
-        setFormData({ name: value.name, reg: value.reg });
+        setFormData({ name: value.name, reg: value.reg,regid: value.regid });
     }
 
     const delte = () => {
@@ -56,7 +58,8 @@ const EditBatch = ({ adminData, deleteBatch, adminDltResponse, editBatch, adminE
         const data = new FormData();
         data.append('id', delData.id);
         data.append('name', name);
-        data.append('reg', reg);
+        data.append('reg', regid);
+        // console.log(name,reg,delData);
         editBatch(data).then(
             () => {
                 if (adminEditResponse.batch.del === "error") {
@@ -149,7 +152,7 @@ const EditBatch = ({ adminData, deleteBatch, adminDltResponse, editBatch, adminE
                                         <div className="">
                                             <select className='form-control' name='reg' onChange={(e) => onChange(e)} >
                                                 {delData.reg ?
-                                                    <option value={delData.id} selected>{delData.reg}</option> : ""}
+                                                    <option value={delData.regid} selected>{delData.reg}</option> : ""}
                                             
                                                 {regs.map((value, index) => {
                                                     return (

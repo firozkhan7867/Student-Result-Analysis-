@@ -12,7 +12,10 @@ const  ToppersData = ({subjSectAnalysisdata,toppersData}) => {
     const getdata = toppersData;
     // console.log(getdata);
     // console.log(toppersData);
-    const [section, setsection] = useState(JSON.parse(localStorage.getItem("subjSectAnalysis")).eachSectionTopData.allSection);
+    // const [section, setsection] = useState(JSON.parse(localStorage.getItem("subjSectAnalysis")).eachSectionTopData.allSection);
+    const [section, setsection] = useState(subjSectAnalysisdata.eachSectionTopData.allSection);
+    // console.log(section);
+    // console.log(subjSectAnalysisdata);
     // console.log(section);
     const [sec, setsec] = useState("allSection");
 

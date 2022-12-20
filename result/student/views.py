@@ -29,7 +29,7 @@ from student.preprocesssing import  get_section_list,regGrades
 from student.add_to_DB import split_data
 from .add_to_DB import check_repeated_subj, split_data_student
 from student.back_log_handler import split_data_backlog
-from .analysis.sem_analysis import get_subject_analysis_data,all_subj
+from .analysis.sem_analysis import get_subject_analysis_data,all_subj,get_sect_data
 from .analysis.sect_analysis import  section_analysis
 from student.preprocesssing import get_subj_list, get_subject_analysis, get_transformed_data
 from .models import BacklogData, Batch, Branch, Performance, Regulation, Semester, Student, StudentDetails, Subjects
@@ -248,10 +248,8 @@ def data(request):
 def get_sem_analysis(request,sem_id):
     if Semester.objects.filter(id=sem_id).exists():
         sem = Semester.objects.get(id=sem_id)
-        return JsonResponse(get_subject_analysis_data(sem))
-    
-    
-    
+        return JsonResponse(get_subject_analysis_data(sem,sem_id))
+
     
 # def get_sect_analysis(request, sem_id):
 #     if Semester.objects.filter(id=sem_id).exists():
@@ -276,7 +274,7 @@ def get_sem_analysis(request,sem_id):
         
         
 # SECTION WISE SEM ANALYSIS API HANDLER
-
+#------------------------
 def get_sect_analysis(request, sem_id):
     if Semester.objects.filter(id=sem_id).exists():
         sem = Semester.objects.get(id=sem_id)
@@ -289,7 +287,7 @@ def get_sect_analysis(request, sem_id):
             #### ------- Warning ---------- Testing area -----------------###
 
             dsecs = get_sect_data(sem_id)
-            print(dsecs)
+            # print(dsecs)
             secs = []
             for i in dsecs["data"]:
                 secs.append(i["name"])
@@ -475,7 +473,7 @@ def get_back_predata(request):
         sem_dic.append(temp)
     data = {}
     data["updata"] = {"reg":reg_dic, "branch": branch_dict,"batch": batch_dic,"sem":sem_dic}
-    print(data)
+    # print(data)
     return JsonResponse(data)
 
 
@@ -661,23 +659,7 @@ async def cancel(request):
 
 
 
-def get_sect_data(sem_id):
-    sem = Semester.objects.get(id=sem_id)
-    # sem = convert_num_to_sem(sem)
-    batch  = Batch.objects.get(id=sem.batch.id)
-    branch_obj = Branch.objects.get(id=sem.branch.id)
-    students = Student.objects.filter(batch=batch,branch=branch_obj)
-    secs = []
-    main_k = {}
-    for i in students:
-        if i.section not in main_k.keys() and  i.section != 10:
-            k = {}
-            k["name"] = i.section
-            secs.append(k)
-            main_k[i.section] = 1
-    
-    
-    return {"data":secs}
+
 
 def get_individual_sem_analysis(request,roll):
     if Student.objects.filter(roll=roll).exists():
@@ -754,7 +736,7 @@ def get_sec_wise_topper_data(sem_id,secs):
     return data
 
 
-
+#------------------------
 def get_subj_section_data(request,sem_id):
     top_data = get_topper_data(sem_id)
     # sem = Semester.objects.get(id=sem_id)
@@ -767,7 +749,7 @@ def get_subj_section_data(request,sem_id):
     #     i.save()
     dsecs = get_sect_data(sem_id)
     print("hi")
-    print(dsecs)
+    # print(dsecs)
     sem = Semester.objects.get(id=sem_id)
     # sem = convert_num_to_sem(sem)
     batch  = Batch.objects.get(id=sem.batch.id)
@@ -915,7 +897,7 @@ def fetchdata1(request):
     data["regulation"] = reg
     data["status"] = True
 
-    print(data)
+    # print(data)
 
     return JsonResponse(data,safe=True)
 
@@ -1195,6 +1177,7 @@ def getAllAdminData(request):
         k["id"] = i.id
         k["name"] = i.name
         k["reg"] = i.reg.regulation
+        k["regid"] = i.reg.id
         batch.append(k)
 
     for i in regs:
@@ -1224,7 +1207,7 @@ def getAllAdminData(request):
 def dltBranch(request):
     if request.method == "POST":
         branch = request.POST.get("branch")
-        print(branch)
+        # print(branch)
         branch = int(branch)
         if Branch.objects.filter(id=branch).exists():
             brn = Branch.objects.get(id=branch)
@@ -1240,7 +1223,7 @@ def dltBranch(request):
 def dltRegulation(request):
     if request.method == "POST":
         reg = request.POST.get("reg")
-        print(reg)
+        # print(reg)
         reg = int(reg)
         if Regulation.objects.filter(id=reg).exists():
             brn = Regulation.objects.get(id=reg)
@@ -1291,10 +1274,10 @@ def editBranch(request):
 @csrf_exempt
 def editBatch(request):
     if request.method == "POST":
-        id = request.POST.get("id")
+        id = int(request.POST.get("id"))
         name = request.POST.get("name")
-        reg = request.POST.get("reg")
-        print(id,name,reg)
+        reg = int(request.POST.get("reg"))
+        # print(id,name,reg)
         if Batch.objects.filter(id=id).exists() and Regulation.objects.filter(id=reg).exists():
             brn = Batch.objects.get(id=id)
             reg = Regulation.objects.get(id=reg)
@@ -1349,6 +1332,7 @@ def viewSemDetails(request):
         if Semester.objects.filter(id=id).exists():
             sem = Semester.objects.get(id=id)
             data = getSemData(sem)
+            # print(get_formated_result("get_formated_result","CSE"))
             # print(data)
             # print(sem)
             return JsonResponse({"msg":"success","message":"Some thing went wrong....!!!!!!!","data":data},safe=True)

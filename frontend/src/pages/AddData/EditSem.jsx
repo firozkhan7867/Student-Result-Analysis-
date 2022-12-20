@@ -10,11 +10,13 @@ const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, 
     const regData = adminData.data.reg;
     const batchData = fetchdata2["batch"];
     const sectData = fetchdata3["section"];
-    const semData = fetchdata3["sems"];
+    // const semData = fetchdata3["sems"];
     const regs = adminData.data.reg;
 
 
+    const [semData,setSemData] = useState(false);
 
+    
     const [showTable, setshowTable] = useState(false);
 
 
@@ -36,20 +38,38 @@ const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, 
 
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        setSemData(false);
+        console.log(semData);
     }
 
     const onChangeReg = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         fetchdatafun2(e.target.value);
+        setSemData(false);
+        console.log(semData);
     }
 
     const onChangeBatch = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        setSemData(false);
+        console.log(semData);
         // console.log(branch,reg,batch);
         // console.log(e.target.value,e.target.name);
-        fetchdatafun3(branch, reg, e.target.value);
+        // fetchdatafun3(branch, reg, e.target.value);
         // console.log(branchData,regData,batchData);
     }
+    const SemSub = () =>{
+        console.log(branch, reg, batch);
+        console.log(semData);
+        fetchdatafun3(branch, reg, batch).then(()=>{
+            setSemData(fetchdata3["sems"]);
+            console.log(semData);
+        })
+        
+        
+    }
+    console.log(semData);
+
 
     const onChangeMul = e => {
         let sems = Array.from(e.target.selectedOptions, option => option.value);
@@ -209,7 +229,7 @@ const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, 
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="editModelLabel">View Semester Details</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" onClick={() => { settable({ isdata: false, data: {} }) }} class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
 
@@ -242,14 +262,14 @@ const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, 
                                                                     {sub.data.map((value, index2) => {
                                                                         return (
                                                                             <tr>
-                                                                                <th scope="row">{index2+1}</th>
+                                                                                <th scope="row">{index2 + 1}</th>
                                                                                 <td>{value.roll}</td>
                                                                                 <td>{value.name}</td>
                                                                                 <td>{value.attendance}</td>
                                                                                 <td>{value.credit}</td>
                                                                                 <td>{value.grade}</td>
                                                                                 <td>{value.cgpa}</td>
-                                                                                <td>{value.result?"FAIL":"PASS"}</td>
+                                                                                <td>{value.result ? "FAIL" : "PASS"}</td>
                                                                                 <td className='d-flex justify-content-center'>
                                                                                     <button type='button' className='btn btn-primary mx-2' >View</button>
                                                                                     <button type='button' className='btn btn-danger'>Delete</button>
@@ -263,11 +283,11 @@ const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, 
                                                     </div>
                                                 )
                                             })
-                                            : "No Data Found"
+                                            : "Loading Data"
                                     }
-
+                                    {/* 
                                     <button type="button" class="btn btn-primary mx-2" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick={() => editConfirm()}>Confirm</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick={() => editConfirm()}>Confirm</button> */}
                                 </div>
                             </div>
                         </div>
@@ -324,22 +344,25 @@ const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, 
                                         </select>
                                     </div>
                                 </div>
+                                <div className="">
+                                    <button type="button" onClick={SemSub} className='btn btn-primary'> Submit </button>
+                                </div>
                             </div>
                             <div className="mt-5 mx-5 text fs-4 fw-bolder">
                                 List of semester Available in the above Batch details Selected
                             </div>
-                            <div className="d-flex justify-content-center">
-                                <table className="table table-hover" style={{ width: "85%" }}>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Semesters Name</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {semData ?
-                                            semData.map((value, index) => {
+                            {semData ?
+                                <div className="d-flex justify-content-center">
+                                    <table className="table table-hover" style={{ width: "85%" }}>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Semesters Name</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {semData.map((value, index) => {
                                                 return (
 
                                                     <tr key={index}>
@@ -359,11 +382,12 @@ const EditSem = ({ adminData, fetchdata1, fetchdata2, fetchdata3, filteredData, 
                                                     </tr>
                                                 )
                                             })
-                                            : ""
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                : ""
+                            }
                         </form>
                     </div>
 

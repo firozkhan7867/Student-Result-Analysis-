@@ -74,6 +74,7 @@ const initialState = {
     updata: null,
     backdata: null,
     semVisData: null,
+    semAnalysisData:null,
     subjVisData: null,
     subjSectAnalysis: null,
     semDetails: { "name": "error", "reg": "error", "branch": "error", "batch": "error" },
@@ -97,6 +98,7 @@ const initialState = {
     adminDltResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
     adminEditResponse: { "branch": { "del": "success", "msg": "success" }, "batch": { "del": "success", "msg": "success" }, "reg": { "del": "success", "msg": "success" } },
     viewSemDetail:{"data":{"msg":"Error","code":"danger","message":"Some thing went wrong....!!!!!!!"}},
+    semFailList: {"code":false,"data":null},
 
 };
 
@@ -143,23 +145,7 @@ export default function (state = initialState, action) {
                 ...state,
                 backdata: null
             }
-        case FETCH_SUBJ_SECT_DATA_SUCCESS:
-            localStorage.setItem('subjSectAnalysis', JSON.stringify(payload.data));
-            // console.log(payload.data.failPercentageSection);
-            return {
-                ...state,
-                subjSectAnalysis: payload.data,
-                failPercentageSection: payload.data.failPercentageSection,
-                toppersData: payload.data.eachSectionTopData
-            }
-        case FETCH_SUBJ_SECT_DATA_FAIL:
-            localStorage.removeItem('subjSectAnalysis');
-            return {
-                ...state,
-                subjSectAnalysis: null,
-                failPercentageSection: [0, 0, 0, 0],
-                toppersData: { 1: [], 2: [], 3: [], 4: [], "allSection": [], "onlysections": [] }
-            }
+        
         case FETCH_REGULATION_DATA_SUCCESS:
             localStorage.setItem('regulationData', JSON.stringify(payload.data));
             return {
@@ -427,18 +413,45 @@ export default function (state = initialState, action) {
                 isAuthenticated: false
             }
         case FETCH_VIS_DATA_SUCCESS:
-            // console.log(payload);
             return {
                 ...state,
-                semVisData: payload.sem_performance,
-                semDetails: payload.details,
-
+                semVisData: payload.semAnalysis.sem_performance,
+                semDetails: payload.semAnalysis.details,
+                semFailList: {"code":true,"data":payload.semAnalysis.failedStudents},
+                semAnalysisData:{"msg":true,"data":payload},
+                subjSectAnalysis: payload.subjData.data,
+                failPercentageSection: payload.subjData.data.failPercentageSection,
+                toppersData: payload.subjData.data.eachSectionTopData,
+                subjVisData: payload.sectData.data,
             }
         case FETCH_VIS_DATA_FAIL:
             return {
                 ...state,
-                semVisData: null,
+                semVisData: {"msg":false,"data":null},
                 semDetails: { "name": "error", "reg": "error", "branch": "error", "batch": "error" },
+                semFailList: {"code":false,"data":null},
+                semAnalysisData:{"msg":false,"data":payload},
+                subjSectAnalysis: null,
+                failPercentageSection: [0, 0, 0, 0],
+                toppersData: { 1: [], 2: [], 3: [], 4: [], "allSection": [], "onlysections": [] },
+                subjVisData: null,
+            }
+        case FETCH_SUBJ_SECT_DATA_SUCCESS:
+            localStorage.setItem('subjSectAnalysis', JSON.stringify(payload.data));
+            // console.log(payload.data.failPercentageSection);
+            return {
+                ...state,
+                subjSectAnalysis: payload.data,
+                failPercentageSection: payload.data.failPercentageSection,
+                toppersData: payload.data.eachSectionTopData
+            }
+        case FETCH_SUBJ_SECT_DATA_FAIL:
+            localStorage.removeItem('subjSectAnalysis');
+            return {
+                ...state,
+                subjSectAnalysis: null,
+                failPercentageSection: [0, 0, 0, 0],
+                toppersData: { 1: [], 2: [], 3: [], 4: [], "allSection": [], "onlysections": [] }
             }
         case FETCH_SUBJ_DATA_SUCCESS:
             return {

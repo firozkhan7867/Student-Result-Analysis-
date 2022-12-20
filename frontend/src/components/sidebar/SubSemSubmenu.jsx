@@ -69,9 +69,18 @@ const SubSemSubmenu = ({item, fetchSemData,fetchSubjData,fetchSubjSectAnalysys})
 
   
     const get = async (id) =>{
-      fetchSemData(id);
-      fetchSubjData(id);
-      fetchSubjSectAnalysys(id);
+      fetchSemData(id).then(()=>{
+        if (window.location.pathname !== "/analysis"){
+          history("/analysis");
+        }
+      }).catch(()=>{
+        if (window.location.pathname === "/analysis"){
+          history("/");
+        }
+      } 
+      );
+      // fetchSubjData(id);
+      // fetchSubjSectAnalysys(id);
       // await new Promise(resolve => setTimeout(resolve, 3000));
       // await wait(2000);
       // history('/analysis');

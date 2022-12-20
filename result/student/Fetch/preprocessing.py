@@ -117,9 +117,7 @@ def check_sem_exist(result,branch,batch,reg,sem,subj):
 
     return sem
 
-
     # ["201342-RNAIDA INADONP A","2332323-asjdnskjdna"]
-    
     
 
 def get_subject_from_fetch_obj(result):
@@ -136,9 +134,6 @@ def get_subject_from_fetch_obj(result):
     
     return subj_list
     
-
-
-
 
 def get_no_of_pass_count(student,sem):
     subjs = Subjects.objects.filter(roll=student,branch=student.branch, regulation=student.regulation, batch=student.batch,sem=sem)
@@ -276,6 +271,7 @@ def get_section_fail_perc(sem_id,secs):
     for i in failcount:
         data.append(int(i/sum(failcount)*100))
     # print(data)
+    
     return data
 
 
@@ -313,6 +309,11 @@ def getSubjectDetails(students,sem,batch,reg,branch,code,name):
         data["result"] = sub.fail
         k.append(data)
     return k
+
+
+
+
+# code from below is for digging dashboard
 
 
 def getSemData(sem):

@@ -10,8 +10,8 @@ import {
   // import { fetchSubjSectAnalysys } from '../../actions/visua';
   import { connect } from 'react-redux';
   
-  const SecWisePerfamanceChart= ({subjSectAnalysisdata}) => {
-    const data = JSON.parse(localStorage.getItem('subjSectAnalysis'));
+  const SecWisePerfamanceChart= ({subjSectAnalysis}) => {
+    const data = subjSectAnalysis;
     // console.log(data);
     return (
       
@@ -112,7 +112,7 @@ import {
   // }
   
   const mapStateToProps = state => ({
-    subjSectAnalysisdata: state.auth.subjSectAnalysis
+    subjSectAnalysis: state.auth.subjSectAnalysis
 });
 
 export default connect(mapStateToProps, null)(SecWisePerfamanceChart);
