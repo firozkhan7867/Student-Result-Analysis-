@@ -533,6 +533,12 @@ def reduced_fetch_semester_result(batch,sem,branch):
         print("!!!  .....   INVALID DETAILS")
         return
 
+    # print()
+    if int(sem) == 9 :
+        print("nooo")
+        reduced_fetch_all_sems(batch,branch)
+        return
+
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
     students = Student.objects.filter(batch=batch,branch=branch_obj)

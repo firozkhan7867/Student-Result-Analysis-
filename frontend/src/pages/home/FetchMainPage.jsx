@@ -257,6 +257,7 @@ class FetchMainPage extends Component {
                                                 <option value="6">VI - Semester</option>
                                                 <option value="7">VII - Semester</option>
                                                 <option value="8">VIII - Semester</option>
+                                                <option value="9">All - Semesters</option>
                                             </select>
                                         </div>
                                     </div>

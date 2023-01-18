@@ -284,6 +284,8 @@ def fetch_check_result(batch,sem,branch):
         return 0
     roll = str(Student.objects.filter(batch=batch,branch=branch_obj)[0])
     result = get_formated_result(roll,branch)
+    if int(sem) == 9:
+        return 1
     # print(result[str(sem)])
     if len(result[str(sem)]) > 0:
         return 1
