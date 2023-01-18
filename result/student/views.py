@@ -1402,8 +1402,11 @@ def reduced_fetch_all_sems(batch,branch):
         time.sleep(7)
         try:
             # print(i)
-            # fetch_and_add_student_all_sem("20135A0518",branch)
-            fetch_and_add_student_all_sem("18131A0553",branch)
+            # # fetch_and_add_student_all_sem("20135A0518",branch)
+            # fetch_and_add_student_all_sem("18131A0553",branch)
+            
+            print(i)
+            fetch_and_add_student_sem(i.roll.upper(),branch)
         except Exception as e: 
             print("----------------------     ERROR ....!!!!!!        ----------------------------")
             print(e)
