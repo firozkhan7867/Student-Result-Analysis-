@@ -192,6 +192,7 @@ def add_preformance_table(roll,sem):
 
 
 
+
 def fetch_and_add_student_sem(roll,sem,branch):
     student = Student.objects.get(roll=roll)
     branch_obj = student.branch

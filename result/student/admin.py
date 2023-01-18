@@ -10,7 +10,7 @@ class VideoAdminModel(admin.ModelAdmin):
 
 
 class StudentDetailsAdmin(admin.ModelAdmin):
-    search_fields = ('roll','name')
+    search_fields = ['roll','name']
     list_display = ('name','roll','dob','aadhar')
     list_display_links = ('name','roll')
 

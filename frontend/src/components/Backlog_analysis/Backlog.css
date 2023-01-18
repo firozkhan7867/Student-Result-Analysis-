@@ -1,12 +1,19 @@
 /* b{
     text-align: center;
 } */
-h5{
+h5 {
     text-align: center;
-    font-family: Helvetica, Arial, sans-serif; 
-    
-    font-size:15px;
-    font-weight:900;
-    color:#373d3f;
+    font-family: Helvetica, Arial, sans-serif;
 
+    font-size: 15px;
+    font-weight: 900;
+    color: #373d3f;
+
+}
+
+.h {
+    max-height: 450px !important;
+    overflow: auto;
+    margin-bottom: 20px;
+    /* background-color: red !important; */
 }

@@ -19,6 +19,7 @@ from .Fetch.preprocessing import fetch_check_result, get_section_fail_perc, get_
 
 from .analysis.section_subj_analysis import get_pass_fail_count_of_each_subject, get_pass_fail_count_of_each_subject_for_table
 from .preprocesssing import convert_num_to_sem, lst_of_sect_of_sem
+from student.Fetch.fetch_all_sems import fetch_and_add_student_all_sem
 from student.Fetch.preprocessing import fetch_and_add_student_sem,getSemData
 from student.Fetch.preprocessing import add_preformance_table
 from student.Fetch.preprocessing import add_subject,check_sem_exist,get_subject_from_fetch_obj
@@ -32,7 +33,7 @@ from student.back_log_handler import split_data_backlog
 from .analysis.sem_analysis import get_subject_analysis_data,all_subj,get_sect_data
 from .analysis.sect_analysis import  section_analysis
 from student.preprocesssing import get_subj_list, get_subject_analysis, get_transformed_data
-from .models import BacklogData, Batch, Branch, Performance, Regulation, Semester, Student, StudentDetails, Subjects
+from .models import BacklogData, Batch, Branch, Performance, Regulation, Semester, Student, StudentDetails, Subjects, BacklogSubject
 import os
 import time
 import pandas as pd
@@ -511,17 +512,17 @@ def get_all_sems_backlog(request,batch_id,branch_id):
 
 def fetch_result(request,roll,branch,sem):
     result = get_formated_result(roll,branch)
-    # print(result)
+    print(result)
     student = Student.objects.get(roll=roll)
     print(f"Branch : {student.branch} Regultaion : {student.regulation} Batch: {student.batch} Section: {student.section}")
-    result = result[str(sem)]
+    # result = result[str(sem)]
     # supply = result[f"{sem}-Supply"]
-    subj = get_subject_from_fetch_obj(result)
+    # subj = get_subject_from_fetch_obj(result)
 
-    sem = check_sem_exist(result,student.branch,student.batch,student.regulation,sem,subj)
+    # sem = check_sem_exist(result,student.branch,student.batch,student.regulation,sem,subj)
     
-    add_subject(result,roll,sem)
-    add_preformance_table(roll,sem)
+    # add_subject(result,roll,sem)
+    # add_preformance_table(roll,sem)
     
     return JsonResponse(result, safe=False)
 
@@ -534,7 +535,7 @@ def reduced_fetch_semester_result(batch,sem,branch):
 
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
-    students = Student.objects.filter(batch=batch,branch=branch_obj)[190:]
+    students = Student.objects.filter(batch=batch,branch=branch_obj)
 
     print("-------------------------------------------------------------------------------------------------")
  
@@ -545,7 +546,7 @@ def reduced_fetch_semester_result(batch,sem,branch):
             print(i)
             fetch_and_add_student_sem(i.roll.upper(),sem,branch)
         except Exception as e: 
-            print("---")
+            print("----------------------     ERROR ....!!!!!!        ----------------------------")
             print(e)
             return
 
@@ -585,6 +586,7 @@ def check_sem_data_exists(request,batch,sem,branch):
             return JsonResponse({"code":"success","msg":"Semester Result has started fetching data from server, wait for while"},safe=False)
     
     except Exception as e: 
+        print("----------------------     ERROR ....!!!!!!        ----------------------------")
         print(e)
         return JsonResponse({"code":"danger","msg":"IMS Server Not Responding .... !!!"}, safe=False)
 
@@ -681,6 +683,16 @@ def get_individual_sem_analysis(request,roll):
             "branch":stu.branch.branches
         }
 
+        # getting list of subject with backlog and passed or not
+        backlist = BacklogSubject.objects.filter(roll=std.roll)
+        backdata = []
+        for back in backlist:
+            k = {}
+            k["name"]= back.subject.name + '-' + back.subject.code
+            k["sem"] = back.sem.name
+            k["count"] = back.count
+            k["passed"] = back.passed
+            backdata.append(k) 
         for sem in sems:
             if sem.sem.name=="I":
                 data["cgpas"][0]=sem.SCGPA
@@ -699,6 +711,7 @@ def get_individual_sem_analysis(request,roll):
             elif sem.sem.name=="VIII":
                 data["cgpas"][7]=sem.SCGPA
         data["details"]= details
+        data['backlog']=backdata
         # print(details)
         return JsonResponse(data,safe=False)
     else:
@@ -1215,6 +1228,8 @@ def dltBranch(request):
                 brn.delete()
                 return JsonResponse({"del":"success","msg":"Successfully deleted all the branch and all its objects"})
             except Exception as e:
+                print("----------------------     ERROR ....!!!!!!        ----------------------------")
+                print(e)
                 return JsonResponse({"del":"error","msg":f"{e}"})
         else:
             return JsonResponse({"del":"error","msg":f"This{branch} Branch Does not exists in DataBase"})
@@ -1231,6 +1246,8 @@ def dltRegulation(request):
                 brn.delete()
                 return JsonResponse({"del":"success","msg":"Successfully deleted all the Regulation and all its objects"})
             except Exception as e:
+                print("----------------------     ERROR ....!!!!!!        ----------------------------")
+                print(e)
                 return JsonResponse({"del":"error","msg":f"{e}"})
         else:
             return JsonResponse({"del":"error","msg":f"This{reg} Regulation Does not exists in DataBase"})
@@ -1248,6 +1265,8 @@ def dltBatch(request):
                 brn.delete()
                 return JsonResponse({"del":"success","msg":"Successfully deleted all the Batch and all its objects"})
             except Exception as e:
+                print("----------------------     ERROR ....!!!!!!        ----------------------------")
+                print(e)
                 return JsonResponse({"del":"error","msg":f"{e}"})
         else:
             return JsonResponse({"del":"error","msg":f"This{batch} Batch Does not exists in DataBase"})
@@ -1265,6 +1284,8 @@ def editBranch(request):
                 brn.save()
                 return JsonResponse({"del":"success","msg":f"Successfully Updated the branch name to {name}"})
             except Exception as e:
+                print("----------------------     ERROR ....!!!!!!        ----------------------------")
+                print(e)
                 return JsonResponse({"del":"error","msg":f"{e}"})
         else:
             return JsonResponse({"del":"error","msg":f"This{name} Branch Does not exists in DataBase"})
@@ -1287,6 +1308,8 @@ def editBatch(request):
                 brn.save()
                 return JsonResponse({"del":"success","msg":f"Successfully Updated the Batch name to {name}"})
             except Exception as e:
+                print("----------------------     ERROR ....!!!!!!        ----------------------------")
+                print(e)
                 return JsonResponse({"del":"error","msg":f"{e}"})
         else:
             return JsonResponse({"del":"error","msg":f"This{name} Batch Does not exists in DataBase or {reg} Regulation does not existsi in DB"})
@@ -1314,6 +1337,8 @@ def editRegulation(request):
                 reg.save()
                 return JsonResponse({"del":"success","msg":f"Successfully Updated the Regulation details"})
             except Exception as e:
+                print("----------------------     ERROR ....!!!!!!        ----------------------------")
+                print(e)
                 return JsonResponse({"del":"error","msg":f"{e}"})
         else:
             return JsonResponse({"del":"error","msg":f"This{name} Regulation Does not exists in DataBase"})
@@ -1344,3 +1369,41 @@ def viewSemDetails(request):
 def semWiseBacklogData(request,roll):
     return JsonResponse({"success":"ok","allBacklogs":[0,2,3,1,5,0,3,0],"clearedBacklogs":[0,2,2,1,1,0,1,0]})
 
+
+
+
+
+
+
+
+
+# Fetch ALL Sems data
+
+@sync_to_async
+def reduced_fetch_all_sems(batch,branch):
+    if not Batch.objects.filter(id=batch).exists() and Branch.objects.filter(branches=branch.upper()).exists():
+        print("!!!  .....   INVALID DETAILS")
+        return
+
+    batch  = Batch.objects.get(id=batch)
+    branch_obj = Branch.objects.get(branches=branch.upper())
+    students = Student.objects.filter(batch=batch,branch=branch_obj)
+
+    print("-------------------------------------------------------------------------------------------------")
+ 
+
+    for i in students:
+        time.sleep(7)
+        try:
+            # print(i)
+            # fetch_and_add_student_all_sem("20135A0518",branch)
+            fetch_and_add_student_all_sem("18131A0553",branch)
+        except Exception as e: 
+            print("----------------------     ERROR ....!!!!!!        ----------------------------")
+            print(e)
+            return
+
+async def fetch_all_sems(request,batch,branch):
+    asyncio.create_task(reduced_fetch_all_sems(batch,branch))
+
+    return JsonResponse({"response":"started Fetching"},safe=False)

@@ -12,7 +12,7 @@ import {
   
   const SecWisePerfamanceChart= ({subjSectAnalysis}) => {
     const data = subjSectAnalysis;
-    // console.log(data);
+    console.log(data);  
     return (
       
         <Chart

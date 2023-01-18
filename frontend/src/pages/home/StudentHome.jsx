@@ -186,6 +186,7 @@ const mapStateToProps = state => ({
     studentdetails: state.auth.studentdetails
 });
 
+
 export default connect(mapStateToProps,{getStudentDetails,semWiseBacklogData})(StudentHome);
 
 // export default StudentHome;
