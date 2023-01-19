@@ -1,5 +1,4 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
 import ReactApexChart from 'react-apexcharts';
 import { CCard, CCardBody} from '@coreui/react';
 import { connect } from 'react-redux';

@@ -1387,7 +1387,7 @@ def viewSemDetails(request):
 
 # Fetch ALL Sems data
 
-@sync_to_async
+# @sync_to_async
 def reduced_fetch_all_sems(batch,branch):
     if not Batch.objects.filter(id=batch).exists() and Branch.objects.filter(branches=branch.upper()).exists():
         print("!!!  .....   INVALID DETAILS")
@@ -1408,13 +1408,14 @@ def reduced_fetch_all_sems(batch,branch):
             # fetch_and_add_student_all_sem("18131A0553",branch)
             
             print(i)
-            fetch_and_add_student_sem(i.roll.upper(),branch)
+            fetch_and_add_student_all_sem(i.roll.upper(),branch)
         except Exception as e: 
             print("----------------------     ERROR ....!!!!!!        ----------------------------")
             print(e)
             return
 
-async def fetch_all_sems(request,batch,branch):
-    asyncio.create_task(reduced_fetch_all_sems(batch,branch))
+# async 
+def fetch_all_sems(request,batch,branch):
+    # asyncio.create_task(reduced_fetch_all_sems(batch,branch))
 
     return JsonResponse({"response":"started Fetching"},safe=False)
