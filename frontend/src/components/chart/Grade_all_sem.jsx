@@ -1,73 +1,87 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 import ReactApexChart from 'react-apexcharts';
+import { CCard, CCardBody} from '@coreui/react';
+import { connect } from 'react-redux';
 
-import { CCard, CCardBody, CCardHeader} from '@coreui/react';
 
+const Grade_all_sem = ({studentdetails}) => {
+    const arr_key = () => {
+      if (studentdetails.grades) {
+        const data = new Map(Object.entries(studentdetails.grades));
+        return Array.from(data.keys());
+      }
+      else {
+        return [0, 0, 0, 0, 0];
+      }
+    }
+  
+    const arry_val = () => {
+      if (studentdetails.grades) {
+        const data = new Map(Object.entries(studentdetails.grades));
+        return Array.from(data.values());
+      }
+      else {
+        return [0, 0, 0, 0, 0];
+      }
+    }
 
-class Grade_all_sem extends React.Component {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-      
-        series: [25, 15, 44, 55, 41, 17],
-        options: {
-          chart: {
-            width: '100%',
-            type: 'pie',
-            height:20,
-          },
-          labels: ["O","A","B","C","D","F"],
-          theme: {
-            monochrome: {
-              enabled: true
-            }
-          },
-          plotOptions: {
-            pie: {
-              dataLabels: {
-                offset: -5
-              }
-            }
-          },
-          title: {
-            text: "Grade analysis over all semesters",
-            align: 'center'
-          },
-          dataLabels: {
-            formatter(val, opts) {
-              const name = opts.w.globals.labels[opts.seriesIndex]
-              return [name, val.toFixed(1) + '%']
-            }
-          },
-          legend: {
-            show: false
+    const state = {
+      series: arry_val(),
+      options: {
+        chart: {
+          width: '100%',
+          type: 'pie',
+          height: 20,
+        },
+        labels: arr_key(),
+        theme: {
+          monochrome: {
+            enabled: true
           }
         },
-      
-      
-      };
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              offset: -5
+            }
+          }
+        },
+        title: {
+          text: "Grade analysis over all semesters",
+          align: 'center'
+        },
+        dataLabels: {
+          formatter(val, opts) {
+            const name = opts.w.globals.labels[opts.seriesIndex]
+            return [name, val.toFixed(1) + '%']
+          }
+        },
+        legend: {
+          show: false
+        }
+      },
     }
 
-  
+    return (
 
-    render() {
-      return (
-        
-
-        <CCard>
+      <CCard>
         <CCardBody>
-      <div id="chart">
-<ReactApexChart options={this.state.options} series={this.state.series} type="pie" height={350} />
-</div>
-</CCardBody>
-</CCard>
+          <div id="chart">
+            <ReactApexChart options={state.options} series={state.series} type="pie" height={350} />
+          </div>
+        </CCardBody>
+      </CCard>
 
 
 
-      );
-    }
-  }
+    );
+}
 
-export default Grade_all_sem;
+
+
+const mapStateToProps = state => ({
+  studentdetails: state.auth.studentdetails
+});
+
+export default connect(mapStateToProps,null)(Grade_all_sem);

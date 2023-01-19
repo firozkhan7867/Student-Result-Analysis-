@@ -20,7 +20,7 @@ from .Fetch.preprocessing import fetch_check_result, get_section_fail_perc, get_
 from .analysis.section_subj_analysis import get_pass_fail_count_of_each_subject, get_pass_fail_count_of_each_subject_for_table
 from .preprocesssing import convert_num_to_sem, lst_of_sect_of_sem
 from student.Fetch.fetch_all_sems import fetch_and_add_student_all_sem
-from student.Fetch.preprocessing import fetch_and_add_student_sem,getSemData
+from student.Fetch.preprocessing import fetch_and_add_student_sem,getSemData,student_grade_analysis
 from student.Fetch.preprocessing import add_preformance_table
 from student.Fetch.preprocessing import add_subject,check_sem_exist,get_subject_from_fetch_obj
 from student.multi_sem_analysis.Sem_backlog_data_analysis import get_sem_wise_backlog_analysis
@@ -667,6 +667,9 @@ async def cancel(request):
 
 
 
+def semWiseBacklogData(request,roll):
+    # print(roll)
+    return JsonResponse({"success":"ok","allBacklogs":[0,2,3,1,5,0,3,0],"clearedBacklogs":[0,2,2,1,1,0,1,0]})
 
 
 def get_individual_sem_analysis(request,roll):
@@ -674,7 +677,7 @@ def get_individual_sem_analysis(request,roll):
         stu=Student.objects.get(roll=roll)
         sems =  Performance.objects.filter(roll=stu)
         data={"cgpas":[None,None,None,None,None,None,None,None],"roll":roll}
-
+        grades = student_grade_analysis(roll)
         std = StudentDetails.objects.get(roll=stu)
         details = {
             "name":std.name,
@@ -718,6 +721,7 @@ def get_individual_sem_analysis(request,roll):
                 data["cgpas"][7]=sem.SCGPA
         data["details"]= details
         data['backlog']=backdata
+        data['grades'] = grades
         # print(details)
         return JsonResponse(data,safe=False)
     else:
@@ -1372,8 +1376,6 @@ def viewSemDetails(request):
 
 
 
-def semWiseBacklogData(request,roll):
-    return JsonResponse({"success":"ok","allBacklogs":[0,2,3,1,5,0,3,0],"clearedBacklogs":[0,2,2,1,1,0,1,0]})
 
 
 

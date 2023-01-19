@@ -156,9 +156,9 @@ const StudentHome = ({studentdetails,getStudentDetails,tog,sidebar,semWiseBacklo
                         <Row>
                             <Col>
                                 <div className="component">
-                                    <ErrorBoundary>
+                                    {/* <ErrorBoundary> */}
                                         <Grade_all_sem />
-                                    </ErrorBoundary>
+                                    {/* </ErrorBoundary> */}
                                 </div>
 
                             </Col>

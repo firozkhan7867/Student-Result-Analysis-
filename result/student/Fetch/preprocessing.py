@@ -338,3 +338,30 @@ def getSemData(sem):
         k["data"] = d
         data.append(k)
     return data
+
+
+
+def student_grade_analysis(roll):
+    if Student.objects.filter(roll=roll).exists():
+        stu=Student.objects.get(roll=roll)
+        grades = stu.regulation.grades
+        subj = Subjects.objects.filter(roll=stu)
+        grad = {}
+        for i in grades:
+            grad[i] = 0
+        for sub in subj:
+            grad[sub.grade] +=1
+        k = list(grad.keys())
+        for i in k:
+            if grad[i] == 0:
+                grad.pop(i)
+        # print(grad)
+        if len(grad)>0:
+            k =  grad.copy()
+            for i in grad:
+                k[i] = int((grad[i]/sum(list(grad.values())))*100)
+            return k
+        else:
+            return {'O': 0, 'A+': 0, 'A': 0, 'B+': 0, 'B': 0, 'C': 0, 'F': 0, 'AB': 100, 'D': 0, 'H': 0}
+    else:
+        return {'O': 0, 'A+': 0, 'A': 0, 'B+': 0, 'B': 0, 'C': 0, 'F': 0, 'AB': 100, 'D': 0, 'H': 0}
