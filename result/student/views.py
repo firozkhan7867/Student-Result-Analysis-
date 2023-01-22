@@ -590,6 +590,10 @@ def check_sem_data_exists(request,batch,sem,branch):
             return JsonResponse({"code":"danger","msg":"Semester Result not found in the server .... !!!"}, safe=False)
         elif flag == 1:
             return JsonResponse({"code":"success","msg":"Semester Result has started fetching data from server, wait for while"},safe=False)
+        elif flag==2:
+            return JsonResponse({"code":"danger","msg":"Student Details are not uploaded for this batch.... !!!"}, safe=False)
+        elif flag==3:
+            return JsonResponse({"code":"success","msg":"All Semester Result has started fetching data from server, wait for while!!!"}, safe=False)
     
     except Exception as e: 
         print("----------------------     ERROR ....!!!!!!        ----------------------------")

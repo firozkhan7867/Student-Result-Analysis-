@@ -280,12 +280,12 @@ def get_section_fail_perc(sem_id,secs):
 def fetch_check_result(batch,sem,branch):
     batch  = Batch.objects.get(id=batch)
     branch_obj = Branch.objects.get(branches=branch.upper())
-    if not  Student.objects.filter(batch=batch,branch=branch_obj).exists():
-        return 0
+    if len(Student.objects.filter(batch=batch,branch=branch_obj)) < 2:
+        return 2    
     roll = str(Student.objects.filter(batch=batch,branch=branch_obj)[0])
     result = get_formated_result(roll,branch)
     if int(sem) == 9:
-        return 1
+        return 3
     # print(result[str(sem)])
     if len(result[str(sem)]) > 0:
         return 1
