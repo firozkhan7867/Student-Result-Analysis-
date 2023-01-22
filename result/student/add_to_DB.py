@@ -198,7 +198,7 @@ def add_or_update_student_details(data,branch,reg,batch):
                 if Student.objects.filter(regulation=reg, branch=branch, batch=batch,roll=rolls[i],section=10).exists():
                     student = Student.objects.get(regulation=reg, branch=branch, batch=batch,roll=rolls[i],section=10)
                     student.section = secs[i]
-                    if not pd.isna(names[i]):
+                    if not pd.isna(names[i]) or not names[i] == "nan": 
                         student.name = names[i]
                     student.save()
                 else:

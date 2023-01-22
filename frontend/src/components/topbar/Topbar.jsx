@@ -73,8 +73,8 @@ const Topbar = ({ logout, isAuthenticated, checkAuthenticated }) => {
                                 <li class="nav-item">
                                     <Link className="tt topbarIconsContainer1 btn btn-outline-danger" to="#!" onClick={logout}>Logout</Link>
                                 </li> 
-                                <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                        alt="" className='topAvatar' />
+                                <Link to="/admin/web"><img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                        alt="" className='topAvatar' /></Link>
                             </ul>
                         </form>
                     </div>
